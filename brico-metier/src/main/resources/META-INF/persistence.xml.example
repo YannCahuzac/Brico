@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="PU" transaction-type="JTA">
+
+		<!-- Attention: l'ordre des balises est tres important!! -->
+
+		<!-- On utilise le provider Eclipse, A priori ça depend du provider DB utilise dans glassfish -->
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<!-- <provider>org.hibernate.ejb.HibernatePersistence</provider> -->
+		<!-- <provider>oracle.toplink.essentials.PersistenceProvider</provider> -->
+
+		<!-- jdbc/MaBaseDeTest est le jndi dans le server glassfish -->
+		<!-- Le jndi jdbc/MaBaseDeTest pointe lui-meme sur la datasource de DEV du glassfish -->
+		<jta-data-source>jdbc/MaBaseDeTest</jta-data-source>
+
+		<!-- Notre fichier pour signaler les infos de notre database -->
+		<mapping-file>META-INF/orm.xml</mapping-file>
+
+		<!-- Nos classes A mapper -->
+		<!-- Attention: toutes les classes utilisees dans le code (em.create[named]Query / em.find / ..) doivent etre mappees ici!! -->
+		<class>fr.smabtp.yca.bean.Histo</class>
+		<class>fr.smabtp.yca.bean.TableU</class>
+
+		<!-- Properties utiles -->
+		<properties>
+			<property name="hibernate.default_schema" value="KV01" />
+		</properties>
+
+	</persistence-unit>
+
+	<persistence-unit name="PU2" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>fr.smabtp.yca.bean.Histo</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DB2Dialect" />
+			<property name="hibernate.connection.driver_class" value="com.ibm.db2.jcc.DB2Driver" />
+			<property name="hibernate.connection.url" value="jdbc:db2://<server>:<port>/<base>" />
+			<property name="hibernate.connection.username" value="***" />
+			<property name="hibernate.connection.password" value="***" />
+			<property name="hibernate.default_schema" value="<schema>" />
+		</properties>
+	</persistence-unit>
+
+</persistence>
