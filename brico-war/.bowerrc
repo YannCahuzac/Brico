@@ -1,4 +1,7 @@
 {
   "directory": "src/main/webapp/bower_components",
-  "strict-ssl": false
+  "strict-ssl": false,
+  "registry": "http://bower.herokuapp.com",
+  "proxy":"http://A15489:Azerty5!@proxypar.orleanssrv.domsma:8090/",
+  "https-proxy":"http://A15489:Azerty5!@proxypar.orleanssrv.domsma:8090/"
 }
