@@ -10,3 +10,4 @@ node_modules
 components
 bower_components
 persistence.xml
+node_modules
