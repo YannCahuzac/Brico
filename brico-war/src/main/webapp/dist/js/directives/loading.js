@@ -4,7 +4,7 @@
  */
 
 angular
-    .module('RDash')
+    .module('bricoAngular')
     .directive('rdLoading', rdLoading);
 
 function rdLoading() {

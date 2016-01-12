@@ -3,7 +3,7 @@
  */
 
 angular
-    .module('RDash')
+    .module('bricoAngular')
     .controller('AlertsCtrl', ['$scope', AlertsCtrl]);
 
 function AlertsCtrl($scope) {

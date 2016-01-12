@@ -3,7 +3,7 @@
  */
 
 angular
-    .module('RDash')
+    .module('bricoAngular')
     .directive('rdWidgetFooter', rdWidgetFooter);
 
 function rdWidgetFooter() {

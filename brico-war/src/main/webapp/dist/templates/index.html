@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fr" ng-app="bricoAngular">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>La Bonne Aide</title>
+<!-- STYLES -->
+<!-- build:css lib/css/main.min.css -->
+<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/rdash-ui/dist/css/rdash.min.css">
+<!-- endbuild -->
+<!-- SCRIPTS -->
+<!-- build:js lib/js/main.min.js -->
+<script type="text/javascript" src="/brico-war/bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="/brico-war/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="/brico-war/bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script type="text/javascript" src="/brico-war/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<!-- endbuild -->
+<!-- Custom Scripts -->
+
+<script src="/brico-war/dist/js/controllers/app.js"></script>
+<script src="/brico-war/dist/js/controllers/homeCtrl.js"></script>
+<script src="/brico-war/dist/js/directives/themesSrv.js"></script>
+
+<script type="text/javascript" src="/brico-war/dist/js/controllers/alert-ctrl.js"></script>
+<script type="text/javascript" src="/brico-war/dist/js/controllers/master-ctrl.js"></script>
+<script type="text/javascript" src="/brico-war/dist/js/directives/loading.js"></script>
+<script type="text/javascript" src="/brico-war/dist/js/directives/widget.js"></script>
+<script type="text/javascript" src="/brico-war/dist/js/directives/widget-body.js"></script>
+<script type="text/javascript" src="/brico-war/dist/js/directives/widget-footer.js"></script>
+<script type="text/javascript" src="/brico-war/dist/js/directives/widget-header.js"></script>
+</head>
+
+<body ng-controller="MasterCtrl">
+	<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar">
+				<li class="sidebar-main"><a ng-click="toggleSidebar()"> Tableau de bord <span class="menu-icon glyphicon glyphicon-transfer"></span>
+				</a></li>
+				<li class="sidebar-title"><span>NAVIGATION</span></li>
+				<li class="sidebar-list"><a href="#/1">Plomberie <span class="menu-icon fa fa-tint"></span></a></li>
+				<li class="sidebar-list"><a href="#/2">Menuiserie <span class="menu-icon fa fa-sun-o"></span></a></li>
+				<li class="sidebar-list"><a href="#/3">Électricité <span class="menu-icon fa fa-bolt"></span></a></li>
+				<li class="sidebar-list"><a href="#/4">Jardinage <span class="menu-icon fa fa-leaf"></span></a></li>
+				<li class="sidebar-list"><a href="#/5">Maçonnerie <span class="menu-icon fa fa-sun-o"></span></a></li>
+			</ul>
+			<div class="sidebar-footer">
+				<div class="col-xs-4">
+					<a href="#"> Contact </a>
+				</div>
+				<div class="col-xs-4">
+					<a href="#"> Aide </a>
+				</div>
+				<div class="col-xs-4">
+					<a href="https://github.com/rdash/rdash-angular/README.md" target="_blank"> Infos </a>
+				</div>
+			</div>
+		</div>
+		<!-- End Sidebar -->
+
+		<div id="content-wrapper">
+			<div class="page-content">
+
+				<!-- Header Bar -->
+				<div class="row header">
+					<div class="col-xs-12">
+						<div class="user pull-right">
+							<div class="item dropdown">
+								<a href="#" class="dropdown-toggle"> <img src="../img/avatar.jpg">
+								</a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li class="dropdown-header">Yann Cahuzac</li>
+									<li class="divider"></li>
+									<li class="link"><a href="#"> Profil </a></li>
+									<li class="link"><a href="#"> Commentaires postés </a></li>
+									<li class="divider"></li>
+									<li class="link"><a href="#"> Connexion </a></li>
+								</ul>
+							</div>
+							<div class="item dropdown">
+								<a href="#" class="dropdown-toggle"> <i class="fa fa-bell-o"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li class="dropdown-header">Notifications</li>
+									<li class="divider"></li>
+									<li><a href="#">Site en chantier</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="meta">
+							<div class="page">Forum d'aide au bricolage</div>
+							<div class="breadcrumb-links">Entre particuliers</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Header Bar -->
+
+				<!-- Main Content -->
+				<div ui-view></div>
+
+			</div>
+			<!-- End Page Content -->
+		</div>
+		<!-- End Content Wrapper -->
+	</div>
+	<!-- End Page Wrapper -->
+</body>
+</html>
