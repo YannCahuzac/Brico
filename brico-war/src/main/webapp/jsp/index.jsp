@@ -1,7 +1,7 @@
 <html>
 <body>
 	<%
-		response.sendRedirect("/brico-war/dist/templates/index.html");
+		response.sendRedirect("/brico-war/script/templates/index.html");
 	%>
 </body>
 </html>

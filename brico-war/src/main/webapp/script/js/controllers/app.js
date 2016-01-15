@@ -1,7 +1,7 @@
 'use strict';
 
 var App = angular.module('bricoAngular', [ 'ui.router', 'ui.bootstrap',
-		'ngCookies' ]);
+		'ngCookies', 'ui.select2' ]);
 
 App.config(function($stateProvider, $urlRouterProvider) {
 
@@ -9,20 +9,12 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		url : '/',
 		templateUrl : '../templates/home.html',
 		controller : 'homeCtrl'
+	}).state('newSub', {
+		url : '/newSub',
+		templateUrl : '../templates/newSub.html',
+		controller : 'newSubCtrl'
 	});
 
 	$urlRouterProvider.otherwise('/');
-
-	// Application routes
-	// $stateProvider
-	// .state('index', {
-	// url: '/',
-	// templateUrl: 'templates/dashboard.html'
-	// })
-	// .state('tables', {
-	// url: '/tables',
-	// templateUrl: 'templates/tables.html'
-	// });
-	// }
 
 });

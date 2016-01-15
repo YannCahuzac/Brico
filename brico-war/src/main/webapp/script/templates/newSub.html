@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		<rd-widget> <rd-widget-body>
+		<div class="widget-icon blue pull-left">
+			<i class="fa fa-tag"></i>
+		</div>
+		<div class="title">Nouveau Sujet</div>
+		<div class="comment">Ici vous pouvez cr&eacute;er un nouveau sujet et vous faire aider par la communaut&eacute; pour r&eacute;soudre votre probl&egrave;me.</div>
+		</rd-widget-body> </rd-widget>
+	</div>
+</div>
+
+<br>
+
+<form ng-submit="submitNewSub()">
+	<div class="row">
+		
+		<div class="row ng-scope">
+			<div class="col-lg-3 col-md-6 col-xs-12">
+				<label for="choixTheme">Choix du th&egrave;me</label><br />
+				<select class="longSelect" ng-model="selectedTheme" ui-select2 id="choixTheme">
+			          <option ng-repeat="theme in themes" value="{{theme.id}}">{{theme.tag}}</option>
+				</select>
+				<p class="help-block">
+					<small>Veuillez indiquer le th&egrave;me de votre requ&ecirc;te.</small>
+				</p>
+			</div>
+		</div>	
+		
+		<div class="row ng-scope">
+			<div class="col-lg-3 col-md-6 col-xs-12">
+				<div class="form-group">
+						<label for="requete">Description de votre requ&ecirc;te</label><br /> 
+					  	<textarea ng-model="demande" class="form-control" rows="5" id="requete" maxlength="200"></textarea>
+				</div>
+				<p class="help-block">
+					<small>Veuillez d&eacute;crire votre requ&ecirc;te (200 mots maximum).</small>
+				</p>
+			</div>
+		</div>
+			
+		<div class="row ng-scope">
+			<div class="col-lg-3 col-md-6 col-xs-12">
+				<button class="btn btn-sm btn-default droite">Valider</button>
+			</div>
+		</div>
+			
+	</div>
+</form>

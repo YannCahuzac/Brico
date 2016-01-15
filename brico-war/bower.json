@@ -1,17 +1,19 @@
 {
   "name": "ig",
   "version": "1.0.0",
-  "description": "Dépendances JS.",
+  "description": "Dependances JS. ~1.2.21  ",
   "dependencies":{
 	"rdash-ui": "1.0.*",
-	"angular": "~1.2.21",
+	"angular": ">=1.2.0",
 	"angular-cookies": "~1.2.21",
 	"angular-bootstrap": "~0.11.0",
 	"angular-ui-router": "^0.2.10",
 	"bootstrap": "~3.2.0",
 	"jquery":"~2.2.0",
 	"restangular":"~1.3.1",
-	"font-awesome": "~4.1.0"
+	"font-awesome": "~4.1.0",
+	"select2": "3.4.8",
+	"angular-ui-select2": "~0.0.5"
   },
   "devDependencies": {
   },
