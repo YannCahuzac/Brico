@@ -1,0 +1,16 @@
+//Fonctions Utiles:
+
+App.factory('utilSrv', [
+    function() {
+		return {
+			alertIt : function(type, msg) {
+				var tab = [];
+				tab.push(
+					{
+						type: type,
+						msg: msg
+					});
+				return tab;
+			}
+		};
+}]);
