@@ -11,6 +11,10 @@ App.factory('utilSrv', [
 						msg: msg
 					});
 				return tab;
+			},
+			closeIt : function(tab, index){
+				tab.splice(index, 1);
+				console.log('closeIt');
 			}
 		};
 }]);

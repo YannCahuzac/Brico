@@ -7,9 +7,8 @@ App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv',
 			$scope.demande = '';
 			
 			$scope.alerts = [];
-		    $scope.closeAlert = function(index) {
-		    	// On ne met pas cette function dans le utilSrv car les services ne prennent pas les scopes..
-		        $scope.alerts.splice(index, 1);
+		    $scope.closeIt = function(index) {
+		        utilSrv.closeIt($scope.alerts, index);
 		    };
 			
 			$scope.themes = [
