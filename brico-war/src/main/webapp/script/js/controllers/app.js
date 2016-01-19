@@ -13,6 +13,10 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		url : '/newSub',
 		templateUrl : '../templates/newSub.html',
 		controller : 'newSubCtrl'
+	}).state('auth', {
+		url : '/auth',
+		// controller : 'authCtrl',
+		templateUrl : '../templates/login.html'
 	});
 
 	$urlRouterProvider.otherwise('/');

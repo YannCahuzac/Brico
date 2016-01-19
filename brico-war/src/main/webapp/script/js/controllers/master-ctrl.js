@@ -3,9 +3,9 @@
  */
 
 angular.module('bricoAngular')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore) {
+function MasterCtrl($scope, $cookieStore, authSrv, $rootScope) {
     /**
      * Sidebar Toggle & Cookie Control
      */
@@ -36,4 +36,26 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() {
         $scope.$apply();
     };
+    
+    /*********************** Connexion *************************/
+    
+	$scope.mail;
+	$scope.psw;
+	
+	$scope.showModal = false;
+	$scope.toggleModal = function() {
+		$scope.showModal = !$scope.showModal;
+	};
+
+	
+	
+	$scope.login = function(){
+		$rootScope.user = authSrv.getUser($scope.mail, $scope.psw);
+		console.log($scope.mail);
+		console.log($scope.psw);
+		console.log($rootScope.user);
+	}
+    
+	/********************* Fin Connexion ***********************/
+    
 }
