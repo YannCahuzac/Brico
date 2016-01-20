@@ -12,7 +12,9 @@ App.directive('modal', function() {
 								+ '<div class="modal-body" ng-transclude></div>'
 								+ '</div>' + '</div>' + '</div>',
 						restrict : 'E',
+						// L'option transclude lui indique de prendre le contenu de l’élément pour l’insérer dans de la balise de son template qui intègre la directive ng-transclude:
 						transclude : true,
+						// L’option replace indique à la directive de remplacer l’élément sur lequel elle est placée par son template:
 						replace : true,
 						scope : true,
 						link : function postLink(scope, element, attrs) {

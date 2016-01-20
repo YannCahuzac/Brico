@@ -38,7 +38,6 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope) {
     };
     
     /*********************** Connexion *************************/
-    
 	$scope.mail;
 	$scope.psw;
 	
@@ -46,16 +45,18 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope) {
 	$scope.toggleModal = function() {
 		$scope.showModal = !$scope.showModal;
 	};
-
-	
 	
 	$scope.login = function(){
 		$rootScope.user = authSrv.getUser($scope.mail, $scope.psw);
 		console.log($scope.mail);
 		console.log($scope.psw);
 		console.log($rootScope.user);
+		$scope.showModal = false;
 	}
-    
+	
+	$scope.logout = function(){
+		$rootScope.user = null;
+		$scope.showModal = false;
+	}
 	/********************* Fin Connexion ***********************/
-    
 }

@@ -53,7 +53,7 @@
 				<ul class="sidebar">
 					<li class="sidebar-main"><a ng-click="toggleSidebar()"> Tableau de bord <span class="menu-icon glyphicon glyphicon-transfer"></span></a></li>
 					<li class="sidebar-title"><span>VIE DU FORUM</span></li>
-					<li class="sidebar-list"><a href="#/newSub">Nouveau Sujet <span class="menu-icon fa"></span></a></li>
+					<li class="sidebar-list"><a href="#/newSub">Nouveau Sujet <span class="menu-icon fa fa-plus-square"></span></a></li>
 					<li class="sidebar-title"><span>NAVIGATION</span></li>
 					<li class="sidebar-list"><a href="#/1">Plomberie <span class="menu-icon fa fa-tint"></span></a></li>
 					<li class="sidebar-list"><a href="#/2">Menuiserie <span class="menu-icon fa fa-sun-o"></span></a></li>
@@ -82,43 +82,58 @@
 					<div class="row header">
 						<div class="col-xs-12">
 							<div class="user pull-right">
+								<!-- Connexion -->
 								<div class="item dropdown">
-									<a href="#" class="dropdown-toggle green" ng-click="toggleModal()"> <i class="fa fa-sign-in"></i>
+									<a href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-in connexion"></i>
 									</a>
-									<!-- Modal de connexion -->
-									<modal title="Veuillez renseigner vos identifiants" visible="showModal">
-										<form role="form" ng-submit="login()">
-											<div class="form-group">
-												<label for="email">Adresse mail</label> <input type="email" class="form-control" id="email" placeholder="Email" ng-model="mail" />
-											</div>
-											<div class="form-group">
-												<label for="password">Mot de passe</label> <input type="password" class="form-control" id="password" placeholder="Mot de passe" ng-model="psw" />
-											</div>
-											<button type="submit" class="btn btn-default">Connexion</button>
-										</form>
-									</modal>
-									<!-- Fin modal de connexion -->
+									<!-- Login -->
+									<span ng-show="!user">
+										<modal title="Veuillez renseigner vos identifiants" visible="showModal">
+											<form role="form" ng-submit="login()">
+												<div class="form-group">
+													<label for="email">Adresse mail</label> <input type="email" required class="form-control" id="email" placeholder="Email" ng-model="$parent.mail" />
+												</div>
+												<div class="form-group">
+													<label for="password">Mot de passe</label> <input type="password" required class="form-control" id="password" placeholder="Mot de passe" ng-model="$parent.psw" />
+												</div>
+												<button type="submit" class="btn btn-default" id="submitConnexionButton">Connexion</button>
+											</form>
+										</modal>
+									</span>
+									<!-- Fin Login -->
+									<!-- Logout -->
+									<span ng-show="user">
+										<modal title="Voulez-vous vraiment vous déconnecter ?" visible="showModal">
+											<form role="form" ng-submit="logout()">
+												<button type="submit" class="btn btn-default" id="submitConnexionButton">Oui</button>
+												<button type="button" class="btn btn-default" id="nonLogoutButton" ng-click="toggleModal()">Non</button>
+											</form>
+										</modal>
+									</span>
+									<!-- Fin Logout -->
 								</div>
+								<!-- Fin Connexion -->
+								<!-- User -->
 								<div class="item dropdown">
-									<a href="#" class="dropdown-toggle"> <img src="../img/avatar.jpg">
+									<!-- <a href="#" class="dropdown-toggle"> <img src="../img/avatar.jpg"> -->
+									<a href="#" class="dropdown-toggle"> <i class="fa fa-user"></i>
 									</a>
 									<ul class="dropdown-menu dropdown-menu-right">
-										<li class="dropdown-header">Yann Cahuzac</li>
+										<li class="dropdown-header" ng-show="user"><label class="header-user">Bienvenue {{user.surname}} !</label></li>
+										<li class="dropdown-header" ng-show="!user"><label class="header-user">Vous n'êtes pas connecté..</label></li>
 										<li class="divider"></li>
 										<li class="link"><a href="#"> Profil </a></li>
 										<li class="link"><a href="#"> Commentaires postés </a></li>
 										<li class="divider"></li>
 									</ul>
 								</div>
-								<div class="item dropdown">
-									<a href="#" class="dropdown-toggle"> <i class="fa fa-bell-o"></i>
+								<!-- Fin User -->
+								<!-- Home -->
+								<div class="item">
+									<a href="#/" class="dropdown-toggle"> <i class="fa fa-home"></i>
 									</a>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li class="dropdown-header">Notifications</li>
-										<li class="divider"></li>
-										<li><a href="#">Site en chantier</a></li>
-									</ul>
 								</div>
+								<!-- Fin Home -->
 							</div>
 							<div class="meta">
 								<div class="page">La Bonne Aide!</div>

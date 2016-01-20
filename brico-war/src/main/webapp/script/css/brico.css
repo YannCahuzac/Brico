@@ -11,3 +11,13 @@
 .droite {
 	float: right;
 }
+
+.connexion {
+	color: red;
+	text-shadow: 1px 1px 1px #ccc;
+}
+
+.header-user{
+	    font-size: 14px;
+		padding-top: 8px;
+}
