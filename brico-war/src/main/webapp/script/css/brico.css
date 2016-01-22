@@ -13,11 +13,14 @@
 }
 
 .connexion {
-	color: red;
+	color: #a94442;
+}
+
+.iconShadow {
 	text-shadow: 1px 1px 1px #ccc;
 }
 
-.header-user{
-	    font-size: 14px;
-		padding-top: 8px;
+.header-user {
+	font-size: 14px;
+	padding-top: 8px;
 }

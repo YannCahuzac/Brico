@@ -15,8 +15,11 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		controller : 'newSubCtrl'
 	}).state('auth', {
 		url : '/auth',
-		// controller : 'authCtrl',
 		templateUrl : '../templates/login.html'
+	}).state('theme', {
+		url : '/theme/:themeId',
+		templateUrl : '../templates/theme.html',
+		controller : 'themeCtrl'
 	});
 
 	$urlRouterProvider.otherwise('/');

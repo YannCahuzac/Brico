@@ -10,15 +10,7 @@ App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv',
 		    $scope.closeIt = function(index) {
 		        utilSrv.closeIt($scope.alerts, index);
 		    };
-			
-			$scope.themes = [
-	           {id:174567,tag:'Plomberie'},
-	           {id:256,tag:'Menuiserie'},
-	           {id:378,tag:'\u00c9lectricit\u00e9'},
-	           {id:478,tag:'Jardinage'},
-	           {id:5785,tag:'Ma\u00e7onnerie'}
-	         ];
-			
+						
 			$scope.submitNewSub = function(){
 				if($scope.demande === '' || $('select option:selected').val() === '' || $('select option:selected').val() === undefined){
 					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez s\u00e9lectionner un th\u00e8me et d\u00e9crire votre requ\u00eate pour valider le formulaire.');

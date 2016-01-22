@@ -20,6 +20,7 @@
 	<bean id="theme" class="fr.yca.brico.services.Theme" />
 
 	<bean id="bricoCtrl" class="fr.yca.brico.controller.BricoCtrl" />
+	<bean id="themeCtrl" class="fr.yca.brico.controller.ThemeCtrl" />
 
 	<bean id="myUserDetailsService" class="fr.yca.brico.security.MyUserDetailsService" />
 

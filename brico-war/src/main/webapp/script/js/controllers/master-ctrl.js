@@ -1,14 +1,17 @@
-/**
- * Master Controller
- */
+'use strict';
 
 angular.module('bricoAngular')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, authSrv, $rootScope) {
-    /**
-     * Sidebar Toggle & Cookie Control
-     */
+function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv) {
+
+	// Gestion des erreurs: 
+	$scope.alerts = [];
+    $scope.closeIt = function(index) {
+        utilSrv.closeIt($scope.alerts, index);
+    };
+	
+    /************ Sidebar Toggle & Cookie Control **************/
     var mobileView = 992;
 
     $scope.getWidth = function() {
@@ -36,6 +39,7 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope) {
     window.onresize = function() {
         $scope.$apply();
     };
+    /********** Fin Sidebar Toggle & Cookie Control ************/
     
     /*********************** Connexion *************************/
 	$scope.mail;
@@ -48,8 +52,6 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope) {
 	
 	$scope.login = function(){
 		$rootScope.user = authSrv.getUser($scope.mail, $scope.psw);
-		console.log($scope.mail);
-		console.log($scope.psw);
 		console.log($rootScope.user);
 		$scope.showModal = false;
 	}
@@ -59,4 +61,20 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope) {
 		$scope.showModal = false;
 	}
 	/********************* Fin Connexion ***********************/
+
+	/*********************** Get Themes ************************/
+	
+	$rootScope.themes = [];
+	
+	// Retourne tous les themes de l'application:
+	$scope.getThemes = function() {
+		themesSrv.getThemes().then(function(d) {
+			$rootScope.themes = d;
+		}, function(errResponse) {
+			$scope.alerts = utilSrv.alertIt('danger', errResponse.statusText);
+		});
+	};
+	
+	$scope.getThemes();
+	/*********************** Fin Themes ************************/
 }

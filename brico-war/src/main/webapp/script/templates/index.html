@@ -36,6 +36,7 @@
 		<script src="/brico-war/script/js/controllers/master-ctrl.js"></script>
 		<script src="/brico-war/script/js/controllers/homeCtrl.js"></script>
 		<script src="/brico-war/script/js/controllers/newSubCtrl.js"></script>
+		<script src="/brico-war/script/js/controllers/themeCtrl.js"></script>
 
 		<script src="/brico-war/script/js/directives/widget.js"></script>
 		<script src="/brico-war/script/js/directives/widget-body.js"></script>
@@ -54,12 +55,10 @@
 					<li class="sidebar-main"><a ng-click="toggleSidebar()"> Tableau de bord <span class="menu-icon glyphicon glyphicon-transfer"></span></a></li>
 					<li class="sidebar-title"><span>VIE DU FORUM</span></li>
 					<li class="sidebar-list"><a href="#/newSub">Nouveau Sujet <span class="menu-icon fa fa-plus-square"></span></a></li>
-					<li class="sidebar-title"><span>NAVIGATION</span></li>
-					<li class="sidebar-list"><a href="#/1">Plomberie <span class="menu-icon fa fa-tint"></span></a></li>
-					<li class="sidebar-list"><a href="#/2">Menuiserie <span class="menu-icon fa fa-sun-o"></span></a></li>
-					<li class="sidebar-list"><a href="#/3">Électricité <span class="menu-icon fa fa-bolt"></span></a></li>
-					<li class="sidebar-list"><a href="#/4">Jardinage <span class="menu-icon fa fa-leaf"></span></a></li>
-					<li class="sidebar-list"><a href="#/5">Maçonnerie <span class="menu-icon fa fa-wrench"></span></a></li>
+					<li class="sidebar-title"><span>VOIR LES POSTS</span></li>					
+					<li class="sidebar-list" ng-repeat="theme in themes" ng-bind-html-unsafe="theme.id1" >
+						<a href="#/theme/{{theme.id1}}">{{theme.lib1}} <span class="menu-icon fa {{theme.libcss1}}"></span></a>
+					</li>
 				</ul>
 				<div class="sidebar-footer">
 					<div class="col-xs-4">
@@ -84,7 +83,7 @@
 							<div class="user pull-right">
 								<!-- Connexion -->
 								<div class="item dropdown">
-									<a href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-in connexion"></i>
+									<a href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-in connexion iconShadow"></i>
 									</a>
 									<!-- Login -->
 									<span ng-show="!user">
@@ -116,21 +115,21 @@
 								<!-- User -->
 								<div class="item dropdown">
 									<!-- <a href="#" class="dropdown-toggle"> <img src="../img/avatar.jpg"> -->
-									<a href="#" class="dropdown-toggle"> <i class="fa fa-user"></i>
+									<a href="#" class="dropdown-toggle"> <i class="fa fa-user iconShadow"></i>
 									</a>
 									<ul class="dropdown-menu dropdown-menu-right">
 										<li class="dropdown-header" ng-show="user"><label class="header-user">Bienvenue {{user.surname}} !</label></li>
 										<li class="dropdown-header" ng-show="!user"><label class="header-user">Vous n'êtes pas connecté..</label></li>
-										<li class="divider"></li>
-										<li class="link"><a href="#"> Profil </a></li>
-										<li class="link"><a href="#"> Commentaires postés </a></li>
-										<li class="divider"></li>
+										<li class="divider" ng-show="user"></li>
+										<li class="link" ng-show="user"><a href="#"> Profil </a></li>
+										<li class="link" ng-show="user"><a href="#"> Commentaires postés </a></li>
+										<li class="divider" ng-show="user"></li>
 									</ul>
 								</div>
 								<!-- Fin User -->
 								<!-- Home -->
 								<div class="item">
-									<a href="#/" class="dropdown-toggle"> <i class="fa fa-home"></i>
+									<a href="#/" class="dropdown-toggle"> <i class="fa fa-home iconShadow"></i>
 									</a>
 								</div>
 								<!-- Fin Home -->
@@ -144,7 +143,16 @@
 					<!-- End Header Bar -->
 	
 					<!-- Main Content -->
-					<div ui-view class="corps"></div>
+					<div ui-view class="corps" ng-show="themes"></div>
+
+					<!-- TODO Voir place erreurs pour ce Ctrl -->
+					<div class="corps row">
+						<div class="col-md-6 col-xs-12">
+							<div class="alerts-container" data-ng-show="alerts.length">
+								<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeIt($index)">{{alert.msg}}</alert>
+							</div>
+						</div>
+					</div>
 	
 				</div>
 				<!-- End Page Content -->
