@@ -8,15 +8,18 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     less = require('gulp-less'),
     rename = require('gulp-rename'),
+    prism = require('connect-prism');
     minifyHTML = require('gulp-minify-html');
 
 var paths = {
-    scripts: 'src/js/**/*.*',
-    styles: 'src/less/**/*.*',
-    images: 'src/img/**/*.*',
-    templates: 'src/templates/**/*.html',
-    index: 'src/index.html',
-    bower_fonts: 'src/components/**/*.{ttf,woff,eof,svg}',
+    scripts: 'src/main/webapp/script/js/**/*.*',
+    styles: 'src/main/webapp/script/css/**/*.*',
+    images: 'src/main/webapp/script/img/**/*.*',
+    templates: 'src/main/webapp/script/templates/**/*.html',
+    index: '/webapp/src/main/webapp/script/templates/index.html',
+    bower_fonts: 'src/main/webapp/bower_components/**/*.{ttf,woff,eof,svg}',
+    dist: 'src/main/webapp/dist/',
+    webapproot:'src/main/webapp',
 };
 
 /**
@@ -28,7 +31,7 @@ gulp.task('usemin', function() {
             js: [minifyJs(), 'concat'],
             css: [minifyCss({keepSpecialComments: 0}), 'concat'],
         }))
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest(paths.dist));
 });
 
 /**
@@ -41,7 +44,7 @@ gulp.task('copy-bower_fonts', function() {
         .pipe(rename({
             dirname: '/fonts'
         }))
-        .pipe(gulp.dest('dist/lib'));
+        .pipe(gulp.dest(paths.dist + 'lib'));
 });
 
 /**
@@ -51,30 +54,31 @@ gulp.task('build-custom', ['custom-images', 'custom-js', 'custom-less', 'custom-
 
 gulp.task('custom-images', function() {
     return gulp.src(paths.images)
-        .pipe(gulp.dest('dist/img'));
+        .pipe(gulp.dest(paths.dist + 'img'));
 });
 
 gulp.task('custom-js', function() {
     return gulp.src(paths.scripts)
         .pipe(minifyJs())
         .pipe(concat('dashboard.min.js'))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest(paths.dist + 'js'));
 });
 
 gulp.task('custom-less', function() {
     return gulp.src(paths.styles)
-        .pipe(less())
-        .pipe(gulp.dest('dist/css'));
+    	// Pb sur less(), voir les versions dans le package.json
+        // .pipe(less())
+        .pipe(gulp.dest(paths.dist + 'css'));
 });
 
 gulp.task('custom-templates', function() {
     return gulp.src(paths.templates)
         .pipe(minifyHTML())
-        .pipe(gulp.dest('dist/templates'));
+        .pipe(gulp.dest(paths.dist + 'templates'));
 });
 
 /**
- * Watch custom files
+ * Watch les modification sur chaque dossier décrit ci-dessous:
  */
 gulp.task('watch', function() {
     gulp.watch([paths.images], ['custom-images']);
@@ -84,25 +88,55 @@ gulp.task('watch', function() {
     gulp.watch([paths.index], ['usemin']);
 });
 
-/**
- * Live reload server
- */
+// TODO Faire fonctionner:
 gulp.task('webserver', function() {
     connect.server({
-        root: 'dist',
+        root: paths.webapproot,
         livereload: true,
         port: 8888
     });
 });
 
+// TODO Faire fonctionner:
 gulp.task('livereload', function() {
-    gulp.src(['dist/**/*.*'])
+    gulp.src([paths.webapproot + '**/*.*'])
         .pipe(watch())
         .pipe(connect.reload());
 });
 
 /**
- * Gulp tasks
+ * Créé le proxy qui se fait passer pour un serveur static qui pointe vers les page HTML/CSS/JS.. 
  */
+gulp.task('connect-dev', ['watch'], function() {
+    connect.server({
+        port:8000,
+        livereload: true,
+        middleware: function(connect, opt) {
+            return [
+                prism.middleware,
+                connect().use('/brico-war', connect.static(paths.webapproot))
+            ];
+        }
+    });
+});
+
+/**
+ * Créé le proxy qui va chercher les services Json sur le vrai serveur d'application: 
+ */
+function prismInit(prismMode) {
+    prism.create({
+        name: 'server',
+        mode: prismMode,
+        context: '/brico-war/action',
+        mocksPath: './mocks',
+        host: 'localhost',
+        port: 8080,
+        delay: 300
+    });
+}
+
+gulp.task('default', ['webserver', 'livereload', 'watch']);
 gulp.task('build', ['usemin', 'build-assets', 'build-custom']);
-gulp.task('default', ['build', 'webserver', 'livereload', 'watch']);
+gulp.task('proxy', ['connect-dev'], function() {
+    prismInit('proxy');
+});
