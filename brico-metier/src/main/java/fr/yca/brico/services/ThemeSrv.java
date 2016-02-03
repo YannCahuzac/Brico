@@ -5,13 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import fr.yca.brico.utils.JsonFLux;
 
-public class Theme {
+public class ThemeSrv {
+
+	final static Logger logger = Logger.getLogger(ThemeSrv.class.getName());
 
 	private Map<Integer, JsonFLux> themesMap = null;
 
-	public Theme() {
+	public ThemeSrv() {
 		super();
 		themesMap = new HashMap<Integer, JsonFLux>();
 		themesMap.put(1, new JsonFLux(1, "Plomberie", "fa-tint"));

@@ -6,21 +6,21 @@ import javax.persistence.Persistence;
 
 import org.apache.log4j.Logger;
 
-public class PU {
+public class MyPU {
 
-	final static Logger logger = Logger.getLogger(PU.class.getName());
+	final static Logger logger = Logger.getLogger(MyPU.class.getName());
 
 	public EntityManagerFactory emf;
 	public EntityManager em;
-	private static PU INSTANCE = new PU();
+	private static MyPU INSTANCE = new MyPU();
 
-	private PU() {
+	private MyPU() {
 		super();
 		emf = Persistence.createEntityManagerFactory("PU");
 		em = emf.createEntityManager();
 	}
 
-	public static PU getInstance() {
+	public static MyPU getInstance() {
 		return INSTANCE;
 	}
 }

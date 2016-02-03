@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<!-- <context:property-placeholder location="classpath:tech/tech.properties" /> -->
 
@@ -17,11 +22,43 @@
 		</property>
 	</bean>
 
-	<bean id="theme" class="fr.yca.brico.services.Theme" />
+	<bean id="commentaire" class="fr.yca.brico.bean.Commentaire" />
+	<bean id="utilisateur" class="fr.yca.brico.bean.Utilisateur" />
+
+	<bean id="themeSrv" class="fr.yca.brico.services.ThemeSrv" />
+	<bean id="commentaireSrv" class="fr.yca.brico.services.CommentaireSrv" />
+	<bean id="utilisateurSrv" class="fr.yca.brico.services.UtilisateurSrv" />
 
 	<bean id="bricoCtrl" class="fr.yca.brico.controller.BricoCtrl" />
 	<bean id="themeCtrl" class="fr.yca.brico.controller.ThemeCtrl" />
+	<bean id="commentaireCtrl" class="fr.yca.brico.controller.CommentaireCtrl" />
+	<bean id="utilisateurCtrl" class="fr.yca.brico.controller.UtilisateurCtrl" />
 
 	<bean id="myUserDetailsService" class="fr.yca.brico.security.MyUserDetailsService" />
+
+	<!-- <bean id="myPU" class="fr.yca.brico.em.MyPU" /> -->
+
+	<!-- ******************** PERSISTENCE ******************** -->
+
+	<!-- Datasource référentiel -->
+	<bean id="dataSourceReferentiel" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/MaBaseDeTest" />
+	</bean>
+
+	<!-- Beans JPA pointant sur la datasource métier -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSourceReferentiel" />
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- Doit être défini dans le même context que les bean avec @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<context:spring-configured />
+	<context:annotation-config />
 
 </beans>

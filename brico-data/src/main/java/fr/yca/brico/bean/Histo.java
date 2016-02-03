@@ -10,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Si le default schema n'est pas défini dans le persistence, le rajouter dans
- * entity et table ci-dessous.
+ * @Entity est le nom que va utiliser notre em pour que c'est cette classe qu'il faut transactionner. Si le
+ * Si default schema n'est pas défini dans le persistence, le rajouter dans @table ci-dessous.
  */
-@Entity(name = "SMABTP_HISTOPPE")
-@Table(name = "SMABTP_HISTOPPE")
+@Entity(name = "Histo")
+@Table(name = "KV01.SMABTP_HISTOPPE")
 public class Histo implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -83,8 +83,7 @@ public class Histo implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "\n\nPk: " + getPk() + "\nNomUp: " + getNomUp() + "\nPrenomUp: "
-				+ getPrenomUp() + "\nClDateHisto: " + getClDateHisto() + "\n";
+		return "\n\nPk: " + getPk() + "\nNomUp: " + getNomUp() + "\nPrenomUp: " + getPrenomUp() + "\nClDateHisto: " + getClDateHisto() + "\n";
 	}
 
 }
