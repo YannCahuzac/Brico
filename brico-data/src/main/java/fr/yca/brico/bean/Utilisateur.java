@@ -16,6 +16,10 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * @Entity est le nom que va utiliser notre em pour que ce soit cette classe qu'il transactionne. 
+ * Si default schema n'est pas défini dans le persistence, le rajouter dans @table ci-dessous.
+ */
 @Entity(name = "Utilisateur")
 @Table(name = "KV01.UTILISATEUR")
 @NamedQueries({ @NamedQuery(name = "findByLib", query = "SELECT t FROM Utilisateur t WHERE t.pseudo = :username") })

@@ -10,9 +10,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fr.yca.brico.bean.Histo;
-import fr.yca.brico.em.MyPU;
-
 public class BricoTest {
 
 	final static Logger logger = Logger.getLogger(BricoTest.class.getName());
@@ -40,7 +37,6 @@ public class BricoTest {
 	@Ignore
 	public void testCreateQuery() {
 		try {
-			MyPU.getInstance().em.find(Histo.class, 3841);
 			em.createQuery("select t from Utilisateur t").getResultList();
 		} catch (Exception e) {
 			logger.error(e);

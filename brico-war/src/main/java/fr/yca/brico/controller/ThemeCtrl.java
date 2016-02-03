@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import fr.yca.brico.services.ThemeSrv;
-import fr.yca.brico.services.UtilisateurSrv;
 import fr.yca.brico.utils.JsonFLux;
 
 //Permet de ne pas avoir l'erreur 406 sur format manquant = application/json: 
@@ -29,9 +28,6 @@ public class ThemeCtrl {
 	@Autowired
 	ThemeSrv themeSrv;
 
-	@Autowired
-	UtilisateurSrv utilisateurSrv;
-
 	/**
 	 * Return tous les thèmes de l'application.
 	 */
@@ -39,11 +35,6 @@ public class ThemeCtrl {
 	@RequestMapping(value = "getThemes", method = RequestMethod.GET)
 	public ResponseEntity<List<JsonFLux>> getThemes(HttpServletRequest request) {
 		List<JsonFLux> themes = themeSrv.getThemes();
-
-		/******** Test ********/
-		utilisateurSrv.getUserRole("test");
-		/**********************/
-
 		return new ResponseEntity<List<JsonFLux>>(themes, HttpStatus.OK);
 	}
 
