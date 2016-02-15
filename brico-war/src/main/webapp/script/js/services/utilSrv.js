@@ -14,9 +14,8 @@ App.factory('utilSrv', [
 					});
 				return tab;
 			},
-			closeIt : function(tab, index){
+			closeAlert : function(tab, index){
 				tab.splice(index, 1);
-				console.log('closeIt');
 			}
 		};
 }]);

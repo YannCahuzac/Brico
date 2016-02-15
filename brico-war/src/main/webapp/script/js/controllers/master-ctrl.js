@@ -7,8 +7,10 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 
 	// Gestion des erreurs: 
 	$scope.alerts = [];
-    $scope.closeIt = function(index) {
-        utilSrv.closeIt($scope.alerts, index);
+	$scope.logalerts = [];
+    $scope.closeAlert = function(index) {
+        utilSrv.closeAlert($scope.alerts, index);
+        utilSrv.closeAlert($scope.logalerts, index);
     };
 	
     /************ Sidebar Toggle & Cookie Control **************/
@@ -47,13 +49,19 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 	
 	$scope.showModal = false;
 	$scope.toggleModal = function() {
+		$scope.closeAlert();
 		$scope.showModal = !$scope.showModal;
 	};
 	
 	$scope.login = function(){
-		$rootScope.user = authSrv.getUser($scope.mail, $scope.psw);
-		console.log($rootScope.user);
-		$scope.showModal = false;
+		authSrv.getUser($scope.mail, $scope.psw).then(function(d) {
+			$rootScope.user = d;
+			$scope.closeAlert();
+			$scope.showModal = false;
+		}, function(errResponse) {
+			$scope.logalerts = utilSrv.alertIt('danger', 'Echec de l\'authentification: mauvais login ou mot de passe.');
+			$scope.showModal = true;
+		});
 	}
 	
 	$scope.logout = function(){

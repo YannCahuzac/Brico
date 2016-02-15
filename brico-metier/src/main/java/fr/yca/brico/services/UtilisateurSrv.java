@@ -1,6 +1,7 @@
 package fr.yca.brico.services;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.yca.brico.bean.Utilisateur;
+import fr.yca.brico.dao.UtilisateurDao;
 
 /**
  * @Component | generic stereotype for any Spring-managed component
@@ -32,6 +34,25 @@ public class UtilisateurSrv {
 
 	public UtilisateurSrv() {
 		super();
+	}
+
+	/**
+	 * Recupere et retourne l'utilisateur en base avec ses identifiants.
+	 */
+	public UtilisateurDao getUserByMailAndPsw(String mail, String psw) {
+		UtilisateurDao userDao = null;
+		try {
+			Utilisateur user = entityManager.createQuery("select t from Utilisateur t where t.mail = :mail and t.password = :psw", Utilisateur.class).setParameter("mail", mail)
+					.setParameter("psw", psw).getSingleResult();
+			if (user != null) {
+				userDao = new UtilisateurDao(user);
+			}
+		} catch (NoResultException nre) {
+			logger.info("Aucun utilisateur trouve.");
+		} catch (Exception e) {
+			logger.info("Exception lors de la recherche d'utilisateur: " + e.getMessage());
+		}
+		return userDao;
 	}
 
 	/************************** SPRING SECURITY **************************/

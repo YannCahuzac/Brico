@@ -7,8 +7,8 @@ App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv',
 			$scope.demande = '';
 			
 			$scope.alerts = [];
-		    $scope.closeIt = function(index) {
-		        utilSrv.closeIt($scope.alerts, index);
+		    $scope.closeAlert = function(index) {
+		        utilSrv.closeAlert($scope.alerts, index);
 		    };
 						
 			$scope.submitNewSub = function(){

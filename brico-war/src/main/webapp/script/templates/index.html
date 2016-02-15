@@ -95,6 +95,10 @@
 												<div class="form-group">
 													<label for="password">Mot de passe</label> <input type="password" required class="form-control" id="password" placeholder="Mot de passe" ng-model="$parent.psw" />
 												</div>
+												<div class="alerts-container" data-ng-show="logalerts.length">
+													<alert data-ng-repeat="alert in logalerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+													</br>
+												</div>
 												<button type="submit" class="btn btn-default" id="submitConnexionButton">Connexion</button>
 											</form>
 										</modal>
@@ -118,7 +122,7 @@
 									<a href="#" class="dropdown-toggle"> <i class="fa fa-user iconShadow"></i>
 									</a>
 									<ul class="dropdown-menu dropdown-menu-right">
-										<li class="dropdown-header" ng-show="user"><label class="header-user">Bienvenue {{user.surname}} !</label></li>
+										<li class="dropdown-header" ng-show="user"><label class="header-user">Bienvenue {{user.pseudo}} !</label></li>
 										<li class="dropdown-header" ng-show="!user"><label class="header-user">Vous n'êtes pas connecté..</label></li>
 										<li class="divider" ng-show="user"></li>
 										<li class="link" ng-show="user"><a href="#"> Profil </a></li>
@@ -142,18 +146,18 @@
 					</div>
 					<!-- End Header Bar -->
 	
-					<!-- Main Content -->
-					<div ui-view class="corps" ng-show="themes"></div>
-
 					<!-- TODO Voir place erreurs pour ce Ctrl -->
 					<div class="corps row">
 						<div class="col-md-6 col-xs-12">
 							<div class="alerts-container" data-ng-show="alerts.length">
-								<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeIt($index)">{{alert.msg}}</alert>
+								<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 							</div>
 						</div>
 					</div>
-	
+
+					<!-- Main Content -->
+					<div ui-view class="corps" ng-show="themes"></div>
+
 				</div>
 				<!-- End Page Content -->
 			</div>

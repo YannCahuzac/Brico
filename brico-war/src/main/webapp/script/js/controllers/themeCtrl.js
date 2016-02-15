@@ -8,8 +8,8 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 
 			// Gestion des erreurs: 
 			$scope.alerts = [];
-		    $scope.closeIt = function(index) {
-		        utilSrv.closeIt($scope.alerts, index);
+		    $scope.closeAlert = function(index) {
+		        utilSrv.closeAlert($scope.alerts, index);
 		    };
 			
 			// Recupere le theme Id de l'URL:

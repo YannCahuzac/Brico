@@ -1,16 +1,21 @@
 'use strict';
 
-App.service('authSrv', [ '$http', '$rootScope', '$location',
-	function($http, $rootScope, $location) {
+App.service('authSrv', [ '$http', '$rootScope', '$location', '$q',
+	function($http, $rootScope, $location, $q) {
 		return {
-			getUser : function(username, psw) {
-				// return Restangular.one('contexte', token).get();
-				var user = 
-					{
-						firstname:'Cahuzac',
-						surname:'Yann'
-					}
-				return user;
+			getUser : function(mail, psw) {
+		    	return $http({
+			    		method: 'GET',
+			    		url: '/brico-war/action/getUserByMailAndPsw/mail/' + mail + '/psw/' + psw})
+			    		.then(
+			    				function(response){
+			    					console.log(response.data);
+			    					return response.data;
+			    				}, 
+			    				function(errResponse){
+			    					return $q.reject(errResponse);
+			    				}
+			    		);
 			},
 			redirectIfNotAuth : function() {
 				if (!$rootScope.user) {
