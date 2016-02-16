@@ -1,54 +1,39 @@
-package fr.yca.brico.bean;
+package fr.yca.brico.dao;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import fr.yca.brico.bean.Commentaire;
 
-@Entity(name = "Commentaire")
-@Table(name = "KV01.COMMENTAIRE")
-public class Commentaire implements java.io.Serializable {
+public class CommentaireDao {
 
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "IDCOMM")
 	private Integer idComm;
-
-	@Column(name = "DATE_CREATION")
 	private Timestamp dateCreation;
-
-	@Column(name = "IDUSER_CREATION")
 	private Integer idUserCreation;
-
-	@Column(name = "IDCOMM_REF")
 	private Integer idCommRef;
-
-	@Column(name = "THEME_ID")
 	private Integer themeId;
-
-	@Column(name = "TITLE")
 	private String title;
-
-	@Column(name = "COMM")
 	private String comm;
-
-	@Column(name = "NB_VOTES")
 	private Integer nbVotes;
-
-	@Column(name = "NOTE")
 	private Integer note;
-
-	@Column(name = "COMM_VALIDATE")
 	private Integer commValidate;
 
-	public Commentaire() {
+	public CommentaireDao() {
 		super();
+	}
+
+	public CommentaireDao(Commentaire comm) {
+		if (comm != null) {
+			setIdComm(comm.getIdComm());
+			setDateCreation(comm.getDateCreation());
+			setIdUserCreation(comm.getIdUserCreation());
+			setIdCommRef(comm.getIdCommRef());
+			setThemeId(comm.getThemeId());
+			setTitle(comm.getTitle());
+			setComm(comm.getComm());
+			setNbVotes(comm.getNbVotes());
+			setNote(comm.getNote());
+			setCommValidate(comm.getCommValidate());
+		}
 	}
 
 	public Integer getIdComm() {

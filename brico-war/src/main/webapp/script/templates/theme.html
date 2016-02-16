@@ -4,8 +4,7 @@
 		<div class="widget-icon blue pull-left">
 			<i class="fa fa-tag"></i>
 		</div>
-		<span ng-show="theme"><div class="title">{{theme.lib1}}</div></span>
-		<span ng-hide="theme"><div class="title">Aucun th&egrave;me n'a &eacute;t&eacute; trouv&eacute;</div></span>
+		<span ng-show="theme"><div class="title">{{theme.lib1}}</div></span> <span ng-hide="theme"><div class="title">Aucun th&egrave;me n'a &eacute;t&eacute; trouv&eacute;</div></span>
 		<div class="comment">Consultation des posts</div>
 		</rd-widget-body> </rd-widget>
 	</div>
@@ -18,5 +17,28 @@
 		<div class="alerts-container" data-ng-show="alerts.length">
 			<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 		</div>
+	</div>
+</div>
+
+<div class="row" data-ng-show="comms.length">
+	<div class="col-lg-6 myThemeTable">
+		<rd-widget> <rd-widget-header icon="fa-tasks" title="Posts par theme"> </rd-widget-header> <rd-widget-body classes="medium no-padding">
+
+		<table class="table table-striped" at-table at-paginated at-list="comms" at-config="config">
+			<thead>
+			</thead>
+			<tbody>
+				<tr>
+					<td at-implicit at-attribute="title" at-initial-sorting="asc"></td>
+					<!-- TODO -->
+					<td at-implicit at-attribute="commValidate">
+						<span ng-show="commValidate == 1" class="text-success"><i class="fa fa-check"></i></span>
+						<span ng-show="commValidate != 1" class="text-danger"><i class="fa fa-check"></i></span>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+		<at-pagination at-list="comms" at-config="config"></at-pagination> </rd-widget-body> </rd-widget>
 	</div>
 </div>

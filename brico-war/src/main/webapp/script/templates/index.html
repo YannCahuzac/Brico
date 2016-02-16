@@ -13,22 +13,26 @@
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/rdash-ui/dist/css/rdash.min.css">
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/select2/select2.css">
+		
 		<!-- endbuild -->
 		
 		<!-- build:js lib/js/main.min.js -->
-		<script type="text/javascript" src="/brico-war/bower_components/angular/angular.min.js"></script>
 		<script type="text/javascript" src="/brico-war/bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="/brico-war/bower_components/angular/angular.min.js"></script>
 		<script type="text/javascript" src="/brico-war/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/brico-war/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script type="text/javascript" src="/brico-war/bower_components/angular-cookies/angular-cookies.min.js"></script>
 		<script type="text/javascript" src="/brico-war/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script type="text/javascript" src="/brico-war/bower_components/select2/select2.js"></script>
 		<script type="text/javascript" src="/brico-war/bower_components/angular-ui-select2/src/select2.js"></script>
+		<script type="text/javascript" src="/brico-war/bower_components/at-table/dist/angular-table.min.js"></script>
+				
 		<!-- endbuild -->
 		
 		<!-- Custom Scripts -->
 		<script src="/brico-war/script/js/controllers/app.js"></script>
 		<!-- ATTENTION BIEN METTRE LES SERVICES AVANT LES CONTROLEURS -->
+		<script src="/brico-war/script/js/services/commSrv.js"></script>
 		<script src="/brico-war/script/js/services/utilSrv.js"></script>
 		<script src="/brico-war/script/js/services/themesSrv.js"></script>
 		<script src="/brico-war/script/js/services/authSrv.js"></script>
@@ -53,6 +57,7 @@
 			<div id="sidebar-wrapper">
 				<ul class="sidebar">
 					<li class="sidebar-main"><a ng-click="toggleSidebar()"> Tableau de bord <span class="menu-icon glyphicon glyphicon-transfer"></span></a></li>
+					<li class="sidebar-list"><a href="#/">Home <span class="menu-icon fa fa-home"></span></a></li>
 					<li class="sidebar-title"><span>VIE DU FORUM</span></li>
 					<li class="sidebar-list"><a href="#/newSub">Nouveau Sujet <span class="menu-icon fa fa-plus-square"></span></a></li>
 					<li class="sidebar-title"><span>VOIR LES POSTS</span></li>					
@@ -83,7 +88,7 @@
 							<div class="user pull-right">
 								<!-- Connexion -->
 								<div class="item dropdown">
-									<a href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-in connexion iconShadow"></i>
+									<a href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-in connexion"></i>
 									</a>
 									<!-- Login -->
 									<span ng-show="!user">
@@ -119,7 +124,7 @@
 								<!-- User -->
 								<div class="item dropdown">
 									<!-- <a href="#" class="dropdown-toggle"> <img src="../img/avatar.jpg"> -->
-									<a href="#" class="dropdown-toggle"> <i class="fa fa-user iconShadow"></i>
+									<a href="#" class="dropdown-toggle"> <i class="fa fa-user"></i>
 									</a>
 									<ul class="dropdown-menu dropdown-menu-right">
 										<li class="dropdown-header" ng-show="user"><label class="header-user">Bienvenue {{user.pseudo}} !</label></li>
@@ -131,12 +136,6 @@
 									</ul>
 								</div>
 								<!-- Fin User -->
-								<!-- Home -->
-								<div class="item">
-									<a href="#/" class="dropdown-toggle"> <i class="fa fa-home iconShadow"></i>
-									</a>
-								</div>
-								<!-- Fin Home -->
 							</div>
 							<div class="meta">
 								<div class="page">La Bonne Aide!</div>

@@ -22,7 +22,6 @@ App.factory('themesSrv', ['$http', '$q', '$rootScope', function($http, $q, $root
 		    		url: '/brico-war/action/getThemeById/' + themeId})
 		    		.then(
 		    				function(response){
-		    					console.log(response.data);
 		    					return response.data;
 		    				}, 
 		    				function(errResponse){

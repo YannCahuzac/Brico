@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import fr.yca.brico.dao.UtilisateurDao;
 import fr.yca.brico.services.UtilisateurSrv;
-import fr.yca.brico.utils.BricoException;
 
 @EnableWebMvc
 @Controller("utilisateurCtrl")
@@ -28,7 +27,7 @@ public class UtilisateurCtrl {
 
 	@ResponseBody
 	@RequestMapping(value = "getUserByMailAndPsw/mail/{mail}/psw/{psw}", method = RequestMethod.GET)
-	public ResponseEntity<UtilisateurDao> getUserByMailAndPsw(HttpServletRequest request, @PathVariable("mail") String mail, @PathVariable("psw") String psw) throws BricoException {
+	public ResponseEntity<UtilisateurDao> getUserByMailAndPsw(HttpServletRequest request, @PathVariable("mail") String mail, @PathVariable("psw") String psw) {
 		UtilisateurDao user = utilisateurSrv.getUserByMailAndPsw(mail, psw);
 		if (user == null) {
 			// TODO Voir comment retourner erreur personnalisées.

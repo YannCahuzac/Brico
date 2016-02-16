@@ -1,7 +1,7 @@
 'use strict';
 
 var App = angular.module('bricoAngular', [ 'ui.router', 'ui.bootstrap',
-		'ngCookies', 'ui.select2' ]);
+		'ngCookies', 'ui.select2', 'angular-table' ]);
 
 App.config(function($stateProvider, $urlRouterProvider) {
 

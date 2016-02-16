@@ -9,7 +9,6 @@ App.service('authSrv', [ '$http', '$rootScope', '$location', '$q',
 			    		url: '/brico-war/action/getUserByMailAndPsw/mail/' + mail + '/psw/' + psw})
 			    		.then(
 			    				function(response){
-			    					console.log(response.data);
 			    					return response.data;
 			    				}, 
 			    				function(errResponse){
