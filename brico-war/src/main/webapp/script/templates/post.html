@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		<rd-widget> <rd-widget-body>
+		<div class="widget-icon blue pull-left">
+			<i ng-hide="theme" class="fa fa-tag"></i>
+			<i ng-show="theme" class="fa {{theme.libcss1}}"></i>
+		</div>
+		<span ng-show="theme"><div class="title">{{theme.lib1}}</div></span> 
+		<span ng-hide="theme"><div class="title">Aucun post n'a &eacute;t&eacute; trouv&eacute;</div></span>
+		<div class="comment">Consultation des posts</div>
+		</rd-widget-body> </rd-widget>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		<div class="alerts-container" data-ng-show="alerts.length">
+			<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		</div>
+	</div>
+</div>
+
+<div class="row" data-ng-show="posts.length">
+	<div class="col-lg-6 myThemeTable">
+	</div>
+</div>

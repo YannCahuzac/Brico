@@ -62,4 +62,16 @@ public class PostCtrl {
 			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
 		}
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "getRecentsPosts", method = RequestMethod.GET)
+	public ResponseEntity<List<PostDao>> getRecentsPosts(HttpServletRequest request) {
+		List<PostDao> ret = postSrv.getPosts(TypeRecherche.FIND_RECENTS_POSTS, null);
+		if (ret == null || (ret != null && ret.size() == 0)) {
+			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
+		}
+	}
+
 }

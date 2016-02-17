@@ -1,5 +1,7 @@
 package fr.smabtp.yca.test;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -9,6 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import fr.yca.brico.bean.Post;
+import fr.yca.brico.utils.Constants;
 
 public class BricoTest {
 
@@ -35,9 +40,10 @@ public class BricoTest {
 
 	@Test
 	@Ignore
-	public void testCreateQuery() {
+	public void test() {
 		try {
-			em.createQuery("select t from Utilisateur t").getResultList();
+			List<Post> l = em.createQuery(Constants.findRecentsPosts, Post.class).setMaxResults(20).getResultList();
+			System.out.println(l.size());
 		} catch (Exception e) {
 			logger.error(e);
 		}

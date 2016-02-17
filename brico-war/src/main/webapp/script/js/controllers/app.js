@@ -20,6 +20,10 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		url : '/theme/:themeId',
 		templateUrl : '../templates/theme.html',
 		controller : 'themeCtrl'
+	}).state('post', {
+		url : '/post/:postId',
+		templateUrl : '../templates/post.html',
+		controller : 'postCtrl'
 	});
 
 	$urlRouterProvider.otherwise('/');

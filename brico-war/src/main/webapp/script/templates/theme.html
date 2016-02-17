@@ -31,7 +31,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td at-sortable at-attribute="title" at-title="Post" class="postThemeTable">{{item.title}}</td>
+					<td at-sortable at-attribute="title" at-title="Post" class="postThemeTable"><a href="#/post/{{item.idPost}}">{{item.title}}</a></td>
 					<td at-sortable at-attribute="dateCreation" at-title="Date de cr&eacute;ation" width="200" at-initial-sorting="desc">{{item.dateCreaS}}</td>
 					<td at-sortable at-attribute="postValidate" at-title="&Eacute;tat" width="100">
 						<span ng-show="item.postValidate == 1" class="text-success"><i class="fa fa-check"></i></span>

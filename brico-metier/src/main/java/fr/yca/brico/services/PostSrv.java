@@ -51,13 +51,22 @@ public class PostSrv {
 		try {
 			switch (typeRecherche) {
 			case FIND_POSTS_BY_ID_POST:
-				tq = entityManager.createQuery(Constants.findPostsByIdPost, Post.class).setParameter("idPostRef", idRecherche).setParameter("idPost", idRecherche);
+				if (idRecherche != null) {
+					tq = entityManager.createQuery(Constants.findPostsByIdPost, Post.class).setParameter("idPostRef", idRecherche).setParameter("idPost", idRecherche);
+				}
 				break;
 			case FIND_POSTS_BY_ID_THEME:
-				tq = entityManager.createQuery(Constants.findPostsByIdTheme, Post.class).setParameter("themeId", idRecherche);
+				if (idRecherche != null) {
+					tq = entityManager.createQuery(Constants.findPostsByIdTheme, Post.class).setParameter("themeId", idRecherche);
+				}
 				break;
 			case FIND_POSTS_BY_ID_USER:
-				tq = entityManager.createQuery(Constants.findPostsByIdUser, Post.class).setParameter("idUserCreation", idRecherche);
+				if (idRecherche != null) {
+					tq = entityManager.createQuery(Constants.findPostsByIdUser, Post.class).setParameter("idUserCreation", idRecherche);
+				}
+				break;
+			case FIND_RECENTS_POSTS:
+				tq = entityManager.createQuery(Constants.findRecentsPosts, Post.class).setMaxResults(Constants.MAX_POST_RESULT);
 				break;
 			}
 			if (tq != null) {
