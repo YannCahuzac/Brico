@@ -12,8 +12,14 @@
 	float: right;
 }
 
-.connexion {
-	color: #a94442;
+.row.header .user>.item i.connexion {
+	color: #569e3d;
+	font-size: 20px;
+}
+
+.row.header .user>.item i.deconnexion {
+	color: #EE5555;
+	font-size: 20px;
 }
 
 .iconShadow {
@@ -35,5 +41,9 @@
 
 .postThemeTable {
 	max-width: 500px;
-	overflow: hidden; 	
+	overflow: hidden;
+}
+
+.brico-header.row.header {
+	background: #f3f3f3
 }

@@ -83,13 +83,13 @@
 				<div class="page-content">
 	
 					<!-- Header Bar -->
-					<div class="row header">
+					<div class="brico-header row header">
 						<div class="col-xs-12">
 							<div class="user pull-right">
 								<!-- Connexion -->
 								<div class="item dropdown">
-									<a href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-in connexion"></i>
-									</a>
+									<a ng-show="!user" href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-in connexion"></i></a>
+									<a ng-show="user" href="#" class="dropdown-toggle" ng-click="toggleModal()"> <i class="fa fa-sign-out deconnexion"></i></a>
 									<!-- Login -->
 									<span ng-show="!user">
 										<modal title="Veuillez renseigner vos identifiants" visible="showModal">
@@ -122,7 +122,7 @@
 								</div>
 								<!-- Fin Connexion -->
 								<!-- User -->
-								<div class="item dropdown">
+								<div ng-show="user" class="item dropdown">
 									<!-- <a href="#" class="dropdown-toggle"> <img src="../img/avatar.jpg"> -->
 									<a href="#" class="dropdown-toggle"> <i class="fa fa-user"></i>
 									</a>
