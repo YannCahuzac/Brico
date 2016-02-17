@@ -19,6 +19,7 @@ public class PostDao {
 	private Integer note;
 	private Integer postValidate;
 	private String dateCreaS;
+	private String libcss1;
 
 	public PostDao() {
 		super();
@@ -80,6 +81,28 @@ public class PostDao {
 
 	public void setThemeId(Integer themeId) {
 		this.themeId = themeId;
+		if (this.themeId != null) {
+			switch (this.themeId) {
+			case 1:
+				setLibcss1(Constants.libCssTheme1);
+				break;
+			case 2:
+				setLibcss1(Constants.libCssTheme2);
+				break;
+			case 3:
+				setLibcss1(Constants.libCssTheme3);
+				break;
+			case 4:
+				setLibcss1(Constants.libCssTheme4);
+				break;
+			case 5:
+				setLibcss1(Constants.libCssTheme5);
+				break;
+			default:
+				setLibcss1(Constants.libCssThemeDefault);
+				break;
+			}
+		}
 	}
 
 	public String getTitle() {
@@ -128,6 +151,14 @@ public class PostDao {
 
 	public void setDateCreaS(String dateCreaS) {
 		this.dateCreaS = dateCreaS;
+	}
+
+	public String getLibcss1() {
+		return libcss1;
+	}
+
+	public void setLibcss1(String libcss1) {
+		this.libcss1 = libcss1;
 	}
 
 }

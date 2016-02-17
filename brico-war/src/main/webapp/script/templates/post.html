@@ -2,12 +2,14 @@
 	<div class="col-md-6 col-xs-12">
 		<rd-widget> <rd-widget-body>
 		<div class="widget-icon blue pull-left">
-			<i ng-hide="theme" class="fa fa-tag"></i>
-			<i ng-show="theme" class="fa {{theme.libcss1}}"></i>
+			<i ng-hide="postParent" class="fa fa-tag"></i>
+			<i ng-show="postParent" class="fa {{postParent.libcss1}}"></i>
 		</div>
-		<span ng-show="theme"><div class="title">{{theme.lib1}}</div></span> 
-		<span ng-hide="theme"><div class="title">Aucun post n'a &eacute;t&eacute; trouv&eacute;</div></span>
-		<div class="comment">Consultation des posts</div>
+		<span ng-show="postParent"><div class="title">{{postParent.title}}</div></span> 
+		<span ng-hide="postParent"><div class="title">Aucun post n'a &eacute;t&eacute; trouv&eacute;</div></span>
+		<div ng-show="postParent && user" class="comment">Vous pouvez contribuer &agrave; ce post!</div>
+		<div ng-show="postParent && !user" class="comment">Vous devez &ecirc;tre connect&eacute; pour contribuer &agrave; ce post.</div>
+		<div ng-hide="postParent" class="comment">Aucune action possible</div>
 		</rd-widget-body> </rd-widget>
 	</div>
 </div>
