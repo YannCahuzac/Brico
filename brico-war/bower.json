@@ -1,25 +1,18 @@
 {
-  "name": "brico",
+  "name": "yca-brico",
   "version": "1.0.0",
-  "description": "Choisir ce qui est suit pour les cookies!",
   "dependencies":{
-	"rdash-ui": "1.0.*",
 	"angular": "~1.2.x",
-	"angular-cookies": "~1.2.21",
-	"angular-bootstrap": "~0.11.0",
-	"angular-ui-router": "^0.2.10",
-	"bootstrap": "~3.2.0",
 	"jquery":"~2.2.0",
+	"angular-ui-router": "^0.2.10",
 	"restangular":"~1.3.1",
+	"bootstrap": "~3.2.0",
+	"angular-bootstrap": "~0.11.0",
+	"angular-cookies": "~1.2.21",
 	"font-awesome": "~4.1.0",
 	"select2": "3.4.8",
 	"angular-ui-select2": "~0.0.5",
-	"at-table": "*"
-  },
-  "devDependencies": {
-  },
-  "repository": {
-        "type": "git",
-        "url": "https://github.com/rdash/rdash-angular"
-    }
+	"rdash-ui": "1.0.*",
+	"at-table": "~1.0.4"
+  }
 }

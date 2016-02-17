@@ -20,7 +20,15 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 
 			$scope.config = {
 				    itemsPerPage: 10,
-				    fillLastPage: true
+				    fillLastPage: true,
+				    paginatorLabels: {
+				        stepBack: '‹',
+				        stepAhead: '›',
+				        jumpBack: '«',
+				        jumpAhead: '»',
+				        first: 'D\u00e9but',
+				        last: 'Fin'
+				    }
 			}
 			
 			// Retourne l'object theme en fonction de l'Id et recupere les commentaires cote serveur en fonction du theme Id:
@@ -31,7 +39,7 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 					$scope.comms = d;
 					console.log($scope.comms);				
 				}, function(errResponse) {
-					$scope.alerts = utilSrv.alertIt('danger', 'Aucun commentaire n\' a ete recupere pour le theme ' + $scope.theme.lib1 + '.');
+					$scope.alerts = utilSrv.alertIt('danger', 'Aucun commentaire n\' a \u00e9t\u00e9 recup\u00e9r\u00e9 pour le th\u00e8me ' + $scope.theme.lib1 + '.');
 				});
 			};
 			

@@ -3,6 +3,8 @@ package fr.yca.brico.dao;
 import java.sql.Timestamp;
 
 import fr.yca.brico.bean.Commentaire;
+import fr.yca.brico.utils.Constants;
+import fr.yca.brico.utils.Outils;
 
 public class CommentaireDao {
 
@@ -16,6 +18,7 @@ public class CommentaireDao {
 	private Integer nbVotes;
 	private Integer note;
 	private Integer commValidate;
+	private String dateCreaS;
 
 	public CommentaireDao() {
 		super();
@@ -50,6 +53,9 @@ public class CommentaireDao {
 
 	public void setDateCreation(Timestamp dateCreation) {
 		this.dateCreation = dateCreation;
+		if (this.dateCreation != null) {
+			setDateCreaS(Outils.formateDate(this.dateCreation, Constants.formatDateTheme));
+		}
 	}
 
 	public Integer getIdUserCreation() {
@@ -114,6 +120,14 @@ public class CommentaireDao {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getDateCreaS() {
+		return dateCreaS;
+	}
+
+	public void setDateCreaS(String dateCreaS) {
+		this.dateCreaS = dateCreaS;
 	}
 
 }

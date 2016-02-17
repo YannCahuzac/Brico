@@ -26,5 +26,14 @@
 }
 
 .myThemeTable .widget .widget-body.medium {
-    height: 500px;
+	height: 500px;
+}
+
+.myThemeTablePagination {
+	text-align: center;
+}
+
+.postThemeTable {
+	max-width: 500px;
+	overflow: hidden; 	
 }
