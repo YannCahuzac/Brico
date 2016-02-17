@@ -22,16 +22,16 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		</property>
 	</bean>
 
-	<bean id="commentaire" class="fr.yca.brico.bean.Commentaire" />
+	<bean id="post" class="fr.yca.brico.bean.Post" />
 	<bean id="utilisateur" class="fr.yca.brico.bean.Utilisateur" />
 
 	<bean id="themeSrv" class="fr.yca.brico.services.ThemeSrv" />
-	<bean id="commentaireSrv" class="fr.yca.brico.services.CommentaireSrv" />
+	<bean id="postSrv" class="fr.yca.brico.services.PostSrv" />
 	<bean id="utilisateurSrv" class="fr.yca.brico.services.UtilisateurSrv" />
 
 	<bean id="bricoCtrl" class="fr.yca.brico.controller.BricoCtrl" />
 	<bean id="themeCtrl" class="fr.yca.brico.controller.ThemeCtrl" />
-	<bean id="commentaireCtrl" class="fr.yca.brico.controller.CommentaireCtrl" />
+	<bean id="postCtrl" class="fr.yca.brico.controller.PostCtrl" />
 	<bean id="utilisateurCtrl" class="fr.yca.brico.controller.UtilisateurCtrl" />
 
 	<bean id="myUserDetailsService" class="fr.yca.brico.security.MyUserDetailsService" />
