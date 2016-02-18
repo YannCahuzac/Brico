@@ -3,6 +3,8 @@
 App.controller('homeCtrl', [ '$scope', 'postSrv', function($scope, postSrv) {
 
 	$scope.posts = [];
+	$scope.postsFiltered = [];
+	$scope.filter = '';
 	
 	// Gestion des erreurs: 
 	$scope.alerts = [];
@@ -27,6 +29,7 @@ App.controller('homeCtrl', [ '$scope', 'postSrv', function($scope, postSrv) {
 	$scope.getRecentsPosts = function() {
 		postSrv.getRecentsPosts().then(function(d) {
 			$scope.posts = d;
+			$scope.postsFiltered = d;
 		}, function(errResponse) {
 			$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9.');
 		});
@@ -34,5 +37,9 @@ App.controller('homeCtrl', [ '$scope', 'postSrv', function($scope, postSrv) {
 	
 	// Init:
 	$scope.getRecentsPosts();
+	
+	$scope.findStringInPosts = function(){
+		 $scope.postsFiltered = postSrv.findStringInPosts($scope.filter, $scope.posts);
+	}
 	
 } ]);

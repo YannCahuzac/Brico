@@ -84,7 +84,7 @@ public class PostSrv {
 			while (itPost.hasNext()) {
 				Post post = itPost.next();
 				if (post != null) {
-					ret.add(new PostDao(post));
+					ret.add(new PostDao(post, typeRecherche));
 				}
 			}
 		}

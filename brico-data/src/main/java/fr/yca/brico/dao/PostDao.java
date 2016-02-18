@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import fr.yca.brico.bean.Post;
 import fr.yca.brico.utils.Constants;
 import fr.yca.brico.utils.Outils;
+import fr.yca.brico.utils.TypeRecherche;
 
 public class PostDao {
 
@@ -31,7 +32,7 @@ public class PostDao {
 		super();
 	}
 
-	public PostDao(Post post) {
+	public PostDao(Post post, TypeRecherche typeRecherche) {
 		if (post != null) {
 			setIdPost(post.getIdPost());
 			setDateCreation(post.getDateCreation());
@@ -40,7 +41,10 @@ public class PostDao {
 			setIdPostRef(post.getIdPostRef());
 			setThemeId(post.getThemeId());
 			setTitle(post.getTitle());
-			setPost(post.getPost());
+			if (typeRecherche.equals(TypeRecherche.FIND_POSTS_BY_ID_POST)) {
+				// On ne le fait que dans ce cas car sinon ça va saturer la mémoire utilisateur côté client:
+				setPost(post.getPost());
+			}
 			setNbVotes(post.getNbVotes());
 			setNote(post.getNote());
 			setPostValidate(post.getPostValidate());

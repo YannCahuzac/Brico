@@ -7,6 +7,7 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 			$scope.themeId = '';
 			$scope.theme = null;
 			$scope.posts = [];
+			$scope.postsFiltered = [];
 
 			// Gestion des erreurs: 
 			$scope.alerts = [];
@@ -38,6 +39,7 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 					$scope.theme = themesSrv.getThemeByIdFromRoot($scope.themeId);
 					postSrv.getPostsByThemeId($scope.themeId).then(function(d) {
 						$scope.posts = d;
+						$scope.postsFiltered = d;
 					}, function(errResponse) {
 						$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9' + ( $scope.theme ? ' pour le th\u00e8me ' + $scope.theme.lib1 + '.' : '.'));
 					});
@@ -49,4 +51,8 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 			// Init:
 			$scope.getPostsByThemeId();
 
+			$scope.findStringInPosts = function(){
+				 $scope.postsFiltered = postSrv.findStringInPosts($scope.filter, $scope.posts);
+			}
+			
 		} ]);

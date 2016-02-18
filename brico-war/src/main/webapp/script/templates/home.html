@@ -22,10 +22,11 @@
 	<div class="col-lg-6 myThemeTable">
 		<rd-widget> 
 			<rd-widget-header icon="fa-tasks" title="Posts les plus r&eacute;cents"> 
-				<input type="text" placeholder="Recherche TODO" class="form-control input-sm" />
+				<input type="text" placeholder="Recherche" class="form-control input-sm" 
+				ng-model="$parent.$parent.filter" ng-change="findStringInPosts()"/>
 			</rd-widget-header> 
 			<rd-widget-body classes="medium no-padding">
-				<table class="table table-striped table-hover" at-table at-paginated at-list="posts" at-config="config">
+				<table class="table table-striped table-hover" at-table at-paginated at-list="postsFiltered" at-config="config" data-ng-show="postsFiltered.length">
 					<thead>
 					</thead>
 					<tbody>
@@ -39,7 +40,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<at-pagination at-list="posts" at-config="config" class="myThemeTablePagination"></at-pagination>
+				<at-pagination at-list="postsFiltered" at-config="config" class="myThemeTablePagination" data-ng-show="postsFiltered.length"></at-pagination>
 			</rd-widget-body> 
 		</rd-widget>
 	</div>
