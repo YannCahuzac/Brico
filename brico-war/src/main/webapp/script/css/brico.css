@@ -108,6 +108,10 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	font-size: 12px;
 }
 
+.postWidgetHeader .widget-header .row .pull-right.col-xs-6.col-sm-4 {
+	width: inherit;
+}
+
 .containerValidite {
 	float: none;
 	text-align: right;
@@ -115,4 +119,8 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 
 .right {
 	float: right;
+}
+
+.metaBrico {
+	padding-left: 15px;
 }
