@@ -40,11 +40,11 @@
 						    	on-leave="post.overStar = false;" titles="['one','two','three']" aria-labelledby="default-rating" class="noteRate"></rating>
 						    <span class="label" 
 						    	ng-class="{
-							    	'label-warning': (100 * (post.noteUserOver / max))<30, 
-							    	'label-info': (100 * (post.noteUserOver/ max))>=30 && (100 * (post.noteUserOver / max))<70, 
-							    	'label-success': (100 * (post.noteUserOver / max))>=70
+							    	'label-warning': (100 * (post.noteUserOver / maxRate))<30, 
+							    	'label-info': (100 * (post.noteUserOver/ maxRate))>=30 && (100 * (post.noteUserOver / maxRate))<70, 
+							    	'label-success': (100 * (post.noteUserOver / maxRate))>=70
 							    }" 
-						    	ng-show="post.overStar">{{(100 * (post.noteUserOver / max))}}%</span>
+						    	ng-show="post.overStar">{{(100 * (post.noteUserOver / maxRate))}}%</span>
 						</div>
 						<!-- Fin note du post -->
 						
