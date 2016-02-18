@@ -28,11 +28,18 @@
 	<div class="col-lg-6">
    		<rd-widget>
    			<rd-widget-header icon="fa-tasks" title="{{posts.length - 1}} R&eacute;ponse{{(posts.length - 1) > 1 ? 's' : ''}}">
+				<!-- Validité du post -->
+				<div class="containerValidite" ng-show="postParent">
+					<span ng-show="post.postValidate == 1" class="text-success validitePost"><i class="fa fa-check"></i>Valid&eacute; par l'auteur du post!</span>
+					<span ng-show="post.postValidate != 1" class="text-danger validitePost"><i class="fa fa-check"></i>Post non encore valid&eacute; par l'auteur</span>
+				</div>
+				<!-- Fin validité du post -->
    			</rd-widget-header>
    			<rd-widget-body>
 	   			<div data-ng-repeat="post in posts | orderBy: 'dateCreation'">
 					<div class="containerMain">
 					
+						
 						<!-- Note du post -->
 						<div class="containerNote">
 							<span class="notePost">{{post.note}}/10</span>

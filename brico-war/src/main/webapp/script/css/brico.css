@@ -70,6 +70,7 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 
 .userBrico {
 	color: #738bc0 !important;
+	font-weight: normal;
 }
 
 .blueBrico1 {
@@ -99,5 +100,15 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	color: #767676;
 	margin-right: 10px;
 	font-size: 11px;
+	text-align: right;
+}
+
+.validitePost {
+	color: #767676;
+	font-size: 12px;
+}
+
+.containerValidite {
+	float: none;
 	text-align: right;
 }
