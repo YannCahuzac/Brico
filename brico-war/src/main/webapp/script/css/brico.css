@@ -77,14 +77,27 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 }
 
 .containerMain {
-	width: 750px;
+	width: 100%;
 }
 
 .notePost {
 	color: #767676;
 	margin-right: 10px;
+	font-size: 12px;
 }
 
 .noteRate {
 	color: #767676;
+}
+
+.containerPost {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.containerAuteur {
+	color: #767676;
+	margin-right: 10px;
+	font-size: 11px;
+	text-align: right;
 }

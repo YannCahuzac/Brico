@@ -26,6 +26,9 @@ public class Post implements java.io.Serializable {
 	@Column(name = "IDUSER_CREATION")
 	private Integer idUserCreation;
 
+	@Column(name = "PSEUDO_USER_CREATION")
+	private String pseudoUserCreation;
+
 	@Column(name = "IDPOST_REF")
 	private Integer idPostRef;
 
@@ -129,6 +132,14 @@ public class Post implements java.io.Serializable {
 
 	public void setPostValidate(Integer postValidate) {
 		this.postValidate = postValidate;
+	}
+
+	public String getPseudoUserCreation() {
+		return pseudoUserCreation;
+	}
+
+	public void setPseudoUserCreation(String pseudoUserCreation) {
+		this.pseudoUserCreation = pseudoUserCreation;
 	}
 
 }

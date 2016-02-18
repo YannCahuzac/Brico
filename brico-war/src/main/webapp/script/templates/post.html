@@ -40,10 +40,10 @@
 						    	on-leave="post.overStar = false;" titles="['one','two','three']" aria-labelledby="default-rating" class="noteRate"></rating>
 						    <span class="label" 
 						    	ng-class="{
-						    		'label-warning': (100 * (post.noteUserOver / max))<30, 
-						    		'label-info': (100 * (post.noteUserOver/ max))>=30 && (100 * (post.noteUserOver / max))<70, 
-						    		'label-success': (100 * (post.noteUserOver / max))>=70
-						    	}" 
+							    	'label-warning': (100 * (post.noteUserOver / max))<30, 
+							    	'label-info': (100 * (post.noteUserOver/ max))>=30 && (100 * (post.noteUserOver / max))<70, 
+							    	'label-success': (100 * (post.noteUserOver / max))>=70
+							    }" 
 						    	ng-show="post.overStar">{{(100 * (post.noteUserOver / max))}}%</span>
 						</div>
 						<!-- Fin note du post -->
@@ -56,6 +56,7 @@
 						
 						<!-- Date / Auteur -->
 						<div class="containerAuteur">
+							<span>Post&eacute;{{(post.pseudoUserCreation != '' ? (' par ' + post.pseudoUserCreation) : '')}} le {{post.dateCreaS}}</span>
 						</div>
 						<!-- Fin Date / Auteur -->
 						

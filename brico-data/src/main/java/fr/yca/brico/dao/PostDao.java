@@ -11,19 +11,19 @@ public class PostDao {
 	private Integer idPost;
 	private Timestamp dateCreation;
 	private Integer idUserCreation;
+	private String pseudoUserCreation = "";
 	private Integer idPostRef;
 	private Integer themeId;
 	private String title;
 	private String post;
-
 	private Integer nbVotes;
 	private Integer note;
-	private Integer noteUser;
-	// Utilisé pour l'IHM:
-	private boolean overStar = false;
-	private Integer noteUserOver;
-
 	private Integer postValidate;
+
+	// Utilisés pour l'IHM:
+	private Integer noteUser = 0;
+	private boolean overStar = false;
+	private Integer noteUserOver = 0;
 	private String dateCreaS;
 	private String libcss1;
 
@@ -36,6 +36,7 @@ public class PostDao {
 			setIdPost(post.getIdPost());
 			setDateCreation(post.getDateCreation());
 			setIdUserCreation(post.getIdUserCreation());
+			setPseudoUserCreation(post.getPseudoUserCreation());
 			setIdPostRef(post.getIdPostRef());
 			setThemeId(post.getThemeId());
 			setTitle(post.getTitle());
@@ -193,6 +194,18 @@ public class PostDao {
 
 	public void setNoteUserOver(Integer noteUserOver) {
 		this.noteUserOver = noteUserOver;
+	}
+
+	public String getPseudoUserCreation() {
+		return pseudoUserCreation;
+	}
+
+	public void setPseudoUserCreation(String pseudoUserCreation) {
+		if (pseudoUserCreation != null) {
+			this.pseudoUserCreation = pseudoUserCreation;
+		} else {
+			this.pseudoUserCreation = "";
+		}
 	}
 
 }

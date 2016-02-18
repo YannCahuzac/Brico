@@ -23,22 +23,20 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				$scope.postId = $stateParams.postId;
 			}
 		    
+			// Compare le $scope.postId avec l'elt du tableau:
+			var BreakException= {};
+	    	function getIt(element, index, array) {
+	    	    if(element.idPost == $scope.postId){
+	    	    	// Affectation du post Parent (en principe c'est le premier de la liste car ORDER BY dateCreation)
+	    	    	$scope.postParent = $scope.posts[index];
+	    	    	// Permet de quitter le foreach:
+	    	    	throw BreakException;
+	    	    }
+	    	}
+			
 	    	// Iteration sur chaque post pour retrouver le post parent:
 			$scope.getParentFromAllPosts = function(){
 				if($scope.postId != null && $scope.postId != '' && $scope.posts != null && $scope.posts.length > 0){
-					
-					var BreakException= {};
-					
-					// Compare le $scope.postId avec l'elt du tableau:
-			    	function getIt(element, index, array) {
-			    	    if(element.idPost == $scope.postId){
-			    	    	// Affectation du post Parent (en principe c'est le premier de la liste car ORDER BY dateCreation)
-			    	    	$scope.postParent = $scope.posts[index];
-			    	    	// Permet de quitter le foreach:
-			    	    	throw BreakException;
-			    	    }
-			    	}
-
 		    		try{
 		    			$scope.posts.forEach(getIt);
 		    		} catch(e) {
@@ -63,5 +61,5 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 			
 			// Init:
 			$scope.getPostsByPostId();
-
+			
 		} ]);
