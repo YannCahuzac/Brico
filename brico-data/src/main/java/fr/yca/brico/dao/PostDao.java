@@ -15,8 +15,14 @@ public class PostDao {
 	private Integer themeId;
 	private String title;
 	private String post;
+
 	private Integer nbVotes;
 	private Integer note;
+	private Integer noteUser;
+	// Utilisé pour l'IHM:
+	private boolean overStar = false;
+	private Integer noteUserOver;
+
 	private Integer postValidate;
 	private String dateCreaS;
 	private String libcss1;
@@ -134,7 +140,11 @@ public class PostDao {
 	}
 
 	public void setNote(Integer note) {
-		this.note = note;
+		if (note != null) {
+			this.note = note;
+		} else {
+			this.note = new Integer(0);
+		}
 	}
 
 	public Integer getPostValidate() {
@@ -159,6 +169,30 @@ public class PostDao {
 
 	public void setLibcss1(String libcss1) {
 		this.libcss1 = libcss1;
+	}
+
+	public Integer getNoteUser() {
+		return noteUser;
+	}
+
+	public void setNoteUser(Integer noteUser) {
+		this.noteUser = noteUser;
+	}
+
+	public boolean isOverStar() {
+		return overStar;
+	}
+
+	public void setOverStar(boolean overStar) {
+		this.overStar = overStar;
+	}
+
+	public Integer getNoteUserOver() {
+		return noteUserOver;
+	}
+
+	public void setNoteUserOver(Integer noteUserOver) {
+		this.noteUserOver = noteUserOver;
 	}
 
 }

@@ -32,17 +32,33 @@
    			<rd-widget-body>
 	   			<div data-ng-repeat="post in posts | orderBy: 'dateCreation'">
 					<div class="containerMain">
+					
+						<!-- Note du post -->
 						<div class="containerNote">
-						    <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" 
-						    	on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></rating>
-						    <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" 
-						    	ng-show="overStar && !isReadonly">{{percent}}%</span>
+							<span class="notePost">{{post.note}}/10</span>
+						    <rating ng-model="post.noteUser" max="maxRate" readonly="false" on-hover="post.overStar = true; post.noteUserOver = value;" 
+						    	on-leave="post.overStar = false;" titles="['one','two','three']" aria-labelledby="default-rating" class="noteRate"></rating>
+						    <span class="label" 
+						    	ng-class="{
+						    		'label-warning': (100 * (post.noteUserOver / max))<30, 
+						    		'label-info': (100 * (post.noteUserOver/ max))>=30 && (100 * (post.noteUserOver / max))<70, 
+						    		'label-success': (100 * (post.noteUserOver / max))>=70
+						    	}" 
+						    	ng-show="post.overStar">{{(100 * (post.noteUserOver / max))}}%</span>
 						</div>
+						<!-- Fin note du post -->
+						
+						<!-- Post -->
 						<div class="containerPost">
 							<span>{{post.post}}</span>
 						</div>
+						<!-- Fin post -->
+						
+						<!-- Date / Auteur -->
 						<div class="containerAuteur">
 						</div>
+						<!-- Fin Date / Auteur -->
+						
 					</div>
 					<hr />
 				</div>

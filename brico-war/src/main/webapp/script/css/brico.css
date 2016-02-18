@@ -79,3 +79,12 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .containerMain {
 	width: 750px;
 }
+
+.notePost {
+	color: #767676;
+	margin-right: 10px;
+}
+
+.noteRate {
+	color: #767676;
+}
