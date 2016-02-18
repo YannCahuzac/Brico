@@ -84,7 +84,7 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .notePost {
 	color: #767676;
 	margin-right: 10px;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 .noteRate {
@@ -111,4 +111,8 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .containerValidite {
 	float: none;
 	text-align: right;
+}
+
+.right {
+	float: right;
 }
