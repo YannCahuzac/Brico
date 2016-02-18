@@ -51,7 +51,7 @@
 		<script src="/brico-war/script/js/directives/login.js"></script>
 	</head>
 	
-	<body ng-controller="MasterCtrl">
+	<body ng-controller="MasterCtrl" class="bricoBody">
 		<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 	
 			<!-- Sidebar -->
@@ -124,17 +124,22 @@
 								<!-- Fin Connexion -->
 								<!-- User -->
 								<div ng-show="user" class="item dropdown">
-									<!-- <a href="#" class="dropdown-toggle"> <img src="../img/avatar.jpg"> -->
-									<a href="#" class="dropdown-toggle"> <i class="fa fa-user"></i>
+									<a href="#" class="dropdown-toggle">
+										<i class="fa fa-user connexion"></i>
 									</a>
 									<ul class="dropdown-menu dropdown-menu-right">
 										<li class="dropdown-header" ng-show="user"><label class="header-user">Bienvenue {{user.pseudo}} !</label></li>
-										<li class="dropdown-header" ng-show="!user"><label class="header-user">Vous n'êtes pas connecté..</label></li>
 										<li class="divider" ng-show="user"></li>
 										<li class="link" ng-show="user"><a href="#"> Profil </a></li>
 										<li class="link" ng-show="user"><a href="#"> Vos Posts </a></li>
 										<li class="divider" ng-show="user"></li>
 									</ul>
+								</div>
+								<div ng-show="!user" class="item dropdown divConnexion">
+									<label class="header-user userBrico">Non connecté</label>
+								</div>
+								<div ng-show="user" class="item dropdown divConnexion">
+									<label class="header-user userBrico">{{user.pseudo}}</label>
 								</div>
 								<!-- Fin User -->
 							</div>

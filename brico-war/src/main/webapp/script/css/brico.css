@@ -1,5 +1,13 @@
 @CHARSET "ISO-8859-1";
 
+body.bricoBody {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body.bricoBody .row.header .meta .breadcrumb-links {
+	font-size: 14px;
+}
+
 .longSelect {
 	width: 400px;
 }
@@ -13,12 +21,12 @@
 }
 
 .row.header .user>.item i.connexion {
-	color: #569e3d;
+	color: #738bc0 !important;
 	font-size: 20px;
 }
 
 .row.header .user>.item i.deconnexion {
-	color: #EE5555;
+	color: #738bc0 !important;
 	font-size: 20px;
 }
 
@@ -27,7 +35,7 @@
 }
 
 .header-user {
-	font-size: 14px;
+	font-size: 13px;
 	padding-top: 8px;
 }
 
@@ -44,10 +52,26 @@
 	overflow: hidden;
 }
 
+.row.header .user>.item.divConnexion {
+	width: 300px;
+	overflow: hidden;
+	text-align: right;
+	line-height: 40px;
+	padding-right: 20px;
+}
+
 .brico-header.row.header {
 	background: #f3f3f3
 }
 
-.myThemeTable table a:hover{
+.myThemeTable table a:hover {
 	text-decoration: none;
+}
+
+.userBrico {
+	color: #738bc0 !important;
+}
+
+.blueBrico1 {
+	background: #738bc0 !important;
 }
