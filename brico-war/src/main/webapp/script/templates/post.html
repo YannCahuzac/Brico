@@ -25,6 +25,28 @@
 </div>
 
 <div class="row" data-ng-show="posts.length">
-	<div class="col-lg-6 myThemeTable">
+	<div class="col-lg-6">
+   		<rd-widget>
+   			<rd-widget-header icon="fa-tasks" title="{{posts.length - 1}} R&eacute;ponse{{(posts.length - 1) > 1 ? 's' : ''}}">
+   			</rd-widget-header>
+   			<rd-widget-body>
+	   			<div data-ng-repeat="post in posts | orderBy: 'dateCreation'">
+					<div class="containerMain">
+						<div class="containerNote">
+						    <rating ng-model="rate" max="max" readonly="isReadonly" on-hover="hoveringOver(value)" 
+						    	on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></rating>
+						    <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" 
+						    	ng-show="overStar && !isReadonly">{{percent}}%</span>
+						</div>
+						<div class="containerPost">
+							<span>{{post.post}}</span>
+						</div>
+						<div class="containerAuteur">
+						</div>
+					</div>
+					<hr />
+				</div>
+   			</rd-widget-body>
+   		</rd-widget>
 	</div>
 </div>
