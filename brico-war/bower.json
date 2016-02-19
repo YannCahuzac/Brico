@@ -1,6 +1,7 @@
 {
   "name": "yca-brico",
   "version": "1.0.0",
+  "description": "ATTENTION: PASSER A UNE VERSION SUPERIEURE D ANGULAR POSERA PB POUR TOUS LES $parent DANS LES PAGES HTML",
   "dependencies": {
     "angular": "~1.2.0",
     "jquery": "~2.2.0",

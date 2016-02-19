@@ -26,7 +26,7 @@
 		<div class="row ng-scope">
 			<div class="col-lg-3 col-md-6 col-xs-12">
 				<label for="choixTheme">Choix du th&egrave;me</label><br />
-				<select class="longSelect" ng-model="selectedTheme" ui-select2 id="choixTheme">
+				<select class="longSelect" ng-model="$parent.selectedTheme" ui-select2 id="choixTheme">
 			          <option ng-repeat="theme in themes" value="{{theme.id1}}">{{theme.lib1}}</option>
 				</select>
 				<p class="help-block">

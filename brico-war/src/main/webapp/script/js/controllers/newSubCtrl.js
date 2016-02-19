@@ -12,7 +12,8 @@ App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv',
 		    };
 						
 			$scope.submitNewSub = function(){
-				if($scope.demande === '' || $('select option:selected').val() === '' || $('select option:selected').val() === undefined){
+				console.log($scope.selectedTheme);
+				if($scope.demande === '' || $scope.selectedTheme === null || $scope.selectedTheme === '' || $scope.selectedTheme === undefined){
 					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez s\u00e9lectionner un th\u00e8me et d\u00e9crire votre requ\u00eate pour valider le formulaire.');
 				}else{
 					// TODO Enregistrement Server
