@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('bricoAngular')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', '$state', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv) {
+function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv, $state) {
 
 	// Gestion des erreurs: 
 	$scope.alerts = [];
@@ -58,6 +58,11 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 			$rootScope.user = d;
 			$scope.closeAlert();
 			$scope.showModal = false;
+			if($state.current.name === 'postByIdUser' || $state.current.name === 'newSub'){
+				// On recharge la page car sinon rien ne se passe:
+				console.log("Rechargement du state!");
+				$state.reload();
+			}
 		}, function(errResponse) {
 			$scope.logalerts = utilSrv.alertIt('danger', 'Echec de l\'authentification: mauvais login ou mot de passe.');
 			$scope.showModal = true;
@@ -67,6 +72,11 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 	$scope.logout = function(){
 		$rootScope.user = null;
 		$scope.showModal = false;
+		if($state.current.name === 'postByIdUser' || $state.current.name === 'newSub'){
+			// On recharge la page car sinon rien ne se passe:
+			console.log("Rechargement du state!");
+			$state.reload();
+		}
 	}
 	/********************* Fin Connexion ***********************/
 

@@ -30,6 +30,20 @@ App.factory('postSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootSc
 		    				}
 		    		);
 		    },         
+		    getPostsByUserId: function(userId) {
+		    	return $http({
+		    		method: 'GET',
+		    		url: '/brico-war/action/getPostsByUserId/' + userId})
+		    		.then(
+		    				function(response){
+		    					return response.data;
+		    				}, 
+		    				function(errResponse){
+		    					console.error('Une erreur est survenue lors de la recuperation des posts.');
+		    					return $q.reject(errResponse);
+		    				}
+		    		);
+		    },         
 		    getRecentsPosts: function() {
 		    	return $http({
 		    		method: 'GET',

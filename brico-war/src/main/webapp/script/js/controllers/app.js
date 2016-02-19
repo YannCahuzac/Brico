@@ -20,9 +20,13 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		url : '/theme/:themeId',
 		templateUrl : '../templates/theme.html',
 		controller : 'themeCtrl'
-	}).state('post', {
+	}).state('postById', {
 		url : '/post/:postId',
 		templateUrl : '../templates/post.html',
+		controller : 'postCtrl'
+	}).state('postByIdUser', {
+		url : '/postUser/:idUser',
+		templateUrl : '../templates/postUser.html',
 		controller : 'postCtrl'
 	});
 

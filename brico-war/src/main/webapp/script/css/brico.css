@@ -129,6 +129,6 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	padding-left: 15px;
 }
 
-.myThemeTable table thead th{
+.myThemeTable table thead th,.bricoBody .sidebar-main {
 	cursor: pointer;
 }

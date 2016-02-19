@@ -20,13 +20,13 @@
 	</div>
 </div>
 
-<form ng-submit="submitNewSub()">
+<form ng-submit="submitNewSub()" ng-show="user">
 	<div class="row">
 		
 		<div class="row ng-scope">
 			<div class="col-lg-3 col-md-6 col-xs-12">
 				<label for="choixTheme">Choix du th&egrave;me</label><br />
-				<select class="longSelect" ng-model="$parent.selectedTheme" ui-select2 id="choixTheme">
+				<select class="longSelect" ng-model="postDao.themeId" ui-select2 id="choixTheme">
 			          <option ng-repeat="theme in themes" value="{{theme.id1}}">{{theme.lib1}}</option>
 				</select>
 				<p class="help-block">
@@ -38,11 +38,23 @@
 		<div class="row ng-scope">
 			<div class="col-lg-3 col-md-6 col-xs-12">
 				<div class="form-group">
-						<label for="requete">Description de votre requ&ecirc;te</label><br /> 
-					  	<textarea ng-model="demande" class="form-control" rows="5" id="requete" maxlength="200"></textarea>
+						<label for="title">Titre de votre post</label><br /> 
+					  	<textarea ng-model="postDao.title" class="form-control" rows="1" id="title" maxlength="100"></textarea>
 				</div>
 				<p class="help-block">
-					<small>Veuillez d&eacute;crire votre requ&ecirc;te (200 mots maximum).</small>
+					<small>Veuillez renseigner le titre de votre post (100 mots maximum).</small>
+				</p>
+			</div>
+		</div>
+		
+		<div class="row ng-scope">
+			<div class="col-lg-3 col-md-6 col-xs-12">
+				<div class="form-group">
+						<label for="requete">Description de votre post</label><br /> 
+					  	<textarea ng-model="postDao.post" class="form-control" rows="5" id="requete" maxlength="500"></textarea>
+				</div>
+				<p class="help-block">
+					<small>Veuillez d&eacute;crire votre post (500 mots maximum).</small>
 				</p>
 			</div>
 		</div>
