@@ -24,10 +24,10 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 				    itemsPerPage: 10,
 				    fillLastPage: true,
 				    paginatorLabels: {
-				        stepBack: '‹',
-				        stepAhead: '›',
-				        jumpBack: '«',
-				        jumpAhead: '»',
+				        stepBack: '\u003c',
+				        stepAhead: '\u003e',
+				        jumpBack: '\u00ab',
+				        jumpAhead: '\u00bb',
 				        first: 'D\u00e9but',
 				        last: 'Fin'
 				    }

@@ -128,3 +128,7 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .metaBrico {
 	padding-left: 15px;
 }
+
+.myThemeTable table thead th{
+	cursor: pointer;
+}

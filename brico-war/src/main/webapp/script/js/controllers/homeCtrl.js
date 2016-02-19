@@ -1,6 +1,6 @@
 'use strict';
 
-App.controller('homeCtrl', [ '$scope', 'postSrv', function($scope, postSrv) {
+App.controller('homeCtrl', [ '$scope', 'postSrv', 'utilSrv', function($scope, postSrv, utilSrv) {
 
 	$scope.posts = [];
 	$scope.postsFiltered = [];
@@ -16,10 +16,10 @@ App.controller('homeCtrl', [ '$scope', 'postSrv', function($scope, postSrv) {
 		    itemsPerPage: 10,
 		    fillLastPage: true,
 		    paginatorLabels: {
-		        stepBack: '‹',
-		        stepAhead: '›',
-		        jumpBack: '«',
-		        jumpAhead: '»',
+		        stepBack: '\u003c',
+		        stepAhead: '\u003e',
+		        jumpBack: '\u00ab',
+		        jumpAhead: '\u00bb',
 		        first: 'D\u00e9but',
 		        last: 'Fin'
 		    }
