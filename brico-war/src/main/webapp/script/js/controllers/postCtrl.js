@@ -10,7 +10,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 			// Dans le cas du state postByIdUser, ça correspond à tous les post de l'user:
 			$scope.posts = [];
 			
-			// Variable juste dans le cas du state postByIdUser (on les met là pour pas faire planter angular avec un null pointer): 
+			// Variable utilisée juste dans le cas du state postByIdUser (on les met là pour pas faire planter angular avec un null pointer): 
 			$scope.postsFiltered = [];
 			
 			// Gestion des erreurs: 
@@ -58,6 +58,8 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				$scope.getPostsByPostId = function() {
 					if($scope.postId != null && $scope.postId != ''){
 						postSrv.getPostsByPostId($scope.postId).then(function(d) {
+							console.log('Posts:');
+							console.log(d);
 							$scope.posts = d;
 							$scope.getParentFromAllPosts();
 						}, function(errResponse) {

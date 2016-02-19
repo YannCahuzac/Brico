@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.yca.brico.bean.Post;
 import fr.yca.brico.dao.PostDao;
 import fr.yca.brico.utils.Constants;
+import fr.yca.brico.utils.Outils;
 import fr.yca.brico.utils.TypeRecherche;
 
 @Service("postSrv")
@@ -37,6 +38,24 @@ public class PostSrv {
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	/**
+	 * Création d'un nouveau post parent.
+	 */
+	public Boolean createPost(PostDao postDao) {
+		Boolean ret = Boolean.TRUE;
+		if (Outils.isValidPostDao(postDao)) {
+			try {
+				entityManager.merge(new Post(postDao));
+			} catch (Exception e) {
+				ret = Boolean.FALSE;
+				logger.info("Exception lors de la création du post: " + e.getMessage());
+			}
+		} else {
+			ret = Boolean.FALSE;
+		}
+		return ret;
 	}
 
 	/**

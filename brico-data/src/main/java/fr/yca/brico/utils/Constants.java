@@ -1,9 +1,12 @@
 package fr.yca.brico.utils;
 
+import java.util.Date;
+
 public class Constants {
 
 	public static final String formatDateTheme = "dd/MM/yyyy 'à' HH'h'mm";
 	public static final int MAX_POST_RESULT = 100;
+	public static final Date TODAY = new Date();
 
 	// Libelle Thèmes
 	public static final String libTheme1 = "Plomberie";

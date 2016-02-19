@@ -58,6 +58,18 @@ App.factory('postSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootSc
 		    				}
 		    		);
 		    },         
+		    createPost: function(postDao) {
+		    	return $http.post('/brico-war/action/createPost', postDao)
+		    		.then(
+		    				function(response){
+		    					return response.data;
+		    				}, 
+		    				function(errResponse){
+		    					console.error('Une erreur est survenue lors de la creation du post.');
+		    					return $q.reject(errResponse);
+		    				}
+		    		);
+		    },         
 		    findStringInPosts: function(s, posts) {
 		    	var postsFiltered = [];
 		    	posts.forEach(function (element, index, array){

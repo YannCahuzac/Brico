@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -72,6 +73,25 @@ public class PostCtrl {
 		} else {
 			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
 		}
+	}
+
+	/**
+	 * Création d'un nouveau post parent.
+	 */
+	@ResponseBody
+	@RequestMapping(value = "createPost", method = { RequestMethod.POST }, consumes = "application/json")
+	public ResponseEntity<Boolean> createPost(@RequestBody PostDao postDao) {
+
+		Boolean ret = Boolean.TRUE;
+		HttpStatus httpStatus = HttpStatus.CREATED;
+
+		ret = postSrv.createPost(postDao);
+
+		if (!ret) {
+			httpStatus = HttpStatus.BAD_REQUEST;
+		}
+
+		return new ResponseEntity<Boolean>(ret, httpStatus);
 	}
 
 }

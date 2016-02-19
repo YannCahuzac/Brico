@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import fr.yca.brico.dao.PostDao;
+import fr.yca.brico.utils.Constants;
+
 @Entity(name = "Post")
 @Table(name = "KV01.POST")
 public class Post implements java.io.Serializable {
@@ -52,6 +55,25 @@ public class Post implements java.io.Serializable {
 
 	public Post() {
 		super();
+	}
+
+	public Post(PostDao postDao) {
+		if (postDao != null) {
+			// Récupérer dans le flux Json:
+			setIdUserCreation(postDao.getIdUserCreation());
+			setPseudoUserCreation(postDao.getPseudoUserCreation());
+			setThemeId(postDao.getThemeId());
+			setTitle(postDao.getTitle());
+			setPost(postDao.getPost());
+
+			// 0 pour dire qu'il s'agit d'un post parent:
+			setIdPostRef(0);
+			setDateCreation(new Timestamp(Constants.TODAY.getTime()));
+			// Init:
+			setNbVotes(0);
+			setNote(0);
+			setPostValidate(0);
+		}
 	}
 
 	public Integer getIdPost() {
