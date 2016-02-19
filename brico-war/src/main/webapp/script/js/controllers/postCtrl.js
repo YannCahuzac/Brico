@@ -19,17 +19,6 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				utilSrv.closeAlert($scope.alerts, index);
 			};
 
-			// Compare le $scope.postId avec l'elt du tableau (juste pour le state postById, mais on le met là car sinon erreur [IE Fonction Imbriquée]):
-			var BreakException= {};
-	    	function getIt(element, index, array) {
-	    	    if(element.idPost == $scope.postId){
-	    	    	// Affectation du post Parent (en principe c'est le premier de la liste car ORDER BY dateCreation)
-	    	    	$scope.postParent = $scope.posts[index];
-	    	    	// Permet de quitter le foreach:
-	    	    	throw BreakException;
-	    	    }
-	    	}
-			
 			if($state.current.name === 'postById'){
 				
 				// Auto injecté dans l'URL:
@@ -42,6 +31,17 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				if ($stateParams.postId) {
 					$scope.postId = $stateParams.postId;
 				}
+
+				// Compare le $scope.postId avec l'elt du tableau (juste pour le state postById, mais on le met là car sinon erreur [IE Fonction Imbriquée]):
+				var BreakException= {};
+		    	var getIt = function (element, index, array) {
+		    	    if(element.idPost == $scope.postId){
+		    	    	// Affectation du post Parent (en principe c'est le premier de la liste car ORDER BY dateCreation)
+		    	    	$scope.postParent = $scope.posts[index];
+		    	    	// Permet de quitter le foreach:
+		    	    	throw BreakException;
+		    	    }
+		    	}
 				
 		    	// Iteration sur chaque post pour retrouver le post parent:
 				$scope.getParentFromAllPosts = function(){

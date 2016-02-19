@@ -132,3 +132,9 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .myThemeTable table thead th,.bricoBody .sidebar-main {
 	cursor: pointer;
 }
+
+@media ( min-width : 1200px) {
+	.newSubForm .col-lg-3 {
+		width: 50%;
+	}
+}
