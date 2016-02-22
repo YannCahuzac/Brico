@@ -138,3 +138,7 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 		width: 50%;
 	}
 }
+
+.myThemeTable .etatPost {
+	padding-left: 20px;
+}
