@@ -8,7 +8,7 @@
 		<span ng-show="postParent"><div class="title">{{postParent.title}}</div></span> 
 		<span ng-hide="postParent"><div class="title">Aucun post n'a &eacute;t&eacute; trouv&eacute;</div></span>
 		<div ng-show="postParent && user" class="comment">Vous pouvez contribuer &agrave; ce post!</div>
-		<div ng-show="postParent && !user" class="comment">Vous devez &ecirc;tre connect&eacute; pour contribuer &agrave; ce post.</div>
+		<div ng-show="postParent && !user" class="comment text-danger">Vous devez &ecirc;tre connect&eacute; pour contribuer &agrave; ce post.</div>
 		<div ng-hide="postParent" class="comment">Aucune action possible</div>
 		</rd-widget-body> </rd-widget>
 	</div>
@@ -30,19 +30,21 @@
    			<rd-widget-header class="postWidgetHeader" icon="fa-tasks" title="{{posts.length - 1}} R&eacute;ponse{{(posts.length - 1) > 1 ? 's' : ''}}">
 				<!-- Validité du post -->
 				<div class="containerValidite" ng-show="postParent">
-					<span ng-show="post.postValidate == 1" class="text-success validitePost"><i class="fa fa-check"></i>Valid&eacute; par l'auteur du post!</span>
-					<span ng-show="post.postValidate != 1" class="text-danger validitePost"><i class="fa fa-ban"></i>Post non encore valid&eacute; par l'auteur</span>
+					<span ng-show="postParent.postValidate == 1" class="text-success validitePost"><i class="fa fa-check"></i>Valid&eacute; par l'auteur du post !</span>
+					<span ng-show="postParent.postValidate != 1" class="text-danger validitePost"><i class="fa fa-ban"></i>Post non encore valid&eacute; par l'auteur</span>
 				</div>
 				<!-- Fin validité du post -->
    			</rd-widget-header>
    			<rd-widget-body>
+				
+				<!-- Affichage des Posts -->
 	   			<div data-ng-repeat="post in posts | orderBy: 'dateCreation'">
 					<div class="containerMain">
 					
 						<!-- Note du post -->
 						<div class="containerNote">
 						    <rating ng-model="post.noteUser" max="maxRate" readonly="false" on-hover="post.overStar = true; post.noteUserOver = value;" 
-						    	on-leave="post.overStar = false;" titles="['one','two','three']" aria-labelledby="default-rating" class="noteRate"></rating>
+						    	on-leave="post.overStar = false;" aria-labelledby="default-rating" class="noteRate"></rating>
 						    <span class="label"
 						    	ng-class="{
 							    	'label-warning': (100 * (post.noteUserOver / maxRate))<30, 
@@ -69,7 +71,28 @@
 					</div>
 					<hr />
 				</div>
-   			</rd-widget-body>
+
+				<!-- Contribution -->
+				<!-- // TODO Not empty -->
+				<div class="containerMain" ng-show="user && (not empty postChild)">
+					<div class="divButtonContribuer">
+						<button type="button" class="buttonContribuer btn btn-default" ng-click="isCollapsedContribBtn = !isCollapsedContribBtn">{{ isCollapsedContribBtn ? 'Contribuer' : 'Fermer' }}</button>
+					</div>
+					<div collapse="isCollapsedContribBtn">
+						<div class="form-group">
+								<label for="requete">Description de votre r&eacute;ponse</label><br /> 
+							  	<textarea class="form-control" rows="5" id="requete" maxlength="500"></textarea>
+						</div>
+						<p class="help-block">
+							<small>Veuillez d&eacute;crire votre r&eacute;ponse (500 mots maximum).</small>
+						</p>
+						<div class="divButtonContribuer">
+							<button type="button" class="buttonContribuer btn btn-default" ng-click="">Enregistrer</button>
+						</div>
+					</div>
+				</div>
+
+			</rd-widget-body>
    		</rd-widget>
 	</div>
 </div>

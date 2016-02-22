@@ -20,6 +20,11 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 			};
 
 			if($state.current.name === 'postById'){
+
+				// Bouton Contribution:
+				$scope.isCollapsedContribBtn = true;
+
+				$scope.postChild = null;
 				
 				// Auto injecté dans l'URL:
 				// Dans le cas de la recherche par postId:
@@ -43,6 +48,33 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 		    	    }
 		    	}
 				
+		    	// Création d'un post Child - réponse
+				var initPostChild = function(){
+					if($rootScope.user != null && $scope.postParent != null && $scope.postParent.idPost != null && $scope.postParent.idPost != ''){
+						console.log("Création Post Enfant.");
+						return {
+							idUserCreation : $rootScope.user.idUser,
+							pseudoUserCreation : $rootScope.user.pseudo,
+							idPostRef : $scope.postParent.idPost,
+							themeId : null,
+							title : '',
+							post : '',
+							idPost : null,
+							dateCreation : null,
+							nbVotes : 0,
+							note : 0,
+							postValidate : 0,
+							noteUser : 0,
+							overStar : false,
+							noteUserOver : 0,
+							dateCreaS : '',
+							libcss1 : ''
+						};
+					}else{
+						return [];
+					}
+				}
+		    	
 		    	// Iteration sur chaque post pour retrouver le post parent:
 				$scope.getParentFromAllPosts = function(){
 					if($scope.postId != null && $scope.postId != '' && $scope.posts != null && $scope.posts.length > 0){
@@ -58,8 +90,6 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				$scope.getPostsByPostId = function() {
 					if($scope.postId != null && $scope.postId != ''){
 						postSrv.getPostsByPostId($scope.postId).then(function(d) {
-							console.log('Posts:');
-							console.log(d);
 							$scope.posts = d;
 							$scope.getParentFromAllPosts();
 						}, function(errResponse) {
@@ -72,6 +102,9 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				
 				// Init:
 				$scope.getPostsByPostId();
+				
+				// TODO
+				$scope.postChild = initPostChild();
 				
 			} else if($state.current.name === 'postByIdUser' && $rootScope.user){
 				

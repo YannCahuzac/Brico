@@ -66,8 +66,9 @@ public class Post implements java.io.Serializable {
 			setTitle(postDao.getTitle());
 			setPost(postDao.getPost());
 
-			// 0 pour dire qu'il s'agit d'un post parent:
-			setIdPostRef(0);
+			// 0 pour dire qu'il s'agit d'un post parent ou idParent sinon:
+			setIdPostRef(postDao.getIdPostRef());
+
 			setDateCreation(new Timestamp(Constants.TODAY.getTime()));
 			// Init:
 			setNbVotes(0);

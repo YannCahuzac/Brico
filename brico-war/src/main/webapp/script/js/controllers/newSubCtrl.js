@@ -14,7 +14,7 @@ App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'p
 				return {
 					idUserCreation : $rootScope.user.idUser,
 					pseudoUserCreation : $rootScope.user.pseudo,
-					idPostRef : '',
+					idPostRef : 0,
 					themeId : null,
 					title : '',
 					post : '',

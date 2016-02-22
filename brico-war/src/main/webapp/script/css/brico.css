@@ -142,3 +142,14 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .myThemeTable .etatPost {
 	padding-left: 20px;
 }
+
+.widget .widget-body .containerMain .divButtonContribuer {
+	width: 100%;
+	margin-bottom: 20px;
+	display: inline-block;
+}
+
+.widget .widget-body .containerMain .buttonContribuer {
+	float: right;
+	margin-left: 0px;
+}
