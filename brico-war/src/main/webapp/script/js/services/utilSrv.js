@@ -16,6 +16,14 @@ App.factory('utilSrv', [
 			},
 			closeAlert : function(tab, index){
 				tab.splice(index, 1);
+			},
+			validateEmail : function(email){
+				var re = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+			    return re.test(email);
+			},
+			validateNum : function(num){
+				var re = /^[1-9][0-9]*$/;
+				return re.test(num);
 			}
 		};
 }]);

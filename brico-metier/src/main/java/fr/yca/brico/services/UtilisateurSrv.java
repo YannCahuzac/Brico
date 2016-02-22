@@ -81,6 +81,7 @@ public class UtilisateurSrv {
 	public Boolean createNewAccount(UtilisateurDao utilisateurDao) {
 		Boolean ret = Boolean.TRUE;
 		// TODO Vérification Regex
+		// TODO Trim
 		// TODO Vérification DB Existant
 		// TODO Enregistrement
 		return ret;
