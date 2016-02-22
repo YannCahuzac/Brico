@@ -1,0 +1,81 @@
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		<rd-widget> <rd-widget-body>
+		<div class="widget-icon blueBrico1 pull-left">
+			<i class="fa fa-user"></i>
+		</div>
+		<div class="title">Nouveau Compte</div>
+		<div class="comment">Une fois votre compte cr&eacute;&eacute;, vous pourrez aider la communaut&eacute; de bricoleurs!</div>
+		</rd-widget-body> </rd-widget>
+	</div>
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		<div class="alerts-container" data-ng-show="alerts.length">
+			<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		</div>
+	</div>
+</div>
+
+<form ng-submit="createNewAccount()" class="newSubForm" ng-show="newUser">
+	<div class="row">
+		
+		<div class="row ng-scope">
+			<div class="col-lg-3 col-md-6 col-xs-12">
+			<!-- Corps -->
+				<div class="form-group">
+					<label for="email">Adresse mail</label>
+					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
+					<input type="email" required class="form-control" id="email" placeholder="Email" ng-model="newUser.mail" maxlength="200" />
+				</div>
+				<div class="form-group">
+					<label for="pseudo">Pseudo</label>
+					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
+					<input type="text" required class="form-control" id="pseudo" placeholder="Pseudo" ng-model="newUser.pseudo" maxlength="100" />
+				</div>
+				<div class="form-group">
+					<label for="password">Mot de passe</label>
+					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
+					<input type="password" required class="form-control" id="password" placeholder="Mot de passe" ng-model="newUser.password" maxlength="100" />
+				</div>
+				<div class="form-group">
+					<label for="password2">Confirmer votre mot de passe</label>
+					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
+					<input type="password" required class="form-control" id="password2" placeholder="Mot de passe" ng-model="newUser.password2" maxlength="100" />
+				</div>
+
+				<div class="form-group">
+					<label for="tel">T&eacute;l&eacute;phone</label>
+					<input type="text" class="form-control" id="tel" placeholder="T&eacute;l&eacute;phone" ng-model="newUser.tel" maxlength="20" />
+				</div>
+				<div class="form-group">
+					<label for="ville">Ville</label>
+					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
+					<input type="text" required class="form-control" id="ville" placeholder="Ville" ng-model="newUser.ville" maxlength="100" />
+				</div>
+				<div class="form-group">
+					<label for="cp">Code Postal</label>
+					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
+					<input type="text" required class="form-control" id="cp" placeholder="Code Postal" ng-model="newUser.cp" maxlength="10" />
+				</div>
+				<div class="form-group">
+					<label for="rue">Rue</label>
+					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
+					<input type="text" required class="form-control" id="rue" placeholder="Rue" ng-model="newUser.rue" maxlength="100" />
+				</div>
+			<!-- Fin Corps -->
+			</div>
+		</div>	
+					
+		<div class="row ng-scope">
+			<div class="col-lg-3 col-md-6 col-xs-12">
+				<span class="btn btn-sm btn-danger gauche" ng-click="init()">R&eacute;initialiser</span>
+				<button class="btn btn-sm btn-success droite">Valider</button>
+			</div>
+		</div>
+			
+	</div>
+</form>

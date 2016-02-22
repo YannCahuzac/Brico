@@ -74,4 +74,15 @@ public class UtilisateurSrv {
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+
+	/**
+	 * Créer un nv compte Utilisateur:
+	 */
+	public Boolean createNewAccount(UtilisateurDao utilisateurDao) {
+		Boolean ret = Boolean.TRUE;
+		// TODO Vérification Regex
+		// TODO Vérification DB Existant
+		// TODO Enregistrement
+		return ret;
+	}
 }

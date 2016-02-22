@@ -37,12 +37,14 @@
 		<script src="/brico-war/script/js/services/utilSrv.js"></script>
 		<script src="/brico-war/script/js/services/themesSrv.js"></script>
 		<script src="/brico-war/script/js/services/authSrv.js"></script>
+		<script src="/brico-war/script/js/services/newAccountSrv.js"></script>
 
 		<script src="/brico-war/script/js/controllers/master-ctrl.js"></script>
 		<script src="/brico-war/script/js/controllers/homeCtrl.js"></script>
 		<script src="/brico-war/script/js/controllers/newSubCtrl.js"></script>
 		<script src="/brico-war/script/js/controllers/themeCtrl.js"></script>
 		<script src="/brico-war/script/js/controllers/postCtrl.js"></script>
+		<script src="/brico-war/script/js/controllers/newAccountCtrl.js"></script>
 
 		<script src="/brico-war/script/js/directives/widget.js"></script>
 		<script src="/brico-war/script/js/directives/widget-body.js"></script>
@@ -108,6 +110,12 @@
 												</div>
 												<button type="submit" class="btn btn-default" id="submitConnexionButton">Connexion</button>
 											</form>
+											<div class="newAccount">
+												<a href="#/newAccount" title="Nouveau compte" class="newAccountRef" ng-click="toggleModal()">
+													<span class="fa fa-user"></span>
+													Cr&eacute;er un nouveau compte
+												</a>
+											</div>
 										</modal>
 									</span>
 									<!-- Fin Login -->

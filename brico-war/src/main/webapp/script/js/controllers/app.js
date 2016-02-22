@@ -28,6 +28,10 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		url : '/postUser/:idUser',
 		templateUrl : '../templates/postUser.html',
 		controller : 'postCtrl'
+	}).state('newAccount', {
+		url : '/newAccount',
+		templateUrl : '../templates/newAccount.html',
+		controller : 'newAccountCtrl'
 	});
 
 	$urlRouterProvider.otherwise('/');

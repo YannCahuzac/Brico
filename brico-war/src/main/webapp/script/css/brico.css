@@ -16,6 +16,10 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	margin-left: 15px;
 }
 
+.gauche {
+	float: left;
+}
+
 .droite {
 	float: right;
 }
@@ -64,7 +68,7 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	background: #f3f3f3
 }
 
-.myThemeTable table a:hover {
+.myThemeTable table a:hover,.newAccount a:hover {
 	text-decoration: none;
 }
 
@@ -152,4 +156,13 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .widget .widget-body .containerMain .buttonContribuer {
 	float: right;
 	margin-left: 0px;
+}
+
+.newAccount {
+	padding: 15px;
+	margin-top: 15px;
+}
+
+.newAccountStar{
+	margin-left: 5px;
 }
