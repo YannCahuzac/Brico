@@ -73,22 +73,27 @@
 				</div>
 
 				<!-- Contribution -->
-				<!-- // TODO Not empty -->
-				<div class="containerMain" ng-show="user && (not empty postChild)">
+				<div class="containerMain" ng-show="user && postParent && postChild">
 					<div class="divButtonContribuer">
-						<button type="button" class="buttonContribuer btn btn-default" ng-click="isCollapsedContribBtn = !isCollapsedContribBtn">{{ isCollapsedContribBtn ? 'Contribuer' : 'Fermer' }}</button>
+						<button type="button" class="buttonContribuer btn {{ isCollapsedContribBtn ? 'btn-success' : 'btn-danger' }}" ng-click="isCollapsedContribBtn = !isCollapsedContribBtn">{{ isCollapsedContribBtn ? 'Contribuer' : 'Fermer' }}</button>
 					</div>
 					<div collapse="isCollapsedContribBtn">
 						<div class="form-group">
 								<label for="requete">Description de votre r&eacute;ponse</label><br /> 
-							  	<textarea class="form-control" rows="5" id="requete" maxlength="500"></textarea>
+							  	<textarea ng-model="postChild.post" class="form-control" rows="5" id="requete" maxlength="500"></textarea>
 						</div>
 						<p class="help-block">
 							<small>Veuillez d&eacute;crire votre r&eacute;ponse (500 mots maximum).</small>
 						</p>
 						<div class="divButtonContribuer">
-							<button type="button" class="buttonContribuer btn btn-default" ng-click="">Enregistrer</button>
+							<button type="button" class="buttonContribuer btn btn-success" ng-click="createPostChild()">Enregistrer</button>
 						</div>
+					</div>
+				</div>
+
+				<div class="containerMain" ng-show="(user && !postParent) || (user && !postChild)">
+					<div class="alerts-container">
+						<alert type="warning">Un probl&egrave;me est survenu, aucune r&eacute;ponse ne pourra &ecirc;tre apport&eacute;e.<br />Veuillez nous excuser pour la g&egrave;ne occasionn&eacute;e.</alert>
 					</div>
 				</div>
 

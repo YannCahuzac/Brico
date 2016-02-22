@@ -58,7 +58,7 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 			$rootScope.user = d;
 			$scope.closeAlert();
 			$scope.showModal = false;
-			if($state.current.name === 'postByIdUser' || $state.current.name === 'newSub'){
+			if($state.current.name === 'postByIdUser' || $state.current.name === 'newSub' || $state.current.name === 'postById'){
 				// On recharge la page car sinon rien ne se passe:
 				console.log("Rechargement du state!");
 				$state.reload();

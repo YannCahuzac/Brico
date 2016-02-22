@@ -44,7 +44,7 @@ App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'p
 					console.log($scope.postDao);
 					postSrv.createPost($scope.postDao).then(function(d) {
 						$scope.postDao = initPost();
-						$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 pris en cr\u00e9\u00e9 et est accessible dans le th\u00e8me choisi.');
+						$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 cr\u00e9\u00e9 et est accessible dans le th\u00e8me choisi.');
 					}, function(errResponse) {
 						$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
 					});

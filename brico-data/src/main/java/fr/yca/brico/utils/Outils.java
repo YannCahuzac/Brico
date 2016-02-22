@@ -14,9 +14,7 @@ public class Outils {
 
 	public static Boolean isValidPostDao(PostDao postDao) {
 		Boolean ret = Boolean.TRUE;
-		if (postDao == null
-				|| (postDao != null && !(isFull(postDao.getIdUserCreation()) && isFull(postDao.getPseudoUserCreation()) && isFull(postDao.getThemeId()) && isFull(postDao.getTitle()) && isFull(postDao
-						.getPost())))) {
+		if (postDao == null || (postDao != null && !(isFull(postDao.getIdUserCreation()) && isFull(postDao.getThemeId()) && isFull(postDao.getTitle()) && isFull(postDao.getPost())))) {
 			ret = Boolean.FALSE;
 		}
 		return ret;

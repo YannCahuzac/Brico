@@ -1,4 +1,3 @@
-Faire enregistrement d'une réponse à un post Client + Serveur
 Définir la rubrique [Profil] dans l'onglet Utilisateur
 Définir les rubrique [Contact / Aide / Infos] de l'application
 Pouvoir créer un compte dans l'application

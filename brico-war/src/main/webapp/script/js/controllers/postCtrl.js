@@ -5,7 +5,9 @@
 App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 'postSrv', '$timeout', '$state',
 		function($scope, $stateParams, utilSrv, $rootScope, postSrv, $timeout, $state) {
 
+			// Note max d'un post:
 			$scope.maxRate = 10;
+			
 			// Tous les posts (y compris le parent) liés au postId (dans le cas du state postById):
 			// Dans le cas du state postByIdUser, ça correspond à tous les post de l'user:
 			$scope.posts = [];
@@ -24,11 +26,13 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				// Bouton Contribution:
 				$scope.isCollapsedContribBtn = true;
 
+				// Post enfant - réponse
 				$scope.postChild = null;
 				
 				// Auto injecté dans l'URL:
 				// Dans le cas de la recherche par postId:
 				$scope.postId = '';
+				
 				// Le post correspondant à notre Id:
 				$scope.postParent = null;
 					
@@ -37,7 +41,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 					$scope.postId = $stateParams.postId;
 				}
 
-				// Compare le $scope.postId avec l'elt du tableau (juste pour le state postById, mais on le met là car sinon erreur [IE Fonction Imbriquée]):
+				// Compare le $scope.postId avec l'elt du tableau:
 				var BreakException= {};
 		    	var getIt = function (element, index, array) {
 		    	    if(element.idPost == $scope.postId){
@@ -51,13 +55,12 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 		    	// Création d'un post Child - réponse
 				var initPostChild = function(){
 					if($rootScope.user != null && $scope.postParent != null && $scope.postParent.idPost != null && $scope.postParent.idPost != ''){
-						console.log("Création Post Enfant.");
 						return {
 							idUserCreation : $rootScope.user.idUser,
 							pseudoUserCreation : $rootScope.user.pseudo,
 							idPostRef : $scope.postParent.idPost,
-							themeId : null,
-							title : '',
+							themeId : $scope.postParent.themeId,
+							title : $scope.postParent.title,
 							post : '',
 							idPost : null,
 							dateCreation : null,
@@ -71,10 +74,24 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 							libcss1 : ''
 						};
 					}else{
-						return [];
+						return null;
 					}
 				}
 		    	
+				// Enregistrement du post child:
+				$scope.createPostChild = function(){
+					if($scope.postChild == null || ($scope.postChild != null && $scope.postChild.post === '')){
+						$scope.alerts = utilSrv.alertIt('danger', 'Enregistrement impossible. V\u00e9rifiez que vous avez bien renseign\u00e9 votre reponse.');
+					}else{
+						postSrv.createPost($scope.postChild).then(function(d) {
+							$state.reload();
+							$scope.alerts = utilSrv.alertIt('success', 'Votre r\u00e9ponse a bien \u00e9t\u00e9 cr\u00e9\u00e9e.');
+						}, function(errResponse) {
+							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de l\'enregistrement de votre r\u00e9ponse.');
+						});
+					}
+				}
+				
 		    	// Iteration sur chaque post pour retrouver le post parent:
 				$scope.getParentFromAllPosts = function(){
 					if($scope.postId != null && $scope.postId != '' && $scope.posts != null && $scope.posts.length > 0){
@@ -92,6 +109,9 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 						postSrv.getPostsByPostId($scope.postId).then(function(d) {
 							$scope.posts = d;
 							$scope.getParentFromAllPosts();
+							// On init le post child ICI car ce post child a besoin des attributs du post parent.
+							// A cause des pbs asynchrones serveur, si on met ça en dehors de cette méthode: le post parent sera tjr null quand on init le child.
+							$scope.postChild = initPostChild();
 						}, function(errResponse) {
 							$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9.');
 						});
@@ -102,9 +122,6 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				
 				// Init:
 				$scope.getPostsByPostId();
-				
-				// TODO
-				$scope.postChild = initPostChild();
 				
 			} else if($state.current.name === 'postByIdUser' && $rootScope.user){
 				
@@ -149,6 +166,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				// Init:
 				$scope.getPostsByUserId();
 				
+				// Filtre:
 				$scope.findStringInPosts = function(){
 					 $scope.postsFiltered = postSrv.findStringInPosts($scope.filter, $scope.posts);
 				}
