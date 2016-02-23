@@ -3,6 +3,7 @@ package fr.yca.brico.bean;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import fr.yca.brico.dao.UtilisateurDao;
-import fr.yca.brico.utils.Constants;
 
 /**
  * @Entity est le nom que va utiliser notre em pour que ce soit cette classe qu'il transactionne. Si default schema n'est pas défini dans le persistence, le rajouter dans @table ci-dessous.
@@ -98,7 +98,7 @@ public class Utilisateur implements UserDetails {
 
 			if (init) {
 				setIdUser(null);
-				setDateCreation(new Timestamp(Constants.TODAY.getTime()));
+				setDateCreation(new Timestamp(new Date().getTime()));
 				setNbVotes(0);
 				setNote(0);
 				setRole(0);

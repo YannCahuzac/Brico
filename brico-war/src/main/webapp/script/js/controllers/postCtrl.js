@@ -80,8 +80,10 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 		    	
 				// Enregistrement du post child:
 				$scope.createPostChild = function(){
-					if($scope.postChild == null || ($scope.postChild != null && $scope.postChild.post === '')){
+					if($scope.postChild == null || ($scope.postChild != null && $scope.postChild.post != null && $scope.postChild.post === '')){
 						$scope.alerts = utilSrv.alertIt('danger', 'Enregistrement impossible. V\u00e9rifiez que vous avez bien renseign\u00e9 votre r\u00e9ponse.');
+					}else if($scope.postChild != null && $scope.postChild.post != null && $scope.postChild.post.length > 500){
+						$scope.alerts = utilSrv.alertIt('danger', 'La taille maximum de votre r\u00e9ponse est de 500 caract\u00e8res.');
 					}else{
 						postSrv.createPost($scope.postChild).then(function(d) {
 							$state.reload();

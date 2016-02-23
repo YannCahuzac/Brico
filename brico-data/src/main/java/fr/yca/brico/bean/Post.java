@@ -1,6 +1,7 @@
 package fr.yca.brico.bean;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import fr.yca.brico.dao.PostDao;
-import fr.yca.brico.utils.Constants;
 
 @Entity(name = "Post")
 @Table(name = "KV01.POST")
@@ -69,7 +69,7 @@ public class Post implements java.io.Serializable {
 			// 0 pour dire qu'il s'agit d'un post parent ou idParent sinon:
 			setIdPostRef(postDao.getIdPostRef());
 
-			setDateCreation(new Timestamp(Constants.TODAY.getTime()));
+			setDateCreation(new Timestamp(new Date().getTime()));
 			// Init:
 			setNbVotes(0);
 			setNote(0);

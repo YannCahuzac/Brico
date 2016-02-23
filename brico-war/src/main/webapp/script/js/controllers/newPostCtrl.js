@@ -1,6 +1,6 @@
 'use strict';
 
-App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'postSrv',
+App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'postSrv',
 		function($scope, $element, utilSrv, $rootScope, postSrv) {
 			
 			$scope.alerts = [];
@@ -38,8 +38,13 @@ App.controller('newSubCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'p
 			}
 						
 			$scope.submitNewSub = function(){
-				if($scope.postDao.post === '' || $scope.postDao.themeId === null || $scope.postDao.themeId === '' || $scope.postDao.themeId === undefined || $scope.postDao.title === ''){
+				if(($scope.postDao.post != null && $scope.postDao.post === '') 
+						|| $scope.postDao.themeId === null || $scope.postDao.themeId === '' 
+						|| $scope.postDao.themeId === undefined 
+						|| ($scope.postDao.title != null && $scope.postDao.title === '')){
 					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez s\u00e9lectionner un th\u00e8me, renseigner un titre et d\u00e9crire votre requ\u00eate pour valider le formulaire.');
+				}else if(($scope.postDao.post != null && $scope.postDao.post.length > 500) || ($scope.postDao.title != null && $scope.postDao.title.length > 100)){
+					$scope.alerts = utilSrv.alertIt('danger', 'Les tailles maximum du titre et du post sont respectivement de 100 et de 500 caract\u00e8res.');
 				}else{
 					console.log($scope.postDao);
 					postSrv.createPost($scope.postDao).then(function(d) {

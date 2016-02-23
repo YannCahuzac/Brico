@@ -12,7 +12,7 @@ App.config(function($stateProvider, $urlRouterProvider) {
 	}).state('newSub', {
 		url : '/newSub',
 		templateUrl : '../templates/newSub.html',
-		controller : 'newSubCtrl'
+		controller : 'newPostCtrl'
 	}).state('auth', {
 		url : '/auth',
 		templateUrl : '../templates/login.html'
