@@ -46,10 +46,17 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 				}else if(($scope.postDao.post != null && $scope.postDao.post.length > 500) || ($scope.postDao.title != null && $scope.postDao.title.length > 100)){
 					$scope.alerts = utilSrv.alertIt('danger', 'Les tailles maximum du titre et du post sont respectivement de 100 et de 500 caract\u00e8res.');
 				}else{
-					console.log($scope.postDao);
 					postSrv.createPost($scope.postDao).then(function(d) {
-						$scope.postDao = initPost();
-						$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 cr\u00e9\u00e9 et est accessible dans le th\u00e8me choisi.');
+						if(d){
+							if(d.create){
+								$scope.postDao = initPost();
+								$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 cr\u00e9\u00e9 et est accessible dans le th\u00e8me choisi.');
+							}else{
+								$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+							}
+						}else{
+							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
+						}
 					}, function(errResponse) {
 						$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
 					});

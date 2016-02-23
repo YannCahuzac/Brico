@@ -86,8 +86,16 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 						$scope.alerts = utilSrv.alertIt('danger', 'La taille maximum de votre r\u00e9ponse est de 500 caract\u00e8res.');
 					}else{
 						postSrv.createPost($scope.postChild).then(function(d) {
-							$state.reload();
-							$scope.alerts = utilSrv.alertIt('success', 'Votre r\u00e9ponse a bien \u00e9t\u00e9 cr\u00e9\u00e9e.');
+							if(d){
+								if(d.create){
+									$state.reload();
+									$scope.alerts = utilSrv.alertIt('success', 'Votre r\u00e9ponse a bien \u00e9t\u00e9 cr\u00e9\u00e9e.');
+								}else{
+									$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+								}
+							}else{
+								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
+							}
 						}, function(errResponse) {
 							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de l\'enregistrement de votre r\u00e9ponse.');
 						});

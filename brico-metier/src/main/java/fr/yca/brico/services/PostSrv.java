@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fr.yca.brico.bean.Post;
 import fr.yca.brico.dao.PostDao;
 import fr.yca.brico.utils.Constants;
+import fr.yca.brico.utils.JsonFLux;
 import fr.yca.brico.utils.Outils;
 import fr.yca.brico.utils.TypeRecherche;
 
@@ -43,19 +44,22 @@ public class PostSrv {
 	/**
 	 * Création d'un nouveau post parent.
 	 */
-	public Boolean createPost(PostDao postDao) {
-		Boolean ret = Boolean.TRUE;
+	public JsonFLux createPost(PostDao postDao) {
+		JsonFLux fluxRet = new JsonFLux();
+		fluxRet.setCreate(Boolean.TRUE);
+
 		if (Outils.isValidPostDao(postDao)) {
 			try {
 				entityManager.merge(new Post(postDao));
 			} catch (Exception e) {
-				ret = Boolean.FALSE;
+				fluxRet.setCreate(Boolean.FALSE);
 				logger.info("Exception lors de la création du post: " + e.getMessage());
 			}
 		} else {
-			ret = Boolean.FALSE;
+			fluxRet.setCreate(Boolean.FALSE);
+			fluxRet.setLib1("Enregistrement impossible: il faut saisir tous les champs obligatoires et respecter la taille limite pour chaque champs.");
 		}
-		return ret;
+		return fluxRet;
 	}
 
 	/**

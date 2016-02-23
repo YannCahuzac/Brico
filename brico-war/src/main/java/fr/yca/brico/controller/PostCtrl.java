@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import fr.yca.brico.dao.PostDao;
 import fr.yca.brico.services.PostSrv;
+import fr.yca.brico.utils.JsonFLux;
 import fr.yca.brico.utils.TypeRecherche;
 
 @EnableWebMvc
@@ -79,19 +80,9 @@ public class PostCtrl {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "createPost", method = { RequestMethod.POST }, consumes = "application/json")
-	public ResponseEntity<Boolean> createPost(@RequestBody PostDao postDao) {
-
-		// TODO Voir comment retourner erreur personnalisées.
-		Boolean ret = Boolean.TRUE;
-		HttpStatus httpStatus = HttpStatus.CREATED;
-
-		ret = postSrv.createPost(postDao);
-
-		if (!ret) {
-			httpStatus = HttpStatus.BAD_REQUEST;
-		}
-
-		return new ResponseEntity<Boolean>(ret, httpStatus);
+	public ResponseEntity<JsonFLux> createPost(@RequestBody PostDao postDao) {
+		JsonFLux fluxRet = postSrv.createPost(postDao);
+		return new ResponseEntity<JsonFLux>(fluxRet, HttpStatus.OK);
 	}
 
 }
