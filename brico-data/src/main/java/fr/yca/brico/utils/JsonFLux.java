@@ -6,6 +6,7 @@ public class JsonFLux {
 	public String lib1;
 	public String lib2;
 	public String libcss1;
+	public Boolean create = Boolean.FALSE;
 
 	public JsonFLux() {
 		super();
@@ -54,6 +55,14 @@ public class JsonFLux {
 
 	public void setLibcss1(String libcss1) {
 		this.libcss1 = libcss1;
+	}
+
+	public Boolean getCreate() {
+		return create;
+	}
+
+	public void setCreate(Boolean create) {
+		this.create = create;
 	}
 
 }

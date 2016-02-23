@@ -16,9 +16,11 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import fr.yca.brico.dao.UtilisateurDao;
+import fr.yca.brico.utils.Constants;
+
 /**
- * @Entity est le nom que va utiliser notre em pour que ce soit cette classe qu'il transactionne. 
- * Si default schema n'est pas défini dans le persistence, le rajouter dans @table ci-dessous.
+ * @Entity est le nom que va utiliser notre em pour que ce soit cette classe qu'il transactionne. Si default schema n'est pas défini dans le persistence, le rajouter dans @table ci-dessous.
  */
 @Entity(name = "Utilisateur")
 @Table(name = "KV01.UTILISATEUR")
@@ -67,6 +69,47 @@ public class Utilisateur implements UserDetails {
 
 	public Utilisateur() {
 		super();
+	}
+
+	public Utilisateur(UtilisateurDao userDao, boolean init) {
+		if (userDao != null) {
+
+			if (userDao.getPseudo() != null) {
+				setPseudo(userDao.getPseudo().trim());
+			}
+			if (userDao.getPassword() != null) {
+				setPassword(userDao.getPassword().trim());
+			}
+			if (userDao.getTel() != null) {
+				setTel(userDao.getTel().trim());
+			}
+			if (userDao.getMail() != null) {
+				setMail(userDao.getMail().trim());
+			}
+			if (userDao.getVille() != null) {
+				setVille(userDao.getVille().trim());
+			}
+			if (userDao.getCp() != null) {
+				setCp(userDao.getCp().trim());
+			}
+			if (userDao.getRue() != null) {
+				setRue(userDao.getRue().trim());
+			}
+
+			if (init) {
+				setIdUser(null);
+				setDateCreation(new Timestamp(Constants.TODAY.getTime()));
+				setNbVotes(0);
+				setNote(0);
+				setRole(0);
+			} else {
+				setIdUser(userDao.getIdUser());
+				setDateCreation(userDao.getDateCreation());
+				setNbVotes(userDao.getNbVotes());
+				setNote(userDao.getNote());
+				setRole(userDao.getRole());
+			}
+		}
 	}
 
 	public Integer getIdUser() {

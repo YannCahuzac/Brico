@@ -8,4 +8,5 @@ Ajouter Département dans les Posts pour faciliter les recherches Utilisateurs da
 Voir aspect sécurité: l'user peut accéder aux GET Serveur via son navigateur
 Voir retour erreur avec message personnalisé côté Client
 Pouvoir voter pour un post si user connecté
-Vérifier côté client la taille des posts/titles
+Vérifier côté client la taille des posts/titles + retours personnalisés
+Affichage spinner quand appel get / post côté Serveur

@@ -30,4 +30,7 @@ public class Constants {
 	public static final String findPostsByIdPost = "SELECT c FROM Post c WHERE c.idPostRef = :idPostRef OR (c.idPost = :idPost AND c.idPostRef = 0) ORDER BY c.dateCreation DESC";
 	public static final String findRecentsPosts = "SELECT c FROM Post c WHERE c.idPostRef = 0 ORDER BY c.dateCreation DESC";
 
+	// Requetes JPQL pour la recherche des utilisateurs:
+	public static final String countUserMail = "SELECT count(u) FROM Utilisateur u WHERE u.mail = :mail";
+	public static final String countUserPseudo = "SELECT count(u) FROM Utilisateur u WHERE u.pseudo = :pseudo";
 }

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import fr.yca.brico.dao.UtilisateurDao;
 import fr.yca.brico.services.UtilisateurSrv;
+import fr.yca.brico.utils.JsonFLux;
 
 @EnableWebMvc
 @Controller("utilisateurCtrl")
@@ -31,7 +32,6 @@ public class UtilisateurCtrl {
 	public ResponseEntity<UtilisateurDao> getUserByMailAndPsw(HttpServletRequest request, @PathVariable("mail") String mail, @PathVariable("psw") String psw) {
 		UtilisateurDao user = utilisateurSrv.getUserByMailAndPsw(mail, psw);
 		if (user == null) {
-			// TODO Voir comment retourner erreur personnalisées.
 			return new ResponseEntity<UtilisateurDao>(user, HttpStatus.BAD_REQUEST);
 		} else {
 			return new ResponseEntity<UtilisateurDao>(user, HttpStatus.OK);
@@ -40,16 +40,8 @@ public class UtilisateurCtrl {
 
 	@ResponseBody
 	@RequestMapping(value = "createNewAccount", method = { RequestMethod.POST }, consumes = "application/json")
-	public ResponseEntity<Boolean> createNewAccount(@RequestBody UtilisateurDao utilisateurDao) {
-		Boolean ret = Boolean.TRUE;
-		HttpStatus httpStatus = HttpStatus.CREATED;
-
-		ret = utilisateurSrv.createNewAccount(utilisateurDao);
-
-		if (!ret) {
-			httpStatus = HttpStatus.BAD_REQUEST;
-		}
-
-		return new ResponseEntity<Boolean>(ret, httpStatus);
+	public ResponseEntity<JsonFLux> createNewAccount(@RequestBody UtilisateurDao utilisateurDao) {
+		JsonFLux fluxRet = utilisateurSrv.createNewAccount(utilisateurDao);
+		return new ResponseEntity<JsonFLux>(fluxRet, HttpStatus.OK);
 	}
 }

@@ -24,7 +24,7 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 					rue : '',
 					nbVotes : 0,
 					note : 0,
-					role : ''
+					role : 0
 				};
 			}
 			
@@ -80,8 +80,16 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 					 $scope.alerts = utilSrv.alertIt('danger', 'Le t\u00e9l\u00e9phone ne doit pas d\u00e9passer 20 caract\u00e8res.');
 				}else{
 					newAccountSrv.createNewAccount($scope.newUser).then(function(d) {
-						// TODO Voir redirection??
-						$scope.alerts = utilSrv.alertIt('success', 'Votre compte a bien \u00e9t\u00e9 cr\u00e9\u00e9.');
+						if(d){
+							if(d.create){
+								// TODO Voir redirection??
+								$scope.alerts = utilSrv.alertIt('success', 'Votre compte a bien \u00e9t\u00e9 cr\u00e9\u00e9.');
+							}else{
+								$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+							}
+						}else{
+							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre compte.');
+						}
 					}, function(errResponse) {
 						$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre compte.');
 					});

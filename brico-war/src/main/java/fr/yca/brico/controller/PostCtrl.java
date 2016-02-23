@@ -35,7 +35,6 @@ public class PostCtrl {
 		// TODO Voir Gestion si y'a plus de 20 posts retournés
 		List<PostDao> ret = postSrv.getPosts(TypeRecherche.FIND_POSTS_BY_ID_THEME, themeId);
 		if (ret == null || (ret != null && ret.size() == 0)) {
-			// TODO Voir comment retourner erreur personnalisées.
 			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.BAD_REQUEST);
 		} else {
 			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
@@ -82,6 +81,7 @@ public class PostCtrl {
 	@RequestMapping(value = "createPost", method = { RequestMethod.POST }, consumes = "application/json")
 	public ResponseEntity<Boolean> createPost(@RequestBody PostDao postDao) {
 
+		// TODO Voir comment retourner erreur personnalisées.
 		Boolean ret = Boolean.TRUE;
 		HttpStatus httpStatus = HttpStatus.CREATED;
 

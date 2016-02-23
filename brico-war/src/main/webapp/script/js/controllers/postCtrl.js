@@ -81,7 +81,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				// Enregistrement du post child:
 				$scope.createPostChild = function(){
 					if($scope.postChild == null || ($scope.postChild != null && $scope.postChild.post === '')){
-						$scope.alerts = utilSrv.alertIt('danger', 'Enregistrement impossible. V\u00e9rifiez que vous avez bien renseign\u00e9 votre reponse.');
+						$scope.alerts = utilSrv.alertIt('danger', 'Enregistrement impossible. V\u00e9rifiez que vous avez bien renseign\u00e9 votre r\u00e9ponse.');
 					}else{
 						postSrv.createPost($scope.postChild).then(function(d) {
 							$state.reload();

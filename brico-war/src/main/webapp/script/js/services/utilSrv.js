@@ -18,7 +18,8 @@ App.factory('utilSrv', [
 				tab.splice(index, 1);
 			},
 			validateEmail : function(email){
-				var re = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+				// var re = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+				var re = /^[A-Za-z0-9]+((\w)?[A-Za-z0-9])*@[a-zA-Z]+((\w)?[A-Za-z0-9])*\.[a-zA-Z]{2,3}$/;
 			    return re.test(email);
 			},
 			validateNum : function(num){

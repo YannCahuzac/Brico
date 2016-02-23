@@ -1,7 +1,5 @@
 package fr.smabtp.yca.test;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,8 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import fr.yca.brico.bean.Post;
 import fr.yca.brico.utils.Constants;
+import fr.yca.brico.utils.Outils;
 
 public class BricoTest {
 
@@ -30,7 +28,7 @@ public class BricoTest {
 	@Before
 	public void initialize() {
 		logger.info("#################### Debut Test ####################");
-		// System.setProperty("AS_DERBY_INSTALL", "C:\\glassfish3\\javadb");
+		System.setProperty("AS_DERBY_INSTALL", "C:\\glassfish3\\javadb");
 	}
 
 	@After
@@ -40,10 +38,29 @@ public class BricoTest {
 
 	@Test
 	@Ignore
+	public void testRegex() {
+		try {
+			String mail = "_yann.cahuzac@gmail.com";
+			System.out.println(Outils.checkMail(mail));
+			String num = "0123";
+			System.out.println(Outils.checkNum(num));
+		} catch (Exception e) {
+			logger.error(e);
+		}
+	}
+
+	@Test
+	@Ignore
 	public void test() {
 		try {
-			List<Post> l = em.createQuery(Constants.findRecentsPosts, Post.class).setMaxResults(20).getResultList();
-			System.out.println(l.size());
+			String mail = "d@d";
+
+			Long countMail = em.createQuery(Constants.countUserMail, Long.class).setParameter("mail", mail).getSingleResult();
+			System.out.println(countMail);
+
+			int countMail2 = em.createQuery(Constants.countUserMail, Long.class).setParameter("mail", mail).getFirstResult();
+			System.out.println(countMail2);
+
 		} catch (Exception e) {
 			logger.error(e);
 		}

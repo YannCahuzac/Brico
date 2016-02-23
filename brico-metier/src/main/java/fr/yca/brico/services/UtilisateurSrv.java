@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.yca.brico.bean.Utilisateur;
 import fr.yca.brico.dao.UtilisateurDao;
+import fr.yca.brico.utils.Constants;
+import fr.yca.brico.utils.JsonFLux;
+import fr.yca.brico.utils.Outils;
 
 /**
  * @Component | generic stereotype for any Spring-managed component
@@ -78,12 +81,46 @@ public class UtilisateurSrv {
 	/**
 	 * Créer un nv compte Utilisateur:
 	 */
-	public Boolean createNewAccount(UtilisateurDao utilisateurDao) {
-		Boolean ret = Boolean.TRUE;
-		// TODO Vérification Regex
-		// TODO Trim
-		// TODO Vérification DB Existant
-		// TODO Enregistrement
-		return ret;
+	public JsonFLux createNewAccount(UtilisateurDao utilisateurDao) {
+		JsonFLux fluxRet = new JsonFLux();
+		fluxRet.setCreate(Boolean.TRUE);
+
+		if (!(Outils.isFull(utilisateurDao.getMail(), 200) && Outils.isFull(utilisateurDao.getCp(), 10) && Outils.isFull(utilisateurDao.getPseudo(), 100)
+				&& Outils.isFull(utilisateurDao.getPassword(), 100) && Outils.isFull(utilisateurDao.getVille(), 100) && Outils.isFull(utilisateurDao.getRue(), 100))) {
+			// Vérif champs obligatoires saisis:
+			fluxRet.setCreate(Boolean.FALSE);
+			fluxRet.setLib1("Enregistrement impossible: il faut saisir tous les champs obligatoires et respecter la taille limite pour chaque champs.");
+		} else if (!Outils.checkMail(utilisateurDao.getMail())) {
+			// Vérif regex mail:
+			fluxRet.setCreate(Boolean.FALSE);
+			fluxRet.setLib1("Enregistrement impossible car le mail saisi est incorrect.");
+		} else if (!Outils.checkNum(utilisateurDao.getCp())) {
+			// Vérif regex cp:
+			fluxRet.setCreate(Boolean.FALSE);
+			fluxRet.setLib1("Enregistrement impossible car le code postal saisi est incorrect.");
+		} else {
+			try {
+				// Vérif mail existant base:
+				Long countMail = entityManager.createQuery(Constants.countUserMail, Long.class).setParameter("mail", utilisateurDao.getMail().trim()).getSingleResult();
+				if (countMail > 0) {
+					fluxRet.setCreate(Boolean.FALSE);
+					fluxRet.setLib1("Création de compte impossible car le mail donné existe déjà.");
+				} else {
+					// Vérif cp existant base:
+					Long countPseudo = entityManager.createQuery(Constants.countUserPseudo, Long.class).setParameter("pseudo", utilisateurDao.getPseudo().trim()).getSingleResult();
+					if (countPseudo > 0) {
+						fluxRet.setCreate(Boolean.FALSE);
+						fluxRet.setLib1("Création de compte impossible car le pseudo donné est déjà utilisé.");
+					} else {
+						entityManager.merge(new Utilisateur(utilisateurDao, true));
+					}
+				}
+			} catch (Exception e) {
+				fluxRet.setCreate(Boolean.FALSE);
+				logger.info("Exception lors de la création de l'utilisateur: " + e.getMessage());
+				fluxRet.setLib1("Exception en base lors de la création de l'utilisateur.");
+			}
+		}
+		return fluxRet;
 	}
 }
