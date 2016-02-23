@@ -44,16 +44,18 @@ public class UtilisateurSrv {
 	 */
 	public UtilisateurDao getUserByMailAndPsw(String mail, String psw) {
 		UtilisateurDao userDao = null;
-		try {
-			Utilisateur user = entityManager.createQuery("select t from Utilisateur t where t.mail = :mail and t.password = :psw", Utilisateur.class).setParameter("mail", mail)
-					.setParameter("psw", psw).getSingleResult();
-			if (user != null) {
-				userDao = new UtilisateurDao(user);
+		if (mail != null && psw != null) {
+			try {
+				Utilisateur user = entityManager.createQuery("select t from Utilisateur t where t.mail = :mail and t.password = :psw", Utilisateur.class).setParameter("mail", mail.trim())
+						.setParameter("psw", psw.trim()).getSingleResult();
+				if (user != null) {
+					userDao = new UtilisateurDao(user);
+				}
+			} catch (NoResultException nre) {
+				logger.info("Aucun utilisateur trouve.");
+			} catch (Exception e) {
+				logger.info("Exception lors de la recherche d'utilisateur: " + e.getMessage());
 			}
-		} catch (NoResultException nre) {
-			logger.info("Aucun utilisateur trouve.");
-		} catch (Exception e) {
-			logger.info("Exception lors de la recherche d'utilisateur: " + e.getMessage());
 		}
 		return userDao;
 	}

@@ -1,7 +1,7 @@
 'use strict';
 
-App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccountSrv', 'utilSrv',
-		function($scope, $element, $rootScope, newAccountSrv, utilSrv) {
+App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccountSrv', 'utilSrv', 'authSrv',
+		function($scope, $element, $rootScope, newAccountSrv, utilSrv, authSrv) {
 			
 			$scope.alerts = [];
 			$scope.closeAlert = function(index) {
@@ -82,7 +82,8 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 					newAccountSrv.createNewAccount($scope.newUser).then(function(d) {
 						if(d){
 							if(d.create){
-								// TODO Voir redirection??
+								$scope.login();
+								// $state.reload();
 								$scope.alerts = utilSrv.alertIt('success', 'Votre compte a bien \u00e9t\u00e9 cr\u00e9\u00e9.');
 							}else{
 								$scope.alerts = utilSrv.alertIt('danger', d.lib1);
@@ -94,7 +95,16 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 						$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre compte.');
 					});
 				}
-				
+			}
+			
+			// Logger l'utilisateur une fois qu'il a bien été créé:
+			$scope.login = function(){
+				authSrv.getUser($scope.newUser.mail, $scope.newUser.password).then(function(d) {
+					$rootScope.user = d;
+				}, function(errResponse) {
+					$scope.logalerts = utilSrv.alertIt('danger', 'Une erreur est survenue lors de la r\u00e9cup\u00e9ration de l\'utilisateur.');
+					$scope.showModal = true;
+				});
 			}
 			
 			// Init:
