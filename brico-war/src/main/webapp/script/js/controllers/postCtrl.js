@@ -77,7 +77,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 						return null;
 					}
 				}
-		    	
+		    					
 				// Enregistrement du post child:
 				$scope.createPostChild = function(){
 					if($scope.postChild == null || ($scope.postChild != null && $scope.postChild.post != null && $scope.postChild.post === '')){
@@ -88,8 +88,10 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 						postSrv.createPost($scope.postChild).then(function(d) {
 							if(d){
 								if(d.create){
-									$state.reload();
+									$scope.getPostsByPostId();
 									$scope.alerts = utilSrv.alertIt('success', 'Votre r\u00e9ponse a bien \u00e9t\u00e9 cr\u00e9\u00e9e.');
+									// TODO Ne marche pas..
+									$scope.isCollapsedContribBtn = true;
 								}else{
 									$scope.alerts = utilSrv.alertIt('danger', d.lib1);
 								}
