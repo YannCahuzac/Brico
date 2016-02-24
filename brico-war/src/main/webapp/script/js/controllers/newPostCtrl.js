@@ -1,8 +1,11 @@
 'use strict';
 
-App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'postSrv',
-		function($scope, $element, utilSrv, $rootScope, postSrv) {
+App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'postSrv', '$timeout',
+		function($scope, $element, utilSrv, $rootScope, postSrv, $timeout) {
 			
+			// Etat du spinner lors d'une validation de formulaire:
+			$scope.showSpinner = false;
+	
 			$scope.alerts = [];
 			$scope.closeAlert = function(index) {
 				utilSrv.closeAlert($scope.alerts, index);
@@ -37,7 +40,7 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 				$scope.alerts = utilSrv.alertIt('danger', 'Vous devez \u00eatre connect\u00e9 pour publier un nouveau post.');
 			}
 						
-			$scope.submitNewSub = function(){
+			$scope.submitNewPost = function(){
 				if(($scope.postDao.post != null && $scope.postDao.post === '') 
 						|| $scope.postDao.themeId === null || $scope.postDao.themeId === '' 
 						|| $scope.postDao.themeId === undefined 
@@ -46,20 +49,26 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 				}else if(($scope.postDao.post != null && $scope.postDao.post.length > 500) || ($scope.postDao.title != null && $scope.postDao.title.length > 100)){
 					$scope.alerts = utilSrv.alertIt('danger', 'Les tailles maximum du titre et du post sont respectivement de 100 et de 500 caract\u00e8res.');
 				}else{
-					postSrv.createPost($scope.postDao).then(function(d) {
-						if(d){
-							if(d.create){
-								$scope.postDao = initPost();
-								$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 cr\u00e9\u00e9 et est accessible dans le th\u00e8me choisi.');
-							}else{
-								$scope.alerts = utilSrv.alertIt('danger', d.lib1);
-							}
-						}else{
-							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
-						}
-					}, function(errResponse) {
-						$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
-					});
+					$timeout(function() {
+						$scope.$apply(function () {
+							$scope.showSpinner = true;
+						});
+							postSrv.createPost($scope.postDao).then(function(d) {
+								if(d){
+									if(d.create){
+										$scope.showSpinner = false;
+										$scope.postDao = initPost();
+										$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 cr\u00e9\u00e9 et est accessible dans le th\u00e8me choisi.');
+									}else{
+										$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+									}
+								}else{
+									$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
+								}
+							}, function(errResponse) {
+								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
+							});
+					}, 0);
 				}
 			}
 } ]);

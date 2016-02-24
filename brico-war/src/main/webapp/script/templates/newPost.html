@@ -20,7 +20,9 @@
 	</div>
 </div>
 
-<form ng-submit="submitNewSub()" ng-show="user" class="newSubForm">
+<rd-loading ng-show="showSpinner"></rd-loading>
+
+<form ng-submit="submitNewPost()" ng-show="user" class="newSubForm">
 	<div class="row">
 		
 		<div class="row ng-scope">

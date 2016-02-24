@@ -1,8 +1,11 @@
 'use strict';
 
-App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccountSrv', 'utilSrv', 'authSrv',
-		function($scope, $element, $rootScope, newAccountSrv, utilSrv, authSrv) {
+App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccountSrv', 'utilSrv', 'authSrv', '$timeout',
+		function($scope, $element, $rootScope, newAccountSrv, utilSrv, authSrv, $timeout) {
 			
+			// Etat du spinner lors d'une validation de formulaire:
+			$scope.showSpinner = false;	
+	
 			$scope.alerts = [];
 			$scope.closeAlert = function(index) {
 				utilSrv.closeAlert($scope.alerts, index);
@@ -79,21 +82,26 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 					// Vérif Tel si renseigné
 					 $scope.alerts = utilSrv.alertIt('danger', 'Le t\u00e9l\u00e9phone ne doit pas d\u00e9passer 20 caract\u00e8res.');
 				}else{
-					newAccountSrv.createNewAccount($scope.newUser).then(function(d) {
-						if(d){
-							if(d.create){
-								$scope.login();
-								// $state.reload();
-								$scope.alerts = utilSrv.alertIt('success', 'Votre compte a bien \u00e9t\u00e9 cr\u00e9\u00e9.');
+					$timeout(function() {
+						$scope.$apply(function () {
+							$scope.showSpinner = true;
+						});
+						newAccountSrv.createNewAccount($scope.newUser).then(function(d) {
+							if(d){
+								if(d.create){
+									$scope.showSpinner = false;
+									$scope.login();
+									$scope.alerts = utilSrv.alertIt('success', 'Votre compte a bien \u00e9t\u00e9 cr\u00e9\u00e9.');
+								}else{
+									$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+								}
 							}else{
-								$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre compte.');
 							}
-						}else{
+						}, function(errResponse) {
 							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre compte.');
-						}
-					}, function(errResponse) {
-						$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre compte.');
-					});
+						});
+					}, 0);
 				}
 			}
 			

@@ -8,6 +8,9 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 			// Note max d'un post:
 			$scope.maxRate = 10;
 			
+			// Etat du spinner lors d'une validation de formulaire:
+			$scope.showSpinner = false;
+			
 			// Tous les posts (y compris le parent) liés au postId (dans le cas du state postById):
 			// Dans le cas du state postByIdUser, ça correspond à tous les post de l'user:
 			$scope.posts = [];
@@ -77,7 +80,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 						return null;
 					}
 				}
-		    					
+		    		
 				// Enregistrement du post child:
 				$scope.createPostChild = function(){
 					if($scope.postChild == null || ($scope.postChild != null && $scope.postChild.post != null && $scope.postChild.post === '')){
@@ -85,22 +88,26 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 					}else if($scope.postChild != null && $scope.postChild.post != null && $scope.postChild.post.length > 500){
 						$scope.alerts = utilSrv.alertIt('danger', 'La taille maximum de votre r\u00e9ponse est de 500 caract\u00e8res.');
 					}else{
-						postSrv.createPost($scope.postChild).then(function(d) {
-							if(d){
-								if(d.create){
-									$scope.getPostsByPostId();
-									$scope.alerts = utilSrv.alertIt('success', 'Votre r\u00e9ponse a bien \u00e9t\u00e9 cr\u00e9\u00e9e.');
-									// TODO Ne marche pas..
-									$scope.isCollapsedContribBtn = true;
+						$timeout(function() {
+							$scope.$apply(function () {
+								$scope.showSpinner = true;
+							});
+							postSrv.createPost($scope.postChild).then(function(d) {
+								if(d){
+									if(d.create){
+										$scope.showSpinner = false;
+										$scope.getPostsByPostId();
+										$scope.alerts = utilSrv.alertIt('success', 'Votre r\u00e9ponse a bien \u00e9t\u00e9 cr\u00e9\u00e9e.');
+									}else{
+										$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+									}
 								}else{
-									$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+									$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
 								}
-							}else{
-								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
-							}
-						}, function(errResponse) {
-							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de l\'enregistrement de votre r\u00e9ponse.');
-						});
+							}, function(errResponse) {
+								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de l\'enregistrement de votre r\u00e9ponse.');
+							});
+						}, 0);
 					}
 				}
 				

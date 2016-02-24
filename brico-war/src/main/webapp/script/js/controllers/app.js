@@ -9,9 +9,9 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		url : '/',
 		templateUrl : '../templates/home.html',
 		controller : 'homeCtrl'
-	}).state('newSub', {
-		url : '/newSub',
-		templateUrl : '../templates/newSub.html',
+	}).state('newPost', {
+		url : '/newPost',
+		templateUrl : '../templates/newPost.html',
 		controller : 'newPostCtrl'
 	}).state('auth', {
 		url : '/auth',
