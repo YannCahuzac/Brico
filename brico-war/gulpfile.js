@@ -8,8 +8,12 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     less = require('gulp-less'),
     rename = require('gulp-rename'),
-    prism = require('connect-prism');
-    minifyHTML = require('gulp-minify-html');
+    prism = require('connect-prism'),
+    minifyHTML = require('gulp-minify-html'),
+    ngAnnotate = require('gulp-ng-annotate'),
+    uglify = require('gulp-uglify'),
+    rev= require('gulp-rev'),
+    replace = require('gulp-replace');
 
 var paths = {
     scripts: 'src/main/webapp/script/js/**/*.*',
@@ -25,13 +29,20 @@ var paths = {
 /**
  * Handle bower components from index
  */
-gulp.task('usemin', function() {
-    return gulp.src(paths.index)
-        .pipe(usemin({
-            js: [minifyJs(), 'concat'],
-            css: [minifyCss({keepSpecialComments: 0}), 'concat'],
-        }))
-        .pipe(gulp.dest(paths.dist));
+gulp.task('usemin',function() {
+	return gulp
+		.src(paths.index)
+		.pipe(
+			usemin({
+				js : [ minifyJs(), 'concat', ngAnnotate(), uglify({outSourceMap : true}), rev() ],
+				vendorjs : [ rev() ],
+				css : [ minifyCss({keepSpecialComments : 0}), 'concat', rev() ],
+				vendorcss : [
+					replace(/ui-grid\.(ttf|woff)/g,'/brico-war/dist/fonts/ui-grid.$1'),
+					replace(/[0-9a-zA-Z\-_\s\.\/]*\/([a-zA-Z\-_\.0-9]*\.(woff|woff2|eot|ttf|svg))/g,'/brico-war/dist/fonts/$1'),
+					rev() ]
+		}))
+		.pipe(gulp.dest(paths.dist));
 });
 
 /**
@@ -60,7 +71,7 @@ gulp.task('custom-images', function() {
 gulp.task('custom-js', function() {
     return gulp.src(paths.scripts)
         .pipe(minifyJs())
-        .pipe(concat('dashboard.min.js'))
+        .pipe(concat('index.min.js'))
         .pipe(gulp.dest(paths.dist + 'js'));
 });
 
