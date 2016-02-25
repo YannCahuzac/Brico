@@ -1,21 +1,12 @@
 var gulp = require('gulp'),
-    usemin = require('gulp-usemin'),
-    wrap = require('gulp-wrap'),
     connect = require('gulp-connect'),
     watch = require('gulp-watch'),
-    minifyCss = require('gulp-minify-css'),
-    minifyJs = require('gulp-uglify'),
+    cleanCSS = require('gulp-clean-css'),
     concat = require('gulp-concat'),
-    less = require('gulp-less'),
-    rename = require('gulp-rename'),
     prism = require('connect-prism'),
-    minifyHTML = require('gulp-minify-html'),
-    ngAnnotate = require('gulp-ng-annotate'),
+    htmlmin = require('gulp-htmlmin'),
     uglify = require('gulp-uglify'),
-    rev= require('gulp-rev'),
     del= require('del'),
-    html2js = require('gulp-html2js'),
-    replace = require('gulp-replace'),
 	htmlreplace = require('gulp-html-replace');
 
 /**
@@ -46,7 +37,7 @@ var paths = {
  * Nettoie la dist
  */
 gulp.task('clean', function(cb) {
-    del([paths.dist],cb);
+    del([paths.dist]);
 });
 
 /**
@@ -77,9 +68,9 @@ gulp.task('custom-appJs', function() {
 		 paths.srcAppDir + 'login.js',
 		 ]
     	)
-    	//.pipe(minifyJs())
-    	//.pipe(uglify())
     	.pipe(concat(paths.appJsFinal))
+    	// TODO Fait tout foirer
+    	//.pipe(uglify())
         .pipe(gulp.dest(paths.distJs));
 });
 
@@ -103,7 +94,6 @@ gulp.task('custom-utilsJs', function() {
 				paths.srcUtils + 'angular-table.min.js'
 			]
 			)
-			// .pipe(minifyJs())
 			.pipe(concat(paths.utilsJsFinal))
 			.pipe(gulp.dest(paths.distJs));
 });
@@ -120,9 +110,7 @@ gulp.task('html-replace', function() {
 	    .pipe(gulp.dest(paths.dist + 'templates'));
 });
 
-// ##########################################################
-// ########################## TODO ##########################
-
+// TODO
 gulp.task('custom-images', function() {
     return gulp.src(paths.srcImages)
         .pipe(gulp.dest(paths.dist + 'img'));
@@ -130,6 +118,7 @@ gulp.task('custom-images', function() {
 
 gulp.task('custom-css', function() {
     return gulp.src(paths.srcStyles)
+    	.pipe(cleanCSS())
         .pipe(gulp.dest(paths.dist + 'css'));
 });
 
@@ -138,12 +127,9 @@ gulp.task('custom-css', function() {
  */
 gulp.task('custom-templates', function() {
     return gulp.src([paths.srcTemplates, '!' + paths.index])
-        .pipe(minifyHTML())
+        .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest(paths.dist + 'templates'));
 });
-
-// ########################## FIN ##########################
-// #########################################################
 
 /**
  * Watch les modification sur chaque dossier décrit ci-dessous:
@@ -188,7 +174,9 @@ function prismInit(prismMode) {
 }
 
 gulp.task('buildStatic', ['custom-templates', 'custom-css', 'custom-images']);
-// Executer les tasks 'clean' puis 'buildBrico'
+// Executer les tasks 'clean' puis 'buildBrico'.
+// Si on met le clean direct dans la task build, comme le clean est super lent, il sera
+// executé en asynchrone après les autres taches du build.
 gulp.task('build', ['custom-appJs', 'custom-utilsJs', 'html-replace', 'buildStatic']);
 
 gulp.task('proxy', ['connect-dev'], function() {
