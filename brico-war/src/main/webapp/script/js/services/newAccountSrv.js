@@ -1,5 +1,3 @@
-'use strict';
- 
 App.factory('newAccountSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
     return {        
     	createNewAccount: function(newUser) {

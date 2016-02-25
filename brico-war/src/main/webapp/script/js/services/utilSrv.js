@@ -1,7 +1,4 @@
-'use strict';
-
 //Fonctions Utiles:
-
 App.factory('utilSrv', [
     function() {
 		return {

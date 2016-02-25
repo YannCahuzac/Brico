@@ -1,5 +1,3 @@
-'use strict';
-
 App.controller('homeCtrl', [ '$scope', 'postSrv', 'utilSrv', function($scope, postSrv, utilSrv) {
 
 	$scope.posts = [];

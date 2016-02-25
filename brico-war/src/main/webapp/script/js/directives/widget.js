@@ -1,10 +1,4 @@
-/**
- * Widget Directive
- */
-
-angular
-    .module('bricoAngular')
-    .directive('rdWidget', rdWidget);
+App.directive('rdWidget', rdWidget);
 
 function rdWidget() {
     var directive = {

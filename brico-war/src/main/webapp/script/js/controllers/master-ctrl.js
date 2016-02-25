@@ -1,7 +1,4 @@
-'use strict';
-
-angular.module('bricoAngular')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', '$state', MasterCtrl]);
+App.controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', '$state', MasterCtrl]);
 
 function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv, $state) {
 

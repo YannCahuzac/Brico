@@ -1,5 +1,3 @@
-'use strict';
-
 App.service('authSrv', [ '$http', '$rootScope', '$location', '$q',
 	function($http, $rootScope, $location, $q) {
 		return {

@@ -56,22 +56,19 @@ gulp.task('clean', function(cb) {
 gulp.task('custom-appJs', function() {
     return gulp.src(
 		[
-		 '!' + paths.srcUtilsJs, 
+		 //'!' + paths.srcUtilsJs, 
 		 paths.srcAppCtrl + 'app.js',
-		 
 		 paths.srcAppSrv + 'postSrv.js',
 		 paths.srcAppSrv + 'utilSrv.js',
 		 paths.srcAppSrv + 'themesSrv.js',
 		 paths.srcAppSrv + 'authSrv.js',
 		 paths.srcAppSrv + 'newAccountSrv.js',
-		 
 		 paths.srcAppCtrl + 'master-ctrl.js',
 		 paths.srcAppCtrl + 'homeCtrl.js',
 		 paths.srcAppCtrl + 'newPostCtrl.js',
 		 paths.srcAppCtrl + 'themeCtrl.js',
 		 paths.srcAppCtrl + 'postCtrl.js',
 		 paths.srcAppCtrl + 'newAccountCtrl.js',
-		 
 		 paths.srcAppDir + 'widget.js',
 		 paths.srcAppDir + 'widget-body.js',
 		 paths.srcAppDir + 'widget-footer.js',
@@ -80,9 +77,9 @@ gulp.task('custom-appJs', function() {
 		 paths.srcAppDir + 'login.js',
 		 ]
     	)
-        .pipe(minifyJs())
-        .pipe(uglify())
-        .pipe(concat(paths.appJsFinal))
+    	//.pipe(minifyJs())
+    	//.pipe(uglify())
+    	.pipe(concat(paths.appJsFinal))
         .pipe(gulp.dest(paths.distJs));
 });
 

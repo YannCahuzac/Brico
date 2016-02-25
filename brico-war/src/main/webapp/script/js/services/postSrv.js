@@ -1,5 +1,3 @@
-'use strict';
- 
 App.factory('postSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
     return {               
     		getPostsByThemeId: function(themeId) {

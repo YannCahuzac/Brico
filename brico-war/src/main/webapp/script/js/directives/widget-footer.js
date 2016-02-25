@@ -1,10 +1,4 @@
-/**
- * Widget Footer Directive
- */
-
-angular
-    .module('bricoAngular')
-    .directive('rdWidgetFooter', rdWidgetFooter);
+App.directive('rdWidgetFooter', rdWidgetFooter);
 
 function rdWidgetFooter() {
     var directive = {

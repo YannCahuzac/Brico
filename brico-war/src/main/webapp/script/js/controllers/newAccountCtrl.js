@@ -1,5 +1,3 @@
-'use strict';
-
 App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccountSrv', 'utilSrv', 'authSrv', '$timeout',
 		function($scope, $element, $rootScope, newAccountSrv, utilSrv, authSrv, $timeout) {
 			

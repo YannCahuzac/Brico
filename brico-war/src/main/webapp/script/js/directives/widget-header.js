@@ -1,10 +1,4 @@
-/**
- * Widget Header Directive
- */
-
-angular
-    .module('bricoAngular')
-    .directive('rdWidgetHeader', rdWidgetTitle);
+App.directive('rdWidgetHeader', rdWidgetTitle);
 
 function rdWidgetTitle() {
     var directive = {

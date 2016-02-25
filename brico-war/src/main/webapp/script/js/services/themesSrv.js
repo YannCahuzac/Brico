@@ -1,5 +1,3 @@
-'use strict';
- 
 App.factory('themesSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
     return {        
 		    getThemes: function() {

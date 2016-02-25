@@ -1,5 +1,3 @@
-'use strict';
-
 App.directive('modal', function() {
 					return {
 						template : '<div class="modal fade">'

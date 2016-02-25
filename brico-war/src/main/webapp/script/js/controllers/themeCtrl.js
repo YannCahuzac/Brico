@@ -1,5 +1,3 @@
-'use strict';
-
 App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', '$rootScope', 'postSrv', '$timeout',
 		function($scope, themesSrv, $stateParams, utilSrv, $rootScope, postSrv, $timeout) {
 

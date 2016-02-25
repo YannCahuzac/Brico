@@ -1,5 +1,3 @@
-'use strict';
-
 App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', 'postSrv', '$timeout',
 		function($scope, $element, utilSrv, $rootScope, postSrv, $timeout) {
 			

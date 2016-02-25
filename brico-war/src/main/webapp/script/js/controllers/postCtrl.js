@@ -1,7 +1,4 @@
-'use strict';
-
 // Ce controller est utilisé pour 2 states définis dans app.js: postById et postByIdUser.
-
 App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 'postSrv', '$timeout', '$state',
 		function($scope, $stateParams, utilSrv, $rootScope, postSrv, $timeout, $state) {
 
