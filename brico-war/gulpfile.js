@@ -13,42 +13,79 @@ var gulp = require('gulp'),
     ngAnnotate = require('gulp-ng-annotate'),
     uglify = require('gulp-uglify'),
     rev= require('gulp-rev'),
-    replace = require('gulp-replace');
+    del= require('del'),
+    html2js = require('gulp-html2js'),
+    replace = require('gulp-replace'),
+	htmlreplace = require('gulp-html-replace');
 
 var paths = {
-    scripts: 'src/main/webapp/script/js/**/*.*',
+	srcAppJs: 'src/main/webapp/script/js/**/*.js',
+    srcUtilsJs: 'src/main/webapp/script/js/utils/*.js',
     styles: 'src/main/webapp/script/css/**/*.*',
     images: 'src/main/webapp/script/img/**/*.*',
-    templates: 'src/main/webapp/script/templates/**/*.html',
-    index: '/webapp/src/main/webapp/script/templates/index.html',
+    index: 'src/main/webapp/script/templates/index.html',
+    templates: 'src/main/webapp/script/templates/*.*',
     bower_fonts: 'src/main/webapp/bower_components/**/*.{ttf,woff,eof,svg}',
     dist: 'src/main/webapp/dist/',
+    app: 'src/main/webapp/script/',
     webapproot:'src/main/webapp',
 };
 
 /**
+ * Nettoie la dist
+ */
+gulp.task('clean', function(cb) {
+    del([paths.dist],cb);
+});
+
+/**
  * Handle bower components from index
  */
-gulp.task('usemin',function() {
+gulp.task('usemin', function() {
 	return gulp
 		.src(paths.index)
 		.pipe(
 			usemin({
-				js : [ minifyJs(), 'concat', ngAnnotate(), uglify({outSourceMap : true}), rev() ],
-				vendorjs : [ rev() ],
-				css : [ minifyCss({keepSpecialComments : 0}), 'concat', rev() ],
-				vendorcss : [
-					replace(/ui-grid\.(ttf|woff)/g,'/brico-war/dist/fonts/ui-grid.$1'),
-					replace(/[0-9a-zA-Z\-_\s\.\/]*\/([a-zA-Z\-_\.0-9]*\.(woff|woff2|eot|ttf|svg))/g,'/brico-war/dist/fonts/$1'),
-					rev() ]
+				appJs : [ minifyJs(), 'concat', ngAnnotate(), uglify({outSourceMap : true}), rev() ],
+				vendorjs : [ rev() ]
 		}))
 		.pipe(gulp.dest(paths.dist));
 });
 
 /**
- * Copy assets
+ * Minify tous les JS App pour les mettre dans index.min.js
  */
-gulp.task('build-assets', ['copy-bower_fonts']);
+gulp.task('custom-appJs', function() {
+    return gulp.src(['!' + paths.srcUtilsJs, paths.srcAppJs])
+        .pipe(minifyJs())
+        .pipe(concat('index.min.js'))
+        .pipe(gulp.dest(paths.dist + 'js'));
+});
+
+/**
+ * Minify tous les JS Utils pour les mettre dans utils.min.js
+ */
+gulp.task('custom-utilsJs', function() {
+	return gulp.src(paths.srcUtilsJs)
+	.pipe(minifyJs())
+	.pipe(concat('utils.min.js'))
+	.pipe(gulp.dest(paths.dist + 'js'));
+});
+
+/**
+ * Remplace les blocs HTML par la src js
+ */
+gulp.task('html-replace', function() {
+	  return gulp.src(paths.index)
+	    .pipe(htmlreplace({
+	        'appJs': paths.dist + 'js/index.min.js',
+	        'utilsJs': paths.dist + 'js/utils.min.js'
+	    }))
+	    .pipe(gulp.dest(paths.dist + 'templates'));
+});
+
+// ###########################################################
+// ###########################################################
 
 gulp.task('copy-bower_fonts', function() {
     return gulp.src(paths.bower_fonts)
@@ -58,21 +95,9 @@ gulp.task('copy-bower_fonts', function() {
         .pipe(gulp.dest(paths.dist + 'lib'));
 });
 
-/**
- * Handle custom files
- */
-gulp.task('build-custom', ['custom-images', 'custom-js', 'custom-less', 'custom-templates']);
-
 gulp.task('custom-images', function() {
     return gulp.src(paths.images)
         .pipe(gulp.dest(paths.dist + 'img'));
-});
-
-gulp.task('custom-js', function() {
-    return gulp.src(paths.scripts)
-        .pipe(minifyJs())
-        .pipe(concat('index.min.js'))
-        .pipe(gulp.dest(paths.dist + 'js'));
 });
 
 gulp.task('custom-less', function() {
@@ -88,31 +113,21 @@ gulp.task('custom-templates', function() {
         .pipe(gulp.dest(paths.dist + 'templates'));
 });
 
+// ###########################################################
+// ###########################################################
+
 /**
  * Watch les modification sur chaque dossier décrit ci-dessous:
  */
 gulp.task('watch', function() {
-    gulp.watch([paths.images], ['custom-images']);
+	gulp.watch([paths.srcAppJs], ['custom-appJs', 'html-replace']);
+	gulp.watch([paths.srcUtilsJs], ['custom-utilsJs', 'html-replace']);
+
+	// A voir:
+	gulp.watch([paths.images], ['custom-images']);
     gulp.watch([paths.styles], ['custom-less']);
-    gulp.watch([paths.scripts], ['custom-js']);
     gulp.watch([paths.templates], ['custom-templates']);
     gulp.watch([paths.index], ['usemin']);
-});
-
-// TODO Faire fonctionner:
-gulp.task('webserver', function() {
-    connect.server({
-        root: paths.webapproot,
-        livereload: true,
-        port: 8888
-    });
-});
-
-// TODO Faire fonctionner:
-gulp.task('livereload', function() {
-    gulp.src([paths.webapproot + '**/*.*'])
-        .pipe(watch())
-        .pipe(connect.reload());
 });
 
 /**
@@ -147,7 +162,11 @@ function prismInit(prismMode) {
 }
 
 gulp.task('default', ['webserver', 'livereload', 'watch']);
-gulp.task('build', ['usemin', 'build-assets', 'build-custom']);
+gulp.task('build', ['usemin', 'html-replace', 'build-assets', 'build-custom']);
+
+// Executer les tasks 'clean' puis 'buildBrico'
+gulp.task('buildBrico', ['custom-appJs', 'custom-utilsJs', 'html-replace']);
+
 gulp.task('proxy', ['connect-dev'], function() {
     prismInit('proxy');
 });
