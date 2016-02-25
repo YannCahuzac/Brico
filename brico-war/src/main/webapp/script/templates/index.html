@@ -14,8 +14,8 @@
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/rdash-ui/dist/css/rdash.min.css">
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/select2/select2.css">
 		<!-- endbuild -->
-		
 		<!-- build:utilsJs -->
+		<!-- RAJOUTEZ LE FICHIER DANS LE GULPFILE.JS -->
 		<script type="text/javascript" src="/brico-war/script/js/utils/jquery.min.js"></script>
 		<script type="text/javascript" src="/brico-war/script/js/utils/angular.min.js"></script>
 		<script type="text/javascript" src="/brico-war/script/js/utils/bootstrap.min.js"></script>
@@ -27,10 +27,9 @@
 		<script type="text/javascript" src="/brico-war/script/js/utils/select2.js"></script>
 		<script type="text/javascript" src="/brico-war/script/js/utils/angular-table.min.js"></script>
 		<!-- endbuild -->
-		
 		<!-- build:appJs -->
-		<script src="/brico-war/script/js/controllers/app.js"></script>
 		<!-- ATTENTION BIEN METTRE LES SERVICES AVANT LES CONTROLEURS -->
+		<script src="/brico-war/script/js/controllers/app.js"></script>
 		<script src="/brico-war/script/js/services/postSrv.js"></script>
 		<script src="/brico-war/script/js/services/utilSrv.js"></script>
 		<script src="/brico-war/script/js/services/themesSrv.js"></script>
@@ -51,7 +50,6 @@
 		<script src="/brico-war/script/js/directives/loading.js"></script>
 		<script src="/brico-war/script/js/directives/login.js"></script>
 		<!-- endbuild -->
-
 	</head>
 	
 	<body ng-controller="MasterCtrl" class="bricoBody">
