@@ -3,6 +3,7 @@ package fr.yca.brico.controller;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class UtilisateurCtrl {
 			String token = tokenLong.toString();
 			request.getSession().setAttribute(Constants.TOKEN, token);
 			user.setToken(token);
-			logger.info("Login: [User id: " + user.getIdUser() + "; Token" + user.getToken() + "]");
+			logger.info("Login: [User id: " + user.getIdUser() + "; Token: " + user.getToken() + "]");
 			return new ResponseEntity<UtilisateurDao>(user, HttpStatus.OK);
 		}
 	}
@@ -53,5 +54,27 @@ public class UtilisateurCtrl {
 	public ResponseEntity<JsonFLux> mergeAccount(@RequestBody UtilisateurDao utilisateurDao) {
 		JsonFLux fluxRet = utilisateurSrv.mergeAccount(utilisateurDao);
 		return new ResponseEntity<JsonFLux>(fluxRet, HttpStatus.OK);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "logout", method = { RequestMethod.POST }, consumes = "application/json")
+	public ResponseEntity<Boolean> logout(HttpServletRequest request, @RequestBody UtilisateurDao utilisateurDao) {
+		Boolean ret = Boolean.TRUE;
+
+		HttpSession session = request.getSession();
+
+		try {
+			if (session != null && session.getAttribute(Constants.TOKEN) != null) {
+				if (!session.isNew()) {
+					session.invalidate();
+					session = request.getSession();
+				}
+			}
+		} catch (Exception e) {
+			ret = Boolean.FALSE;
+			logger.error("Exception lors du kill session: " + e.getMessage());
+		}
+
+		return new ResponseEntity<Boolean>(ret, HttpStatus.OK);
 	}
 }

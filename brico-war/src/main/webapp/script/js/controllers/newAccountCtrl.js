@@ -106,13 +106,13 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 						$scope.showSpinner = false;
 						if(d){
 							if(d.create){
+								$scope.login();
+								$scope.init();
 								if(isModeCreate){
-									$scope.init();
 									$scope.alerts = utilSrv.alertIt('success', 'Votre compte a bien \u00e9t\u00e9 cr\u00e9\u00e9.');
 								}else{
 									$scope.alerts = utilSrv.alertIt('success', 'Votre compte a bien \u00e9t\u00e9 mis \u00e0 jour.');
 								}
-								$scope.login();
 							}else{
 								$scope.alerts = utilSrv.alertIt('danger', d.lib1);
 							}

@@ -7,7 +7,7 @@ App.factory('newAccountSrv', ['$http', '$q', '$rootScope', function($http, $q, $
 	    					return response.data;
 	    				}, 
 	    				function(errResponse){
-	    					console.error('Une erreur est survenue lors de la creation/update du compte.');
+	    					console.error('Une erreur est survenue lors de la cr\u00e9ation / mise \u00e0 jour du compte.');
 	    					return $q.reject(errResponse);
 	    				}
 	    		);

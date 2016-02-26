@@ -67,13 +67,21 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 	}
 	
 	$scope.logout = function(){
-		$rootScope.user = null;
-		$scope.showModal = false;
-		if($state.current.name === 'postByIdUser' || $state.current.name === 'newPost'){
-			// On recharge la page car sinon rien ne se passe:
-			console.log("Rechargement du state!");
-			$state.reload();
-		}
+		authSrv.logout($rootScope.user).then(function(d) {
+			if(d){
+				$rootScope.user = null;
+				$scope.showModal = false;
+				if($state.current.name === 'postByIdUser' || $state.current.name === 'newPost'){
+					// On recharge la page car sinon rien ne se passe:
+					console.log("Rechargement du state!");
+					$state.reload();
+				}
+			}else{
+				$scope.logalerts = utilSrv.alertIt('danger', 'Une erreur est survenue lors de la d\u00e9connexion.');
+			}
+		}, function(errResponse) {
+			$scope.logalerts = utilSrv.alertIt('danger', 'Une erreur est survenue lors de la d\u00e9connexion.');
+		});
 	}
 	/********************* Fin Connexion ***********************/
 

@@ -7,4 +7,3 @@ Prévoir Alert si navigateur non compatible (voir Syges avec IE < 9)
 Ajouter Département dans les Posts pour faciliter les recherches Utilisateurs dans les tableaux
 Pouvoir voter pour un post si user connecté
 Voir Gestion Post si y'a plus de 20 posts retournés
-Serveur Logout supprimer token

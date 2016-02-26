@@ -14,6 +14,18 @@ App.service('authSrv', [ '$http', '$rootScope', '$location', '$q',
 			    				}
 			    		);
 			},
+			logout: function(user) {
+		    	return $http.post('/brico-war/action/logout', user)
+		    		.then(
+		    				function(response){
+		    					return response.data;
+		    				}, 
+		    				function(errResponse){
+		    					console.error('Une erreur est survenue lors de la d\u00e9connexion.');
+		    					return $q.reject(errResponse);
+		    				}
+		    		);
+		    },
 			redirectIfNotAuth : function() {
 				if (!$rootScope.user) {
 					// TODO
