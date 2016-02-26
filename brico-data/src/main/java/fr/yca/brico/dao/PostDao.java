@@ -28,6 +28,8 @@ public class PostDao {
 	private String dateCreaS;
 	private String libcss1;
 
+	private String tokenUser;
+
 	public PostDao() {
 		super();
 	}
@@ -210,6 +212,14 @@ public class PostDao {
 		} else {
 			this.pseudoUserCreation = "";
 		}
+	}
+
+	public String getTokenUser() {
+		return tokenUser;
+	}
+
+	public void setTokenUser(String tokenUser) {
+		this.tokenUser = tokenUser;
 	}
 
 }

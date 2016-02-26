@@ -18,6 +18,7 @@ public class UtilisateurDao {
 	private Integer nbVotes;
 	private Integer note;
 	private Integer role;
+	private String token;
 
 	public UtilisateurDao() {
 		super();
@@ -134,6 +135,14 @@ public class UtilisateurDao {
 
 	public void setRole(Integer role) {
 		this.role = role;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }

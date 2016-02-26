@@ -5,6 +5,7 @@ public class Constants {
 	public static final String formatDateTheme = "dd/MM/yyyy 'à' HH'h'mm";
 	public static final int MAX_POST_RESULT = 100;
 	public static final String SPACE = " ";
+	public static final String TOKEN = "token";
 
 	// Libelle Thèmes
 	public static final String libTheme1 = "Plomberie";

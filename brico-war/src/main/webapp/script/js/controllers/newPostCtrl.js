@@ -19,6 +19,7 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 					themeId : null,
 					title : '',
 					post : '',
+					tokenUser: $rootScope.user.token,
 					idPost : null,
 					dateCreation : null,
 					nbVotes : 0,
@@ -52,9 +53,9 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 							$scope.showSpinner = true;
 						});
 							postSrv.createPost($scope.postDao).then(function(d) {
+								$scope.showSpinner = false;
 								if(d){
 									if(d.create){
-										$scope.showSpinner = false;
 										$scope.postDao = initPost();
 										$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 cr\u00e9\u00e9 et est accessible dans le th\u00e8me choisi.');
 									}else{

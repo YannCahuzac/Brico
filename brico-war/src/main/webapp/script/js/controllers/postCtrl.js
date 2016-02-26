@@ -62,6 +62,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 							themeId : $scope.postParent.themeId,
 							title : $scope.postParent.title,
 							post : '',
+							tokenUser: $rootScope.user.token,
 							idPost : null,
 							dateCreation : null,
 							nbVotes : 0,
@@ -90,9 +91,9 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 								$scope.showSpinner = true;
 							});
 							postSrv.createPost($scope.postChild).then(function(d) {
+								$scope.showSpinner = false;
 								if(d){
 									if(d.create){
-										$scope.showSpinner = false;
 										$scope.getPostsByPostId();
 										$scope.alerts = utilSrv.alertIt('success', 'Votre r\u00e9ponse a bien \u00e9t\u00e9 cr\u00e9\u00e9e.');
 									}else{

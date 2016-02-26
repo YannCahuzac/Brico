@@ -1,5 +1,7 @@
 package fr.yca.brico.controller;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import fr.yca.brico.dao.UtilisateurDao;
 import fr.yca.brico.services.UtilisateurSrv;
+import fr.yca.brico.utils.Constants;
 import fr.yca.brico.utils.JsonFLux;
 
 @EnableWebMvc
@@ -30,10 +33,17 @@ public class UtilisateurCtrl {
 	@ResponseBody
 	@RequestMapping(value = "getUserByMailAndPsw/mail/{mail}/psw/{psw}", method = RequestMethod.GET)
 	public ResponseEntity<UtilisateurDao> getUserByMailAndPsw(HttpServletRequest request, @PathVariable("mail") String mail, @PathVariable("psw") String psw) {
+
 		UtilisateurDao user = utilisateurSrv.getUserByMailAndPsw(mail, psw);
 		if (user == null) {
 			return new ResponseEntity<UtilisateurDao>(user, HttpStatus.BAD_REQUEST);
 		} else {
+			// Mise en place du token pour l'user:
+			Long tokenLong = new Random().nextLong();
+			String token = tokenLong.toString();
+			request.getSession().setAttribute(Constants.TOKEN, token);
+			user.setToken(token);
+			logger.info("Login: [User id: " + user.getIdUser() + "; Token" + user.getToken() + "]");
 			return new ResponseEntity<UtilisateurDao>(user, HttpStatus.OK);
 		}
 	}

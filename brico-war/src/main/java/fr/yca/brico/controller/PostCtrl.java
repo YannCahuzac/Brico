@@ -18,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import fr.yca.brico.dao.PostDao;
 import fr.yca.brico.services.PostSrv;
+import fr.yca.brico.utils.Constants;
 import fr.yca.brico.utils.JsonFLux;
 import fr.yca.brico.utils.TypeRecherche;
 
@@ -80,9 +81,22 @@ public class PostCtrl {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "createPost", method = { RequestMethod.POST }, consumes = "application/json")
-	public ResponseEntity<JsonFLux> createPost(@RequestBody PostDao postDao) {
-		JsonFLux fluxRet = postSrv.createPost(postDao);
+	public ResponseEntity<JsonFLux> createPost(HttpServletRequest request, @RequestBody PostDao postDao) {
+
+		// Vérification du token pour pouvoir créer un post:
+		logger.info("Creation Post: [User Id: " + postDao.getIdUserCreation() + "; Token User Client: " + postDao.getTokenUser() + "; Token User Serveur: "
+				+ request.getSession().getAttribute(Constants.TOKEN) + "]");
+
+		JsonFLux fluxRet = null;
+
+		if (request.getSession() != null && postDao.getTokenUser() != null && postDao.getTokenUser().equals(request.getSession().getAttribute(Constants.TOKEN))) {
+			fluxRet = postSrv.createPost(postDao);
+		} else {
+			fluxRet = new JsonFLux();
+			fluxRet.setCreate(Boolean.FALSE);
+			fluxRet.setLib1("Enregistrement impossible: authentification KO.");
+		}
+
 		return new ResponseEntity<JsonFLux>(fluxRet, HttpStatus.OK);
 	}
-
 }

@@ -5,5 +5,4 @@ Pouvoir valider un post dans la consultation des posts utilisateur
 Définir un type de post [Aide Réalisation Travaux] et un type de post [Conseil]
 Prévoir Alert si navigateur non compatible (voir Syges avec IE < 9)
 Ajouter Département dans les Posts pour faciliter les recherches Utilisateurs dans les tableaux
-Voir aspect sécurité: l'user peut accéder aux GET Serveur via son navigateur
 Pouvoir voter pour un post si user connecté
