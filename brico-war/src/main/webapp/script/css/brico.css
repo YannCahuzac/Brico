@@ -163,6 +163,10 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	margin-top: 15px;
 }
 
-.newAccountStar{
+.newAccountStar {
 	margin-left: 5px;
+}
+
+.accountBtnBlock {
+	margin-top: 15px;
 }

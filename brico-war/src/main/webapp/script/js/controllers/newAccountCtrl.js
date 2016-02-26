@@ -9,7 +9,7 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 				utilSrv.closeAlert($scope.alerts, index);
 			};
 
-			$scope.newUser = null;
+			$scope.mergeUser = null;
 			
 			var initUser = function(){
 				return {
@@ -30,65 +30,65 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 			}
 			
 			$scope.init = function(){
-				$scope.newUser = initUser();
+				$scope.mergeUser = initUser();
 			}
 			
 			// Méthode de vérification des champs obligatoires:
 			$scope.checkMandatoyFields = function(){
 				var error = false;
 				if(
-					!($scope.newUser != null 
-					&& $scope.newUser.pseudo != null && $scope.newUser.pseudo !== ''
-					&& $scope.newUser.password != null && $scope.newUser.password !== '' 
-					&& $scope.newUser.password2 != null && $scope.newUser.password2 !== ''
-					&& $scope.newUser.mail != null && $scope.newUser.mail !== ''
-					&& $scope.newUser.ville != null && $scope.newUser.ville !== ''
-					&& $scope.newUser.cp != null && $scope.newUser.cp !== ''
-					&& $scope.newUser.rue != null && $scope.newUser.rue !== '')
+					!($scope.mergeUser != null 
+					&& $scope.mergeUser.pseudo != null && $scope.mergeUser.pseudo !== ''
+					&& $scope.mergeUser.password != null && $scope.mergeUser.password !== '' 
+					&& $scope.mergeUser.password2 != null && $scope.mergeUser.password2 !== ''
+					&& $scope.mergeUser.mail != null && $scope.mergeUser.mail !== ''
+					&& $scope.mergeUser.ville != null && $scope.mergeUser.ville !== ''
+					&& $scope.mergeUser.cp != null && $scope.mergeUser.cp !== ''
+					&& $scope.mergeUser.rue != null && $scope.mergeUser.rue !== '')
 				){
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez renseigner tous les champs obligatoires.');
 				} else if(
-					$scope.newUser.password != null && $scope.newUser.password !== '' 
-					&& $scope.newUser.password2 != null && $scope.newUser.password2 !== '' 
-					&& $scope.newUser.password !== $scope.newUser.password2
+					$scope.mergeUser.password != null && $scope.mergeUser.password !== '' 
+					&& $scope.mergeUser.password2 != null && $scope.mergeUser.password2 !== '' 
+					&& $scope.mergeUser.password !== $scope.mergeUser.password2
 					)
 				{
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Les mots de passe saisis ne sont pas identiques.');
-				}else if($scope.newUser.mail.length > 200){
+				}else if($scope.mergeUser.mail.length > 200){
 					// Vérif Mail
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le mail ne doit pas d\u00e9passer 200 caract\u00e8res.');
-				}else if(!utilSrv.validateEmail($scope.newUser.mail)){
+				}else if(!utilSrv.validateEmail($scope.mergeUser.mail)){
 					// Vérif Regex Mail
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le mail saisi n\est pas correct.');
-				}else if($scope.newUser.cp.length > 10){
+				}else if($scope.mergeUser.cp.length > 10){
 					// Vérif CP
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le code postal ne doit pas d\u00e9passer 10 caract\u00e8res.');
-				}else if(!utilSrv.validateNum($scope.newUser.cp)){
+				}else if(!utilSrv.validateNum($scope.mergeUser.cp)){
 					// Vérif Regex CP
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le code postal saisi n\est pas correct.');
-				}else if($scope.newUser.pseudo.length > 100){
+				}else if($scope.mergeUser.pseudo.length > 100){
 					// Vérif Pseudo
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le pseudo ne doit pas d\u00e9passer 100 caract\u00e8res.');
-				}else if($scope.newUser.password.length > 100){
+				}else if($scope.mergeUser.password.length > 100){
 					// Vérif Psw
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le mot de passe ne doit pas d\u00e9passer 100 caract\u00e8res.');
-				}else if($scope.newUser.ville.length > 100){
+				}else if($scope.mergeUser.ville.length > 100){
 					// Vérif Ville
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le ville ne doit pas d\u00e9passer 100 caract\u00e8res.');
-				}else if($scope.newUser.rue.length > 100){
+				}else if($scope.mergeUser.rue.length > 100){
 					// Vérif Rue
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'La rue ne doit pas d\u00e9passer 100 caract\u00e8res.');
-				}else if($scope.newUser.tel.length > 20){
+				}else if($scope.mergeUser.tel.length > 20){
 					// Vérif Tel si renseigné
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le t\u00e9l\u00e9phone ne doit pas d\u00e9passer 20 caract\u00e8res.');
@@ -102,7 +102,7 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 					$scope.$apply(function () {
 						$scope.showSpinner = true;
 					});
-					newAccountSrv.mergeAccount($scope.newUser).then(function(d) {
+					newAccountSrv.mergeAccount($scope.mergeUser).then(function(d) {
 						$scope.showSpinner = false;
 						if(d){
 							if(d.create){
@@ -143,7 +143,7 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 			
 			// Logger l'utilisateur une fois qu'il a bien été créé:
 			$scope.login = function(){
-				authSrv.getUser($scope.newUser.mail, $scope.newUser.password).then(function(d) {
+				authSrv.getUser($scope.mergeUser.mail, $scope.mergeUser.password).then(function(d) {
 					$rootScope.user = d;
 				}, function(errResponse) {
 					$scope.logalerts = utilSrv.alertIt('danger', 'Une erreur est survenue lors de la r\u00e9cup\u00e9ration de l\'utilisateur.');
