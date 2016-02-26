@@ -49,9 +49,9 @@ public class UtilisateurCtrl {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "createNewAccount", method = { RequestMethod.POST }, consumes = "application/json")
-	public ResponseEntity<JsonFLux> createNewAccount(@RequestBody UtilisateurDao utilisateurDao) {
-		JsonFLux fluxRet = utilisateurSrv.createNewAccount(utilisateurDao);
+	@RequestMapping(value = "mergeAccount", method = { RequestMethod.POST }, consumes = "application/json")
+	public ResponseEntity<JsonFLux> mergeAccount(@RequestBody UtilisateurDao utilisateurDao) {
+		JsonFLux fluxRet = utilisateurSrv.mergeAccount(utilisateurDao);
 		return new ResponseEntity<JsonFLux>(fluxRet, HttpStatus.OK);
 	}
 }

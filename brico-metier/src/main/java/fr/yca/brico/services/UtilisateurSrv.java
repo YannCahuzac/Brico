@@ -81,9 +81,9 @@ public class UtilisateurSrv {
 	}
 
 	/**
-	 * Créer un nv compte Utilisateur:
+	 * Créer/Update un compte Utilisateur:
 	 */
-	public JsonFLux createNewAccount(UtilisateurDao utilisateurDao) {
+	public JsonFLux mergeAccount(UtilisateurDao utilisateurDao) {
 		JsonFLux fluxRet = new JsonFLux();
 		fluxRet.setCreate(Boolean.TRUE);
 
@@ -102,25 +102,31 @@ public class UtilisateurSrv {
 			fluxRet.setLib1("Enregistrement impossible car le code postal saisi est incorrect.");
 		} else {
 			try {
-				// Vérif mail existant base:
-				Long countMail = entityManager.createQuery(Constants.countUserMail, Long.class).setParameter("mail", utilisateurDao.getMail().trim()).getSingleResult();
-				if (countMail > 0) {
-					fluxRet.setCreate(Boolean.FALSE);
-					fluxRet.setLib1("Création de compte impossible car le mail donné existe déjà.");
-				} else {
-					// Vérif cp existant base:
-					Long countPseudo = entityManager.createQuery(Constants.countUserPseudo, Long.class).setParameter("pseudo", utilisateurDao.getPseudo().trim()).getSingleResult();
-					if (countPseudo > 0) {
+				if (utilisateurDao.getIdUser() == null) {
+					// Mode Creation:
+					// Vérif mail existant base:
+					Long countMail = entityManager.createQuery(Constants.countUserMail, Long.class).setParameter("mail", utilisateurDao.getMail().trim()).getSingleResult();
+					if (countMail > 0) {
 						fluxRet.setCreate(Boolean.FALSE);
-						fluxRet.setLib1("Création de compte impossible car le pseudo donné est déjà utilisé.");
+						fluxRet.setLib1("Création de compte impossible car le mail donné existe déjà.");
 					} else {
-						entityManager.merge(new Utilisateur(utilisateurDao, true));
+						// Vérif cp existant base:
+						Long countPseudo = entityManager.createQuery(Constants.countUserPseudo, Long.class).setParameter("pseudo", utilisateurDao.getPseudo().trim()).getSingleResult();
+						if (countPseudo > 0) {
+							fluxRet.setCreate(Boolean.FALSE);
+							fluxRet.setLib1("Création de compte impossible car le pseudo donné est déjà utilisé.");
+						} else {
+							entityManager.merge(new Utilisateur(utilisateurDao, true));
+						}
 					}
+				} else {
+					// Mode Update:
+					entityManager.merge(new Utilisateur(utilisateurDao, true));
 				}
 			} catch (Exception e) {
 				fluxRet.setCreate(Boolean.FALSE);
-				logger.info("Exception lors de la création de l'utilisateur: " + e.getMessage());
-				fluxRet.setLib1("Exception en base lors de la création de l'utilisateur.");
+				logger.info("Exception lors de la création/mise à jour de l'utilisateur: " + e.getMessage());
+				fluxRet.setLib1("Exception en base lors de la création/mise à jour de l'utilisateur.");
 			}
 		}
 		return fluxRet;

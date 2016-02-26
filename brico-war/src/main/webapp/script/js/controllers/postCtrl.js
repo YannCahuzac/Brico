@@ -103,6 +103,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 									$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la cr\u00e9ation de votre post.');
 								}
 							}, function(errResponse) {
+								$scope.showSpinner = false;
 								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de l\'enregistrement de votre r\u00e9ponse.');
 							});
 						}, 0);
