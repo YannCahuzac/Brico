@@ -36,8 +36,12 @@ App.controller('themeCtrl', [ '$scope', 'themesSrv', '$stateParams', 'utilSrv', 
 				if($scope.themeId != null && $scope.themeId != ''){
 					$scope.theme = themesSrv.getThemeByIdFromRoot($scope.themeId);
 					postSrv.getPostsByThemeId($scope.themeId).then(function(d) {
-						$scope.posts = d;
-						$scope.postsFiltered = d;
+						if(d != null && d.length > 0){
+							$scope.posts = d;
+							$scope.postsFiltered = d;
+						}else{
+							$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9' + ( $scope.theme ? ' pour le th\u00e8me ' + $scope.theme.lib1 + '.' : '.'));
+						}
 					}, function(errResponse) {
 						$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9' + ( $scope.theme ? ' pour le th\u00e8me ' + $scope.theme.lib1 + '.' : '.'));
 					});

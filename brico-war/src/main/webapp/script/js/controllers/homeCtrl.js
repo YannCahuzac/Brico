@@ -26,8 +26,12 @@ App.controller('homeCtrl', [ '$scope', 'postSrv', 'utilSrv', function($scope, po
 	// Recupere les plus recents posts cote serveur:
 	$scope.getRecentsPosts = function() {
 		postSrv.getRecentsPosts().then(function(d) {
-			$scope.posts = d;
-			$scope.postsFiltered = d;
+			if(d != null && d.length > 0){
+				$scope.posts = d;
+				$scope.postsFiltered = d;
+			}else{
+				$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9.');
+			}
 		}, function(errResponse) {
 			$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9.');
 		});

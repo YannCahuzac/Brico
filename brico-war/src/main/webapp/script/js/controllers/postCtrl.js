@@ -124,11 +124,15 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				$scope.getPostsByPostId = function() {
 					if($scope.postId != null && $scope.postId != ''){
 						postSrv.getPostsByPostId($scope.postId).then(function(d) {
-							$scope.posts = d;
-							$scope.getParentFromAllPosts();
-							// On init le post child ICI car ce post child a besoin des attributs du post parent.
-							// A cause des pbs asynchrones serveur, si on met ça en dehors de cette méthode: le post parent sera tjr null quand on init le child.
-							$scope.postChild = initPostChild();
+							if(d != null && d.length > 0){
+								$scope.posts = d;
+								$scope.getParentFromAllPosts();
+								// On init le post child ICI car ce post child a besoin des attributs du post parent.
+								// A cause des pbs asynchrones serveur, si on met ça en dehors de cette méthode: le post parent sera tjr null quand on init le child.
+								$scope.postChild = initPostChild();
+							}else{
+								$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9.');
+							}
 						}, function(errResponse) {
 							$scope.alerts = utilSrv.alertIt('danger', 'Aucun post n\' a \u00e9t\u00e9 recup\u00e9r\u00e9.');
 						});
@@ -170,8 +174,12 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				$scope.getPostsByUserId = function() {
 					if($scope.idUser != null && $scope.idUser != ''){
 						postSrv.getPostsByUserId($scope.idUser).then(function(d) {
-							$scope.posts = d;
-							$scope.postsFiltered = d;
+							if(d != null && d.length > 0){
+								$scope.posts = d;
+								$scope.postsFiltered = d;
+							}else{
+								$scope.alerts = utilSrv.alertIt('danger', 'Vous n\'avez publi\u00e9 aucun post pour le moment.');
+							}
 						}, function(errResponse) {
 							$scope.alerts = utilSrv.alertIt('danger', 'Vous n\'avez publi\u00e9 aucun post pour le moment.');
 						});

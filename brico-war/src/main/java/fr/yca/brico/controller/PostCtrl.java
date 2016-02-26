@@ -34,46 +34,29 @@ public class PostCtrl {
 	@ResponseBody
 	@RequestMapping(value = "getPostsByThemeId/{themeId}", method = RequestMethod.GET)
 	public ResponseEntity<List<PostDao>> getPostsByThemeId(HttpServletRequest request, @PathVariable("themeId") int themeId) {
-		// TODO Voir Gestion si y'a plus de 20 posts retournés
 		List<PostDao> ret = postSrv.getPosts(TypeRecherche.FIND_POSTS_BY_ID_THEME, themeId);
-		if (ret == null || (ret != null && ret.size() == 0)) {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
-		}
+		return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "getPostsByPostId/{postId}", method = RequestMethod.GET)
 	public ResponseEntity<List<PostDao>> getPostsByPostId(HttpServletRequest request, @PathVariable("postId") int postId) {
 		List<PostDao> ret = postSrv.getPosts(TypeRecherche.FIND_POSTS_BY_ID_POST, postId);
-		if (ret == null || (ret != null && ret.size() == 0)) {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
-		}
+		return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "getPostsByUserId/{userId}", method = RequestMethod.GET)
 	public ResponseEntity<List<PostDao>> getPostsByUserId(HttpServletRequest request, @PathVariable("userId") int userId) {
 		List<PostDao> ret = postSrv.getPosts(TypeRecherche.FIND_POSTS_BY_ID_USER, userId);
-		if (ret == null || (ret != null && ret.size() == 0)) {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
-		}
+		return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "getRecentsPosts", method = RequestMethod.GET)
 	public ResponseEntity<List<PostDao>> getRecentsPosts(HttpServletRequest request) {
 		List<PostDao> ret = postSrv.getPosts(TypeRecherche.FIND_RECENTS_POSTS, null);
-		if (ret == null || (ret != null && ret.size() == 0)) {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.BAD_REQUEST);
-		} else {
-			return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
-		}
+		return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
 	}
 
 	/**
