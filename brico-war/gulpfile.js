@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     htmlmin = require('gulp-htmlmin'),
     uglify = require('gulp-uglify'),
     del= require('del'),
+    ngAnnotate = require('gulp-ng-annotate');
 	htmlreplace = require('gulp-html-replace');
 
 /**
@@ -67,7 +68,9 @@ gulp.task('custom-appJs', function() {
 		 paths.srcAppDir + 'login.js',
 		 ]
     	)
-    	.pipe(uglify({mangle: false}))
+    	// http://stackoverflow.com/questions/17238759/angular-module-minification-bug
+    	.pipe(ngAnnotate())
+    	.pipe(uglify())
     	.pipe(concat(paths.appJsFinal))
         .pipe(gulp.dest(paths.distJs));
 });
