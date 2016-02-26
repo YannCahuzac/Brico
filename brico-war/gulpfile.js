@@ -37,7 +37,7 @@ var paths = {
  * Nettoie la dist
  */
 gulp.task('clean', function(cb) {
-    del([paths.dist]);
+    del([paths.dist], cb);
 });
 
 /**
@@ -47,7 +47,6 @@ gulp.task('clean', function(cb) {
 gulp.task('custom-appJs', function() {
     return gulp.src(
 		[
-		 //'!' + paths.srcUtilsJs, 
 		 paths.srcAppCtrl + 'app.js',
 		 paths.srcAppSrv + 'postSrv.js',
 		 paths.srcAppSrv + 'utilSrv.js',
@@ -68,9 +67,8 @@ gulp.task('custom-appJs', function() {
 		 paths.srcAppDir + 'login.js',
 		 ]
     	)
+    	.pipe(uglify({mangle: false}))
     	.pipe(concat(paths.appJsFinal))
-    	// TODO Fait tout foirer
-    	//.pipe(uglify())
         .pipe(gulp.dest(paths.distJs));
 });
 
