@@ -11,7 +11,11 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td at-sortable at-attribute="title" at-title="Post" class="postThemeTable"><a href="#/post/{{item.idPost}}">{{item.title}}</a></td>
+							<td at-sortable at-attribute="title" at-title="Post" class="postThemeTable">
+								<a href="#/post/{{(item.idPostRef == 0 ? item.idPost : item.idPostRef)}}">
+									{{item.title}}
+								</a>	
+							</td>
 							<td at-sortable at-attribute="dateCreation" at-title="Date de cr&eacute;ation" width="200" at-initial-sorting="desc" class="postTable">{{item.dateCreaS}}</td>
 							<td at-sortable at-attribute="postValidate" at-title="&Eacute;tat" width="100" class="etatPost">
 								<span ng-show="item.postValidate == 1" class="text-success"><i class="fa fa-check"></i></span>

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import fr.yca.brico.dao.PostDao;
+import fr.yca.brico.utils.Constants;
 
 @Entity(name = "Post")
 @Table(name = "KV01.POST")
@@ -63,11 +64,16 @@ public class Post implements java.io.Serializable {
 			setIdUserCreation(postDao.getIdUserCreation());
 			setPseudoUserCreation(postDao.getPseudoUserCreation());
 			setThemeId(postDao.getThemeId());
-			setTitle(postDao.getTitle());
 			setPost(postDao.getPost());
 
 			// 0 pour dire qu'il s'agit d'un post parent ou idParent sinon:
 			setIdPostRef(postDao.getIdPostRef());
+			if (postDao.getIdPostRef() != null && postDao.getIdPostRef() != 0) {
+				// Veillez à ce que la taille du titre ne dépasse pas 80 chars pour continuer à pouvoir rajouter le champs suivant par la suite:
+				setTitle(Constants.postContribution + postDao.getTitle());
+			} else {
+				setTitle(postDao.getTitle());
+			}
 
 			setDateCreation(new Timestamp(new Date().getTime()));
 			// Init:
