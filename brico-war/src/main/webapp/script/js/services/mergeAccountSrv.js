@@ -1,4 +1,4 @@
-App.factory('newAccountSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
+App.factory('mergeAccountSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
     return {        
     	mergeAccount: function(user) {
 	    	return $http.post('/brico-war/action/mergeAccount', user)

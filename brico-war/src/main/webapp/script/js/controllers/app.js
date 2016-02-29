@@ -30,8 +30,12 @@ App.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		controller : 'postCtrl'
 	}).state('newAccount', {
 		url : '/newAccount',
-		templateUrl : '../templates/newAccount.html',
-		controller : 'newAccountCtrl'
+		templateUrl : '../templates/mergeAccount.html',
+		controller : 'mergeAccountCtrl'
+	}).state('updateAccount', {
+		url : '/updateAccount',
+		templateUrl : '../templates/mergeAccount.html',
+		controller : 'mergeAccountCtrl'
 	});
 
 	$urlRouterProvider.otherwise('/');

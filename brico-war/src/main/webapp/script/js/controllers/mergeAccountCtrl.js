@@ -1,5 +1,5 @@
-App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccountSrv', 'utilSrv', 'authSrv', '$timeout',
-		function($scope, $element, $rootScope, newAccountSrv, utilSrv, authSrv, $timeout) {
+App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAccountSrv', 'utilSrv', 'authSrv', '$timeout',
+		function($scope, $element, $rootScope, mergeAccountSrv, utilSrv, authSrv, $timeout) {
 			
 			// Etat du spinner lors d'une validation de formulaire:
 			$scope.showSpinner = false;	
@@ -102,7 +102,7 @@ App.controller('newAccountCtrl', [ '$scope', '$element','$rootScope', 'newAccoun
 					$scope.$apply(function () {
 						$scope.showSpinner = true;
 					});
-					newAccountSrv.mergeAccount($scope.mergeUser).then(function(d) {
+					mergeAccountSrv.mergeAccount($scope.mergeUser).then(function(d) {
 						$scope.showSpinner = false;
 						if(d){
 							if(d.create){
