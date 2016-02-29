@@ -71,7 +71,7 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 			if(d){
 				$rootScope.user = null;
 				$scope.showModal = false;
-				if($state.current.name === 'postByIdUser' || $state.current.name === 'newPost'){
+				if($state.current.name === 'postByIdUser' || $state.current.name === 'newPost' || $state.current.name === 'updateAccount'){
 					// On recharge la page car sinon rien ne se passe:
 					console.log("Rechargement du state!");
 					$state.reload();

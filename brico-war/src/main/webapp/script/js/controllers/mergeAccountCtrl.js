@@ -80,7 +80,11 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez renseigner tous les champs obligatoires.');
 				}else if(
 						$scope.state == 'U'
-						&& $scope.mergeUser.password0 != null && password0.length > 0
+						&& ( 
+						$scope.mergeUser.password0 != null && $scope.mergeUser.password0.length > 100
+						|| $scope.mergeUser.password != null && $scope.mergeUser.password.length > 100
+						|| $scope.mergeUser.password2 != null && $scope.mergeUser.password2.length > 100
+						)
 				){
 					// MODE UPDATE
 					error = true;
@@ -100,11 +104,34 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez renseigner tous les champs obligatoires.');
 				} else if(
+					$scope.state == 'N' &&
 					$scope.mergeUser.password != null && $scope.mergeUser.password !== '' 
 					&& $scope.mergeUser.password2 != null && $scope.mergeUser.password2 !== '' 
 					&& $scope.mergeUser.password !== $scope.mergeUser.password2
 					)
 				{
+					error = true;
+					$scope.alerts = utilSrv.alertIt('danger', 'Les mots de passe saisis ne sont pas identiques.');
+					
+				}else if(
+					$scope.state == 'U' 
+					&& $scope.mergeUser.password0 != null && $scope.mergeUser.password0 !== ''
+					&& (
+							$scope.mergeUser.password === '' 
+							|| $scope.mergeUser.password2 === '' 
+						)
+				){
+					// MODE UPDATE
+					// VÈrif psw remplis
+					error = true;
+					$scope.alerts = utilSrv.alertIt('danger', 'Vous devez renseigner les mots de passe.');
+				}else if(
+					$scope.state == 'U' 
+					&& $scope.mergeUser.password0 != null && $scope.mergeUser.password0 !== ''
+					&& $scope.mergeUser.password !== $scope.mergeUser.password2
+				){
+					// MODE UPDATE
+					// VÈrif psw identiques
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Les mots de passe saisis ne sont pas identiques.');
 				}else if($scope.state == 'N' && $scope.mergeUser.mail.length > 200){
@@ -205,15 +232,6 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 								// VÈrification que le psw0 saisi est bien l'ancien psw.
 								update = false;
 								$scope.alerts = utilSrv.alertIt('danger', 'L\'ancien mot de passe saisi ne correspond pas \u00e0 votre ancien mot de passe.');
-							}else if(
-									$scope.mergeUser.password == null || ( $scope.mergeUser.password != null && $scope.mergeUser.password === '') 	
-							){
-								// VÈrification que l'user avait bien rempli les champs password et password2 avec le bon psw pour prendre en compte la modif suivante:
-								update = false;
-								$scope.alerts = utilSrv.alertIt('danger', 'Vous n\'avez saisi aucun nouveau mot de passe.');
-							}else{
-								// Si tout est ok: affectation du nv psw ‡ l'user qu'on enverra ensuite au serveur:
-								$scope.mergeUser.password = $scope.mergeUser.password0;
 							}
 						}else{
 							// L'utilisateur n'a pas rempli psw0 donc il ne souhaite pas faire une M‡J du psw.
