@@ -1,29 +1,55 @@
-<form ng-submit="createNewAccount()" class="newSubForm" ng-show="!user && mergeUser">
+<form ng-submit="submitAccount()" class="newSubForm" ng-show="merge != 'ok'" name="formMergeAccount">
 	<div class="row">	
 		<div class="ng-scope">
 			<div class="col-lg-3 col-md-6 col-xs-12">
 				<!-- Corps -->
-				<div class="form-group">
+
+				<!-- CHAMPS UTILISES PAR LE STATE newAccount -->
+				<div class="form-group" ng-show="state == 'N'">
 					<label for="email">Adresse mail</label>
 					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
 					<input type="email" required class="form-control" id="email" placeholder="Email" ng-model="mergeUser.mail" maxlength="200" />
 				</div>
-				<div class="form-group">
+				<div class="form-group" ng-show="state == 'N'">
 					<label for="pseudo">Pseudo</label>
 					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
 					<input type="text" required class="form-control" id="pseudo" placeholder="Pseudo" ng-model="mergeUser.pseudo" maxlength="100" />
 				</div>
-				<div class="form-group">
-					<label for="password">Mot de passe</label>
+				<!-- NB: ng-if car sinon le required pose pb pour l'état updateAccount -->
+				<div class="form-group" ng-if="state == 'N'">
+					<label for="password">Nouveau mot de passe</label>
 					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
-					<input type="password" required class="form-control" id="password" placeholder="Mot de passe" ng-model="mergeUser.password" maxlength="100" />
+					<input type="password" class="form-control" id="password" placeholder="Mot de passe" ng-model="mergeUser.password" maxlength="100" required />
 				</div>
-				<div class="form-group">
-					<label for="password2">Confirmer votre mot de passe</label>
+				<!-- NB: ng-if car sinon le required pose pb pour l'état updateAccount -->
+				<div class="form-group" ng-if="state == 'N'">
+					<label for="password2">Confirmer votre nouveau mot de passe</label>
 					<span class="fa fa-star-o text-danger newAccountStar" tooltip="Saisie obligatoire"></span>
-					<input type="password" required class="form-control" id="password2" placeholder="Mot de passe" ng-model="mergeUser.password2" maxlength="100" />
+					<input type="password" class="form-control" id="password2" placeholder="Confirmation du mot de passe" ng-model="mergeUser.password2" maxlength="100" required />
 				</div>
-	
+				
+				<!-- CHAMPS UTILISES PAR LE STATE updateAccount -->
+				<div class="form-group" ng-show="state == 'U'">
+					<label for="password0">Ancien mot de passe</label>
+					<input type="password" class="form-control" id="password0" placeholder="Ancien mot de passe" ng-model="mergeUser.password0" maxlength="100" />
+				</div>
+				<div collapse="mergeUser.password0 != ''">
+					<p class="help-block">
+						<small>Renseignez votre mot de passe actuel si vous souhaitez le modifier.</small>
+					</p>
+				</div>
+				<div collapse="mergeUser.password0 == ''">
+					<div class="form-group" ng-show="state == 'U'">
+						<label for="password">Nouveau mot de passe</label>
+						<input class="form-control" id="password" placeholder="Mot de passe" ng-model="mergeUser.password" maxlength="100" />
+					</div>
+					<div class="form-group" ng-show="state == 'U'">
+						<label for="password2">Confirmer votre nouveau mot de passe</label>
+						<input class="form-control" id="password2" placeholder="Confirmation du mot de passe" ng-model="mergeUser.password2" maxlength="100" />
+					</div>
+				</div>
+
+				<!-- CHAMPS UTILISES PAR LES 2 STATES -->
 				<div class="form-group">
 					<label for="tel">T&eacute;l&eacute;phone</label>
 					<input type="text" class="form-control" id="tel" placeholder="T&eacute;l&eacute;phone" ng-model="mergeUser.tel" maxlength="20" />
@@ -50,7 +76,7 @@
 				</div>
 
 				<div class="accountBtnBlock">
-					<span class="btn btn-sm btn-danger gauche" ng-click="init()">R&eacute;initialiser</span>
+					<span class="btn btn-sm btn-danger gauche" ng-click="state == 'N' ? init() : initExistingUser()">R&eacute;initialiser</span>
 					<button class="btn btn-sm btn-success droite">Valider</button>
 				</div>
 			</div>

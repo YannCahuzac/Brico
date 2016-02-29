@@ -1,5 +1,6 @@
-App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAccountSrv', 'utilSrv', 'authSrv', '$timeout',
-		function($scope, $element, $rootScope, mergeAccountSrv, utilSrv, authSrv, $timeout) {
+// Ce controller est utilisÈ pour 2 states dÈfinis dans app.js: newAccount et updateAccount.
+App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAccountSrv', 'utilSrv', 'authSrv', '$timeout', '$state', 
+		function($scope, $element, $rootScope, mergeAccountSrv, utilSrv, authSrv, $timeout, $state) {
 			
 			// Etat du spinner lors d'une validation de formulaire:
 			$scope.showSpinner = false;	
@@ -10,8 +11,36 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 			};
 
 			$scope.mergeUser = null;
+			// Etat du ctrl: create ou update
+			$scope.state = '';
+			// Etat de la creation ou de la mise ‡ jour:
+			$scope.merge = 'ko';
 			
-			var initUser = function(){
+			// NB: Quand on valide le formulaire, les champs required doivent Ítre renseignÈs:
+			var initOldUser = function(){
+				if($rootScope.user != null){
+					return {
+						idUser : $rootScope.user.idUser,
+						dateCreation : $rootScope.user.dateCreation,
+						pseudo : $rootScope.user.pseudo,
+						password0 : '',
+						password : '',
+						password2 : '',
+						tel : $rootScope.user.tel,
+						mail : $rootScope.user.mail,
+						ville : $rootScope.user.ville,
+						cp : $rootScope.user.cp,
+						rue : $rootScope.user.rue,
+						nbVotes : $rootScope.user.nbVotes,
+						note : $rootScope.user.note,
+						role : $rootScope.user.role
+					};
+				}else{
+					return null;
+				}
+			}
+			
+			var initNewUser = function(){
 				return {
 					idUser : null,
 					dateCreation : null,
@@ -29,14 +58,35 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 				};
 			}
 			
+			$scope.initExistingUser = function(){
+				$scope.mergeUser = initOldUser();
+			}
+
 			$scope.init = function(){
-				$scope.mergeUser = initUser();
+				$scope.mergeUser = initNewUser();
 			}
 			
 			// MÈthode de vÈrification des champs obligatoires:
 			$scope.checkMandatoyFields = function(){
 				var error = false;
 				if(
+						$scope.state == 'U'	&&	
+						!($scope.mergeUser.ville != null && $scope.mergeUser.ville !== ''
+						&& $scope.mergeUser.cp != null && $scope.mergeUser.cp !== ''
+						&& $scope.mergeUser.rue != null && $scope.mergeUser.rue !== '')
+				){
+					// MODE UPDATE
+					error = true;
+					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez renseigner tous les champs obligatoires.');
+				}else if(
+						$scope.state == 'U'
+						&& $scope.mergeUser.password0 != null && password0.length > 0
+				){
+					// MODE UPDATE
+					error = true;
+					$scope.alerts = utilSrv.alertIt('danger', 'Le mot de passe ne doit pas d\u00e9passer 100 caract\u00e8res.');
+				}else if(
+					$scope.state == 'N' &&
 					!($scope.mergeUser != null 
 					&& $scope.mergeUser.pseudo != null && $scope.mergeUser.pseudo !== ''
 					&& $scope.mergeUser.password != null && $scope.mergeUser.password !== '' 
@@ -46,6 +96,7 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 					&& $scope.mergeUser.cp != null && $scope.mergeUser.cp !== ''
 					&& $scope.mergeUser.rue != null && $scope.mergeUser.rue !== '')
 				){
+					// MODE CREATE
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez renseigner tous les champs obligatoires.');
 				} else if(
@@ -56,11 +107,13 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 				{
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Les mots de passe saisis ne sont pas identiques.');
-				}else if($scope.mergeUser.mail.length > 200){
+				}else if($scope.state == 'N' && $scope.mergeUser.mail.length > 200){
+					// MODE CREATE
 					// VÈrif Mail
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le mail ne doit pas d\u00e9passer 200 caract\u00e8res.');
-				}else if(!utilSrv.validateEmail($scope.mergeUser.mail)){
+				}else if($scope.state == 'N' && !utilSrv.validateEmail($scope.mergeUser.mail)){
+					// MODE CREATE
 					// VÈrif Regex Mail
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le mail saisi n\est pas correct.');
@@ -72,18 +125,19 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 					// VÈrif Regex CP
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le code postal saisi n\est pas correct.');
-				}else if($scope.mergeUser.pseudo.length > 100){
+				}else if($scope.state == 'N' && $scope.mergeUser.pseudo.length > 100){
+					// MODE CREATE
 					// VÈrif Pseudo
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le pseudo ne doit pas d\u00e9passer 100 caract\u00e8res.');
-				}else if($scope.mergeUser.password.length > 100){
+				}else if($scope.mergeUser.password != null && $scope.mergeUser.password.length > 100){
 					// VÈrif Psw
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le mot de passe ne doit pas d\u00e9passer 100 caract\u00e8res.');
 				}else if($scope.mergeUser.ville.length > 100){
 					// VÈrif Ville
 					error = true;
-					$scope.alerts = utilSrv.alertIt('danger', 'Le ville ne doit pas d\u00e9passer 100 caract\u00e8res.');
+					$scope.alerts = utilSrv.alertIt('danger', 'La ville ne doit pas d\u00e9passer 100 caract\u00e8res.');
 				}else if($scope.mergeUser.rue.length > 100){
 					// VÈrif Rue
 					error = true;
@@ -106,6 +160,8 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 						$scope.showSpinner = false;
 						if(d){
 							if(d.create){
+								// Success:
+								$scope.merge = 'ok';
 								$scope.login();
 								$scope.init();
 								if(isModeCreate){
@@ -135,9 +191,39 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 			}
 			
 			// MÈthode pour crÈer un nv compte:
-			$scope.createNewAccount = function(){
+			$scope.submitAccount = function(){
 				if(!$scope.checkMandatoyFields()){
-					$scope.mergeAccount(true);
+					if($scope.state == 'N'){
+						$scope.mergeAccount(true);
+					}else if($scope.state == 'U'){
+						// MODE UPDATE
+						var update = true;
+						// Remplissage du psw user:
+						if($scope.mergeUser.password0 != null && $scope.mergeUser.password0 !== '') {
+							// L'utilisateur a rempli psw0 donc il souhaite faire une M‡J du psw:
+							if($scope.mergeUser.password0 !== $rootScope.user.password){
+								// VÈrification que le psw0 saisi est bien l'ancien psw.
+								update = false;
+								$scope.alerts = utilSrv.alertIt('danger', 'L\'ancien mot de passe saisi ne correspond pas \u00e0 votre ancien mot de passe.');
+							}else if(
+									$scope.mergeUser.password == null || ( $scope.mergeUser.password != null && $scope.mergeUser.password === '') 	
+							){
+								// VÈrification que l'user avait bien rempli les champs password et password2 avec le bon psw pour prendre en compte la modif suivante:
+								update = false;
+								$scope.alerts = utilSrv.alertIt('danger', 'Vous n\'avez saisi aucun nouveau mot de passe.');
+							}else{
+								// Si tout est ok: affectation du nv psw ‡ l'user qu'on enverra ensuite au serveur:
+								$scope.mergeUser.password = $scope.mergeUser.password0;
+							}
+						}else{
+							// L'utilisateur n'a pas rempli psw0 donc il ne souhaite pas faire une M‡J du psw.
+							// On remet donc l'ancien psw dans le champs user psw qu'on enverra ensuite au serveur:
+							$scope.mergeUser.password = $rootScope.user.password;
+						}
+						if(update){
+							$scope.mergeAccount(false);
+						}
+					}
 				}
 			}
 			
@@ -151,6 +237,23 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 				});
 			}
 			
-			// Init:
-			$scope.init();
+			if($state.current.name === 'newAccount'){
+				$scope.state = 'N';
+				if(!$rootScope.user){
+					// Init:
+					$scope.init();
+				}else{
+					$state.go('updateAccount');
+				}
+			}else if($state.current.name === 'updateAccount'){
+				$scope.state = 'U';
+				if($rootScope.user){
+					console.log('initExistingUser');
+					// Init:
+					$scope.initExistingUser();
+				}else{
+					console.log('redirect');
+					$state.go('newAccount');
+				}
+			}
 } ]);

@@ -121,7 +121,7 @@ public class UtilisateurSrv {
 					}
 				} else {
 					// Mode Update:
-					entityManager.merge(new Utilisateur(utilisateurDao, true));
+					entityManager.merge(new Utilisateur(utilisateurDao, false));
 				}
 			} catch (Exception e) {
 				fluxRet.setCreate(Boolean.FALSE);

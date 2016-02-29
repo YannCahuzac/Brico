@@ -4,8 +4,9 @@
 		<div class="widget-icon blueBrico1 pull-left">
 			<i class="fa fa-user"></i>
 		</div>
-		<div class="title">Nouveau Compte</div>
-		<div class="comment">Une fois votre compte cr&eacute;&eacute;, vous pourrez aider la communaut&eacute; de bricoleurs!</div>
+		<div class="title">{{( state == 'N' ? 'Nouveau Compte' : 'Gestion des donn&eacute;es personnelles' )}}</div>
+		<div class="comment" ng-show="state == 'N'">Une fois votre compte cr&eacute;&eacute;, vous pourrez aider la communaut&eacute; de bricoleurs!</div>
+		<div class="comment" ng-show="state == 'U'">Mise &agrave; jour de votre profil</div>
 		</rd-widget-body> </rd-widget>
 	</div>
 </div>
