@@ -52,8 +52,9 @@
 		<script src="/brico-war/script/js/directives/login.js"></script>
 		<!-- endbuild -->
 	</head>
-	
+		
 	<body ng-controller="MasterCtrl" class="bricoBody">
+
 		<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 	
 			<!-- Sidebar -->
@@ -178,4 +179,15 @@
 		</div>
 		<!-- End Page Wrapper -->
 	</body>
+		
+	<!--[if lt IE 9]>
+         <div class="modal-backdrop fade in ieDead">
+         	<p class="ieDeadText">Votre navigateur actuel n'est plus &agrave; jour..<br> 
+         	Veuillez <a href="http://browsehappy.com/">le mettre &agrave; jour</a> pour utiliser le site La Bonne Aide !</p>
+         </div>
+         <script type="text/javascript">
+	         document.getElementById("page-wrapper").style.display = 'none';
+         </script>
+	<![endif]-->
+	
 </html>

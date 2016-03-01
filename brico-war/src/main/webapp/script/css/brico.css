@@ -170,3 +170,12 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 .accountBtnBlock {
 	margin-top: 15px;
 }
+
+.ieDead {
+	text-align: center;
+	font-size: 25px;
+}
+
+.ieDeadText {
+	margin-top: 200px;
+}
