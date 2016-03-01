@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		<rd-widget> <rd-widget-body>
+		<div class="widget-icon blueBrico1 pull-left">
+			<i class="fa fa-info"></i>
+		</div>
+		<div class="title">{{( state == 'L' ? 'Mentions l&eacute;gales' : 'Aide' )}}</div>
+		<div class="comment" ng-show="state == 'L'">Auteur et publication</div>
+		<div class="comment" ng-show="state == 'A'">Contact et utilisation du site !</div>
+		</rd-widget-body> </rd-widget>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-xs-12">
+		<div class="alerts-container" data-ng-show="alerts.length">
+			<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div ng-show="state == 'L'" class="col-md-6 col-xs-12">
+			<p>
+				TODO Mettre en place les mentions l&eacute;gales.
+			</p>
+	</div>
+	<div ng-show="state == 'A'" class="col-md-6 col-xs-12">
+			<p>
+				Le site <strong>La Bonne Aide</strong> vous permet de poster, contribuer ou consulter des posts.
+			</p>
+			<p>
+				Les posts peuvent &ecirc;tre soit des questions pratiques concerant toute activit&eacute; de bricolage, soit une demande d'aide sp&eacute;cifique pour la r&eacute;alisation de travaux.
+				Dans tous les cas, il sera possible &agrave; toute personne inscrite sur le site de contribuer &agrave; l'entre-aide entre bricoleurs.
+			</p>
+			<p>
+				Dans le cas o&ugrave; vous seriez demandeur d'aide, une fois que votre post vous aura apport&eacute; satisfaction, vous pourrez alors le valider dans la rubrique <Strong>Profil</Strong> 
+				pour avertir la communaut&eacute; qu'une r&eacute;ponse favorable vous a d&eacute;j&agrave; &eacute;t&eacute; apport&eacute;e.
+			</p>
+			<p>
+				Pour tout renseignement concernant l'utilisation du site ou pour une simple question, vous pouvez &eacute;crire &agrave; l'adresse mail <strong>labonneaide@gmail.com</strong>.
+			</p>
+	</div>
+</div>

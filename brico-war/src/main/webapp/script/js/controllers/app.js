@@ -36,6 +36,14 @@ App.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		url : '/updateAccount',
 		templateUrl : '../templates/mergeAccount.html',
 		controller : 'mergeAccountCtrl'
+	}).state('license', {
+		url : '/license',
+		templateUrl : '../templates/info.html',
+		controller : 'infoCtrl'
+	}).state('aide', {
+		url : '/aide',
+		templateUrl : '../templates/info.html',
+		controller : 'infoCtrl'
 	});
 
 	$urlRouterProvider.otherwise('/');

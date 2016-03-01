@@ -60,6 +60,7 @@ gulp.task('custom-appJs', function() {
 		 paths.srcAppCtrl + 'themeCtrl.js',
 		 paths.srcAppCtrl + 'postCtrl.js',
 		 paths.srcAppCtrl + 'mergeAccountCtrl.js',
+		 paths.srcAppCtrl + 'infoCtrl.js',
 		 paths.srcAppDir + 'widget.js',
 		 paths.srcAppDir + 'widget-body.js',
 		 paths.srcAppDir + 'widget-footer.js',
