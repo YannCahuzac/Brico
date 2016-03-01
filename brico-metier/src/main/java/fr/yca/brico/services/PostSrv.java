@@ -10,11 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.yca.brico.bean.Post;
+import fr.yca.brico.bean.Utilisateur;
 import fr.yca.brico.dao.PostDao;
 import fr.yca.brico.utils.Constants;
 import fr.yca.brico.utils.JsonFLux;
@@ -28,9 +28,6 @@ public class PostSrv {
 	final static Logger logger = Logger.getLogger(PostSrv.class.getName());
 
 	protected EntityManager entityManager;
-
-	@Autowired
-	Post post;
 
 	public EntityManager getEntityManager() {
 		return entityManager;
@@ -68,28 +65,28 @@ public class PostSrv {
 	public List<PostDao> getPosts(TypeRecherche typeRecherche, Integer idRecherche) {
 
 		List<PostDao> ret = null;
-		List<Post> postList = null;
-		TypedQuery<Post> tq = null;
+		List<Object> postList = null;
+		TypedQuery<Object> tq = null;
 
 		try {
 			switch (typeRecherche) {
 			case FIND_POSTS_BY_ID_POST:
 				if (idRecherche != null) {
-					tq = entityManager.createQuery(Constants.findPostsByIdPost, Post.class).setParameter("idPostRef", idRecherche).setParameter("idPost", idRecherche);
+					tq = entityManager.createQuery(Constants.findPostsByIdPost, Object.class).setParameter("idPostRef", idRecherche).setParameter("idPost", idRecherche);
 				}
 				break;
 			case FIND_POSTS_BY_ID_THEME:
 				if (idRecherche != null) {
-					tq = entityManager.createQuery(Constants.findPostsByIdTheme, Post.class).setParameter("themeId", idRecherche);
+					tq = entityManager.createQuery(Constants.findPostsByIdTheme, Object.class).setParameter("themeId", idRecherche);
 				}
 				break;
 			case FIND_POSTS_BY_ID_USER:
 				if (idRecherche != null) {
-					tq = entityManager.createQuery(Constants.findPostsByIdUser, Post.class).setParameter("idUserCreation", idRecherche);
+					tq = entityManager.createQuery(Constants.findPostsByIdUser, Object.class).setParameter("idUserCreation", idRecherche);
 				}
 				break;
 			case FIND_RECENTS_POSTS:
-				tq = entityManager.createQuery(Constants.findRecentsPosts, Post.class).setMaxResults(Constants.MAX_POST_RESULT);
+				tq = entityManager.createQuery(Constants.findRecentsPosts, Object.class).setMaxResults(Constants.MAX_POST_RESULT);
 				break;
 			}
 			if (tq != null) {
@@ -103,12 +100,20 @@ public class PostSrv {
 
 		if (postList != null && postList.size() > 0) {
 			ret = new ArrayList<PostDao>();
-			Iterator<Post> itPost = postList.iterator();
+			Object[] o = null;
+			Post post = null;
+			Utilisateur user = null;
+			Iterator<Object> itPost = postList.iterator();
 			while (itPost.hasNext()) {
-				Post post = itPost.next();
-				if (post != null) {
-					ret.add(new PostDao(post, typeRecherche));
+				o = (Object[]) itPost.next();
+				if (o != null && o.length > 1 && o[0] instanceof Post && o[0] != null && o[1] instanceof Utilisateur && o[1] != null) {
+					post = (Post) o[0];
+					user = (Utilisateur) o[1];
+					ret.add(new PostDao(post, user, typeRecherche));
+					post = null;
+					user = null;
 				}
+				o = null;
 			}
 		}
 		return ret;

@@ -3,6 +3,7 @@ package fr.yca.brico.dao;
 import java.sql.Timestamp;
 
 import fr.yca.brico.bean.Post;
+import fr.yca.brico.bean.Utilisateur;
 import fr.yca.brico.utils.Constants;
 import fr.yca.brico.utils.Outils;
 import fr.yca.brico.utils.TypeRecherche;
@@ -12,11 +13,10 @@ public class PostDao {
 	private Integer idPost;
 	private Timestamp dateCreation;
 	private Integer idUserCreation;
-	private String pseudoUserCreation = "";
 	private Integer idPostRef;
 	private Integer themeId;
-	private String title;
-	private String post;
+	private String title = "";
+	private String post = "";
 	private Integer typePost;
 	private Integer nbVotes;
 	private Integer note;
@@ -28,6 +28,7 @@ public class PostDao {
 	private Integer noteUserOver = 0;
 	private String dateCreaS;
 	private String libcss1;
+	private UtilisateurDao userDao;
 
 	private String tokenUser;
 
@@ -35,12 +36,11 @@ public class PostDao {
 		super();
 	}
 
-	public PostDao(Post post, TypeRecherche typeRecherche) {
+	public PostDao(Post post, Utilisateur user, TypeRecherche typeRecherche) {
 		if (post != null) {
 			setIdPost(post.getIdPost());
 			setDateCreation(post.getDateCreation());
 			setIdUserCreation(post.getIdUserCreation());
-			setPseudoUserCreation(post.getPseudoUserCreation());
 			setIdPostRef(post.getIdPostRef());
 			setThemeId(post.getThemeId());
 			setTitle(post.getTitle());
@@ -52,6 +52,7 @@ public class PostDao {
 			setNbVotes(post.getNbVotes());
 			setNote(post.getNote());
 			setPostValidate(post.getPostValidate());
+			setUserDao(new UtilisateurDao(user));
 		}
 	}
 
@@ -204,18 +205,6 @@ public class PostDao {
 		this.noteUserOver = noteUserOver;
 	}
 
-	public String getPseudoUserCreation() {
-		return pseudoUserCreation;
-	}
-
-	public void setPseudoUserCreation(String pseudoUserCreation) {
-		if (pseudoUserCreation != null) {
-			this.pseudoUserCreation = pseudoUserCreation;
-		} else {
-			this.pseudoUserCreation = "";
-		}
-	}
-
 	public String getTokenUser() {
 		return tokenUser;
 	}
@@ -230,6 +219,14 @@ public class PostDao {
 
 	public void setTypePost(Integer typePost) {
 		this.typePost = typePost;
+	}
+
+	public UtilisateurDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(UtilisateurDao userDao) {
+		this.userDao = userDao;
 	}
 
 }

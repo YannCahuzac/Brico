@@ -8,17 +8,17 @@ public class UtilisateurDao {
 
 	private Integer idUser;
 	private Timestamp dateCreation;
-	private String pseudo;
-	private String password;
-	private String tel;
-	private String mail;
-	private String ville;
-	private String cp;
-	private String rue;
+	private String pseudo = "";
+	private String password = "";
+	private String tel = "";
+	private String mail = "";
+	private String ville = "";
+	private String cp = "";
+	private String rue = "";
 	private Integer nbVotes;
 	private Integer note;
 	private Integer role;
-	private String token;
+	private String token = "";
 
 	public UtilisateurDao() {
 		super();

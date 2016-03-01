@@ -32,10 +32,10 @@ public class Constants {
 
 	// Requetes JPQL pour la recherche des posts:
 	// La clause [WHERE c.idPostRef = 0] c'est pour dire qu'il s'agit d'un post parent (cad qu'il ne fait pas reference à un autre post):
-	public static final String findPostsByIdTheme = "SELECT c FROM Post c WHERE c.themeId = :themeId AND c.idPostRef = 0";
-	public static final String findPostsByIdUser = "SELECT c FROM Post c WHERE c.idUserCreation = :idUserCreation";
-	public static final String findPostsByIdPost = "SELECT c FROM Post c WHERE c.idPostRef = :idPostRef OR c.idPost = :idPost ORDER BY c.dateCreation DESC";
-	public static final String findRecentsPosts = "SELECT c FROM Post c WHERE c.idPostRef = 0 ORDER BY c.dateCreation DESC";
+	public static final String findPostsByIdTheme = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND c.themeId = :themeId AND c.idPostRef = 0";
+	public static final String findPostsByIdUser = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND c.idUserCreation = :idUserCreation";
+	public static final String findPostsByIdPost = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND (c.idPostRef = :idPostRef OR c.idPost = :idPost) ORDER BY c.dateCreation DESC";
+	public static final String findRecentsPosts = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND c.idPostRef = 0 ORDER BY c.dateCreation DESC";
 
 	// Requetes JPQL pour la recherche des utilisateurs:
 	public static final String countUserMail = "SELECT count(u) FROM Utilisateur u WHERE u.mail = :mail";

@@ -57,7 +57,6 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 					if($rootScope.user != null && $scope.postParent != null && $scope.postParent.idPost != null && $scope.postParent.idPost != ''){
 						return {
 							idUserCreation : $rootScope.user.idUser,
-							pseudoUserCreation : $rootScope.user.pseudo,
 							idPostRef : $scope.postParent.idPost,
 							themeId : $scope.postParent.themeId,
 							title : $scope.postParent.title,

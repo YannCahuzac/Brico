@@ -71,7 +71,8 @@ App.factory('postSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootSc
 		    findStringInPosts: function(s, posts) {
 		    	var postsFiltered = [];
 		    	posts.forEach(function (element, index, array){
-		    		if(posts[index].title.toUpperCase().indexOf(s.toUpperCase()) > -1 || posts[index].dateCreaS.indexOf(s) > -1){
+		    		if(posts[index].title.toUpperCase().indexOf(s.toUpperCase()) > -1 || posts[index].dateCreaS.indexOf(s) > -1 || 
+		    				(posts[index].userDao !== null && posts[index].userDao.cp !== null && posts[index].userDao.cp.toUpperCase().indexOf(s.toUpperCase()) > -1)){
 		    			postsFiltered.push(posts[index]);
 		    		}
 		    	});

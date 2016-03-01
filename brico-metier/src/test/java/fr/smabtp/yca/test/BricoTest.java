@@ -1,5 +1,8 @@
 package fr.smabtp.yca.test;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,6 +13,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import fr.yca.brico.bean.Post;
+import fr.yca.brico.bean.Utilisateur;
 import fr.yca.brico.utils.Constants;
 import fr.yca.brico.utils.Outils;
 
@@ -61,6 +66,32 @@ public class BricoTest {
 			int countMail2 = em.createQuery(Constants.countUserMail, Long.class).setParameter("mail", mail).getFirstResult();
 			System.out.println(countMail2);
 
+		} catch (Exception e) {
+			logger.error(e);
+		}
+	}
+
+	@Test
+	@Ignore
+	public void testJoin() {
+		try {
+			String joinReq = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND c.idPostRef = 0 ORDER BY c.dateCreation DESC";
+			List<Object> postList = em.createQuery(joinReq, Object.class).setMaxResults(Constants.MAX_POST_RESULT).getResultList();
+
+			if (postList != null && postList.size() > 0) {
+				Iterator<Object> itPost = postList.iterator();
+				while (itPost.hasNext()) {
+					Object[] o = (Object[]) itPost.next();
+					if (o[0] instanceof Post) {
+						Post post = (Post) o[0];
+						System.out.println(post);
+					}
+					if (o[1] instanceof Utilisateur) {
+						Utilisateur user = (Utilisateur) o[1];
+						System.out.println(user);
+					}
+				}
+			}
 		} catch (Exception e) {
 			logger.error(e);
 		}

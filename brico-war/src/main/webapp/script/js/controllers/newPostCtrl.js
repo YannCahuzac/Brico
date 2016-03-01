@@ -14,7 +14,6 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 			var initPost = function(){
 				return {
 					idUserCreation : $rootScope.user.idUser,
-					pseudoUserCreation : $rootScope.user.pseudo,
 					idPostRef : 0,
 					themeId : null,
 					title : '',
