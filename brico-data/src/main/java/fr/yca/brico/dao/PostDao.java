@@ -17,6 +17,7 @@ public class PostDao {
 	private Integer themeId;
 	private String title;
 	private String post;
+	private Integer typePost;
 	private Integer nbVotes;
 	private Integer note;
 	private Integer postValidate;
@@ -47,6 +48,7 @@ public class PostDao {
 				// On ne le fait que dans ce cas car sinon ça va saturer la mémoire utilisateur côté client:
 				setPost(post.getPost());
 			}
+			setTypePost(post.getTypePost());
 			setNbVotes(post.getNbVotes());
 			setNote(post.getNote());
 			setPostValidate(post.getPostValidate());
@@ -220,6 +222,14 @@ public class PostDao {
 
 	public void setTokenUser(String tokenUser) {
 		this.tokenUser = tokenUser;
+	}
+
+	public Integer getTypePost() {
+		return typePost;
+	}
+
+	public void setTypePost(Integer typePost) {
+		this.typePost = typePost;
 	}
 
 }

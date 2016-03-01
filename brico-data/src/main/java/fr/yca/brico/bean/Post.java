@@ -45,6 +45,9 @@ public class Post implements java.io.Serializable {
 	@Column(name = "POST")
 	private String post;
 
+	@Column(name = "TYPE_POST")
+	private Integer typePost;
+
 	@Column(name = "NB_VOTES")
 	private Integer nbVotes;
 
@@ -65,6 +68,7 @@ public class Post implements java.io.Serializable {
 			setPseudoUserCreation(postDao.getPseudoUserCreation());
 			setThemeId(postDao.getThemeId());
 			setPost(postDao.getPost());
+			setTypePost(postDao.getTypePost());
 
 			// 0 pour dire qu'il s'agit d'un post parent ou idParent sinon:
 			setIdPostRef(postDao.getIdPostRef());
@@ -169,6 +173,14 @@ public class Post implements java.io.Serializable {
 
 	public void setPseudoUserCreation(String pseudoUserCreation) {
 		this.pseudoUserCreation = pseudoUserCreation;
+	}
+
+	public Integer getTypePost() {
+		return typePost;
+	}
+
+	public void setTypePost(Integer typePost) {
+		this.typePost = typePost;
 	}
 
 }

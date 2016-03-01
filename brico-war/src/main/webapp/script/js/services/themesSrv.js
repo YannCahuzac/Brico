@@ -9,7 +9,7 @@ App.factory('themesSrv', ['$http', '$q', '$rootScope', function($http, $q, $root
 										return response.data;
 									}, 
 									function(errResponse){
-											console.error('Une erreur est survenue lors de la récupération des thèmes de l\'application.');
+											console.error('Une erreur est survenue lors de la recuperation des themes de l\'application.');
 											return $q.reject(errResponse);
 									}
 								);

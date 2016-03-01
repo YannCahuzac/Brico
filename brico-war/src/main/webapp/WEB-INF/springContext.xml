@@ -26,11 +26,13 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<bean id="utilisateur" class="fr.yca.brico.bean.Utilisateur" />
 
 	<bean id="themeSrv" class="fr.yca.brico.services.ThemeSrv" />
+	<bean id="typeSrv" class="fr.yca.brico.services.TypeSrv" />
 	<bean id="postSrv" class="fr.yca.brico.services.PostSrv" />
 	<bean id="utilisateurSrv" class="fr.yca.brico.services.UtilisateurSrv" />
 
 	<bean id="bricoCtrl" class="fr.yca.brico.controller.BricoCtrl" />
 	<bean id="themeCtrl" class="fr.yca.brico.controller.ThemeCtrl" />
+	<bean id="typeCtrl" class="fr.yca.brico.controller.TypeCtrl" />
 	<bean id="postCtrl" class="fr.yca.brico.controller.PostCtrl" />
 	<bean id="utilisateurCtrl" class="fr.yca.brico.controller.UtilisateurCtrl" />
 

@@ -8,7 +8,7 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 			$scope.closeAlert = function(index) {
 				utilSrv.closeAlert($scope.alerts, index);
 			};
-
+			
 			$scope.closeAlert();
 			
 			var initPost = function(){
@@ -19,6 +19,7 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 					themeId : null,
 					title : '',
 					post : '',
+					typePost : null,
 					tokenUser: $rootScope.user.token,
 					idPost : null,
 					dateCreation : null,
@@ -43,8 +44,9 @@ App.controller('newPostCtrl', [ '$scope', '$element', 'utilSrv', '$rootScope', '
 				if(($scope.postDao.post != null && $scope.postDao.post === '') 
 						|| $scope.postDao.themeId === null || $scope.postDao.themeId === '' 
 						|| $scope.postDao.themeId === undefined 
+						|| $scope.postDao.typePost === null 
 						|| ($scope.postDao.title != null && $scope.postDao.title === '')){
-					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez s\u00e9lectionner un th\u00e8me, renseigner un titre et d\u00e9crire votre requ\u00eate pour valider le formulaire.');
+					$scope.alerts = utilSrv.alertIt('danger', 'Veuillez s\u00e9lectionner un th\u00e8me ainsi qu\'un type de post, puis renseigner le titre et la description de votre requ\u00eate pour valider le formulaire.');
 				}else if(($scope.postDao.post != null && $scope.postDao.post.length > 500) || ($scope.postDao.title != null && $scope.postDao.title.length > 80)){
 					$scope.alerts = utilSrv.alertIt('danger', 'Les tailles maximum du titre et du post sont respectivement de 80 et de 500 caract\u00e8res.');
 				}else{

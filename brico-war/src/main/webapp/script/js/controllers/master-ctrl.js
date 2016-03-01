@@ -1,6 +1,6 @@
-App.controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', '$state', MasterCtrl]);
+App.controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', '$state', 'typesSrv', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv, $state) {
+function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv, $state, typesSrv) {
 
 	// Gestion des erreurs: 
 	$scope.alerts = [];
@@ -100,4 +100,20 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 	
 	$scope.getThemes();
 	/*********************** Fin Themes ************************/
+	
+	/*********************** Get Types ************************/
+	
+	$rootScope.typesPost = [];
+	
+	// Retourne tous les themes de l'application:
+	$scope.getTypes = function() {
+		typesSrv.getTypes().then(function(d) {
+			$rootScope.typesPost = d;
+		}, function(errResponse) {
+			$scope.alerts = utilSrv.alertIt('danger', errResponse.statusText);
+		});
+	};
+	
+	$scope.getTypes();
+	/*********************** Fin Types ************************/
 }

@@ -52,6 +52,7 @@ gulp.task('custom-appJs', function() {
 		 paths.srcAppSrv + 'postSrv.js',
 		 paths.srcAppSrv + 'utilSrv.js',
 		 paths.srcAppSrv + 'themesSrv.js',
+		 paths.srcAppSrv + 'typesSrv.js',
 		 paths.srcAppSrv + 'authSrv.js',
 		 paths.srcAppSrv + 'mergeAccountSrv.js',
 		 paths.srcAppCtrl + 'master-ctrl.js',

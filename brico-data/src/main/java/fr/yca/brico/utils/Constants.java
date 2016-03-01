@@ -7,20 +7,28 @@ public class Constants {
 	public static final String SPACE = " ";
 	public static final String TOKEN = "token";
 
-	// Libelle Thèmes
+	// Libellés Thèmes
 	public static final String libTheme1 = "Plomberie";
 	public static final String libTheme2 = "Menuiserie";
 	public static final String libTheme3 = "Électricité";
 	public static final String libTheme4 = "Jardinage";
 	public static final String libTheme5 = "Maçonnerie";
 
-	// Libelle CSS Thèmes
+	// Libellés CSS Thèmes
 	public static final String libCssTheme1 = "fa-tint";
 	public static final String libCssTheme2 = "fa-sun-o";
 	public static final String libCssTheme3 = "fa-bolt";
 	public static final String libCssTheme4 = "fa-leaf";
 	public static final String libCssTheme5 = "fa-wrench";
 	public static final String libCssThemeDefault = "fa-tag";
+
+	// Libellés Types Posts
+	public static final String libType1 = "Demande de conseils";
+	public static final String libType2 = "Aide pour la réalisation de travaux";
+
+	// Libellés CSS Types Posts
+	public static final String libCssType1 = "fa-comments";
+	public static final String libCssType2 = "fa-child";
 
 	// Requetes JPQL pour la recherche des posts:
 	// La clause [WHERE c.idPostRef = 0] c'est pour dire qu'il s'agit d'un post parent (cad qu'il ne fait pas reference à un autre post):
