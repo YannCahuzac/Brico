@@ -51,9 +51,10 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	text-align: center;
 }
 
-.postThemeTable {
-	max-width: 500px;
-	overflow: hidden;
+.aPostTableHidden {
+	height: 20px;
+	display: block;
+	overflow: hidden
 }
 
 .row.header .user>.item.divConnexion {
@@ -143,7 +144,7 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	}
 }
 
-.myThemeTable .etatPost {
+.myThemeTable .table>tbody>tr>td.iconPost {
 	padding-left: 20px;
 }
 
@@ -178,4 +179,16 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 
 .ieDeadText {
 	margin-top: 200px;
+}
+
+.myThemeTable .table>tbody>tr>td,.myThemeTable .table>thead:first-child>tr:first-child>th
+	{
+	padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.myThemeTable .table>tbody>tr>td {
+	cursor: default;
 }

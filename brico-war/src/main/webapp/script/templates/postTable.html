@@ -11,19 +11,19 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td at-sortable at-attribute="typePost" at-title="Type" width="80" class="etatPost">
+							<td at-sortable at-attribute="typePost" at-title="Type" width="70" class="iconPost">
 								<span tooltip="{{typesPost[(item.typePost)].lib1}}"><i class="fa {{typesPost[(item.typePost)].libcss1}}"></i></span>
 							</td>
-							<td at-sortable at-attribute="title" at-title="Post" class="postThemeTable" width="450">
-								<a href="#/post/{{(item.idPostRef == 0 ? item.idPost : item.idPostRef)}}">
-									{{item.title}}
+							<td at-sortable at-attribute="title" at-title="Post">
+								<a href="#/post/{{(item.idPostRef == 0 ? item.idPost : item.idPostRef)}}" class="aPostTableHidden">
+									<span>{{item.title}}</span>
 								</a>	
 							</td>
-							<td at-sortable at-attribute="dateCreation" at-title="Date de cr&eacute;ation" width="160" at-initial-sorting="desc" class="postTable">{{item.dateCreaS}}</td>
-							<td at-sortable at-attribute="cp" at-title="CP" width="80" class="postTable">
+							<td at-sortable at-attribute="dateCreation" at-title="Cr&eacute;er le" width="130" at-initial-sorting="desc" class="postTable">{{item.dateCreaS}}</td>
+							<td at-sortable at-attribute="userDao.cp" at-title="CP" width="55" class="postTable">
 								<span tooltip="{{item.userDao.ville}}">{{item.userDao.cp}}</span>
 							</td>
-							<td at-sortable at-attribute="postValidate" at-title="&Eacute;tat" width="80" class="postTable">
+							<td at-sortable at-attribute="postValidate" at-title="&Eacute;tat" width="60" class="iconPost">
 								<span ng-show="item.postValidate == 1" tooltip="Post valid&eacute;" class="text-success"><i class="fa fa-check"></i></span>
 								<span ng-show="item.postValidate != 1" tooltip="Post non valid&eacute;" class="text-danger"><i class="fa fa-ban"></i></span>
 							</td>
