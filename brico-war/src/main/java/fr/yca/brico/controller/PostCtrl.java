@@ -66,7 +66,7 @@ public class PostCtrl {
 	@RequestMapping(value = "createPost", method = { RequestMethod.POST }, consumes = "application/json")
 	public ResponseEntity<JsonFLux> createPost(HttpServletRequest request, @RequestBody PostDao postDao) {
 
-		// Vérification du token pour pouvoir créer un post:
+		// Vérification du token pour pouvoir créer le post:
 		logger.info("Creation Post: [User Id: " + postDao.getIdUserCreation() + "; Token User Client: " + postDao.getTokenUser() + "; Token User Serveur: "
 				+ request.getSession().getAttribute(Constants.TOKEN) + "]");
 
@@ -78,6 +78,30 @@ public class PostCtrl {
 			fluxRet = new JsonFLux();
 			fluxRet.setCreate(Boolean.FALSE);
 			fluxRet.setLib1("Enregistrement impossible: authentification KO.");
+		}
+
+		return new ResponseEntity<JsonFLux>(fluxRet, HttpStatus.OK);
+	}
+
+	/**
+	 * Validation d'un post parent.
+	 */
+	@ResponseBody
+	@RequestMapping(value = "validatePost", method = { RequestMethod.POST }, consumes = "application/json")
+	public ResponseEntity<JsonFLux> validatePost(HttpServletRequest request, @RequestBody PostDao postDao) {
+
+		// Vérification du token pour pouvoir valider le post:
+		logger.info("Validation Post: [User Id: " + postDao.getIdUserCreation() + "; Token User Client: " + postDao.getTokenUser() + "; Token User Serveur: "
+				+ request.getSession().getAttribute(Constants.TOKEN) + "]");
+
+		JsonFLux fluxRet = null;
+
+		if (request.getSession() != null && postDao.getTokenUser() != null && postDao.getTokenUser().equals(request.getSession().getAttribute(Constants.TOKEN))) {
+			fluxRet = postSrv.validatePost(postDao);
+		} else {
+			fluxRet = new JsonFLux();
+			fluxRet.setCreate(Boolean.FALSE);
+			fluxRet.setLib1("Validation du post impossible: authentification KO.");
 		}
 
 		return new ResponseEntity<JsonFLux>(fluxRet, HttpStatus.OK);

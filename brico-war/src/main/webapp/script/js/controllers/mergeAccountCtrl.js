@@ -144,10 +144,10 @@ App.controller('mergeAccountCtrl', [ '$scope', '$element','$rootScope', 'mergeAc
 					// Vérif Regex Mail
 					error = true;
 					$scope.alerts = utilSrv.alertIt('danger', 'Le mail saisi n\est pas correct.');
-				}else if($scope.mergeUser.cp.length > 10){
+				}else if($scope.mergeUser.cp.length != 5){
 					// Vérif CP
 					error = true;
-					$scope.alerts = utilSrv.alertIt('danger', 'Le code postal ne doit pas d\u00e9passer 10 caract\u00e8res.');
+					$scope.alerts = utilSrv.alertIt('danger', 'Le code postal doit comporter 5 caract\u00e8res num\u00e9riques.');
 				}else if(!utilSrv.validateNum($scope.mergeUser.cp)){
 					// Vérif Regex CP
 					error = true;

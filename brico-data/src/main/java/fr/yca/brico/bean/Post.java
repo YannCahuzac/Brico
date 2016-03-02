@@ -58,28 +58,37 @@ public class Post implements java.io.Serializable {
 		super();
 	}
 
-	public Post(PostDao postDao) {
+	public Post(PostDao postDao, boolean init) {
 		if (postDao != null) {
 			// Récupérer dans le flux Json:
 			setIdUserCreation(postDao.getIdUserCreation());
 			setThemeId(postDao.getThemeId());
 			setPost(postDao.getPost());
 			setTypePost(postDao.getTypePost());
-
 			// 0 pour dire qu'il s'agit d'un post parent ou idParent sinon:
 			setIdPostRef(postDao.getIdPostRef());
-			if (postDao.getIdPostRef() != null && postDao.getIdPostRef() != 0) {
-				// Veillez à ce que la taille du titre ne dépasse pas 80 chars pour continuer à pouvoir rajouter le champs suivant par la suite:
-				setTitle(Constants.postContribution + postDao.getTitle());
+
+			if (init) {
+				if (postDao.getIdPostRef() != null && postDao.getIdPostRef() != 0) {
+					// Veillez à ce que la taille du titre ne dépasse pas 80 chars pour continuer à pouvoir rajouter le champs suivant par la suite:
+					setTitle(Constants.postContribution + postDao.getTitle());
+				} else {
+					setTitle(postDao.getTitle());
+				}
+
+				setDateCreation(new Timestamp(new Date().getTime()));
+				// Init:
+				setNbVotes(0);
+				setNote(0);
+				setPostValidate(0);
 			} else {
+				setIdPost(postDao.getIdPost());
+				setDateCreation(postDao.getDateCreation());
+				setNbVotes(postDao.getNbVotes());
+				setNote(postDao.getNote());
+				setPostValidate(postDao.getPostValidate());
 				setTitle(postDao.getTitle());
 			}
-
-			setDateCreation(new Timestamp(new Date().getTime()));
-			// Init:
-			setNbVotes(0);
-			setNote(0);
-			setPostValidate(0);
 		}
 	}
 

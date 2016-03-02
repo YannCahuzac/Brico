@@ -88,7 +88,6 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 
 .notePost {
 	color: #767676;
-	margin-right: 10px;
 	font-size: 11px;
 }
 
@@ -100,6 +99,10 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	color: #767676;
 }
 
+.bottomPostInfo {
+	height: 20px;
+}
+
 .containerPost {
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -107,9 +110,9 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 
 .containerAuteur {
 	color: #767676;
-	margin-right: 10px;
 	font-size: 11px;
 	text-align: right;
+	float: right;
 }
 
 .validitePost {

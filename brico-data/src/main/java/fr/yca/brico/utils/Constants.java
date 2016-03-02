@@ -36,6 +36,7 @@ public class Constants {
 	public static final String findPostsByIdUser = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND c.idUserCreation = :idUserCreation";
 	public static final String findPostsByIdPost = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND (c.idPostRef = :idPostRef OR c.idPost = :idPost) ORDER BY c.dateCreation DESC";
 	public static final String findRecentsPosts = "SELECT c, u FROM Post c, Utilisateur u WHERE c.idUserCreation = u.idUser AND c.idPostRef = 0 ORDER BY c.dateCreation DESC";
+	public static final String validatePosts = "UPDATE Post p SET p.postValidate = 1 WHERE p.idPost = :id OR p.idPostRef = :id";
 
 	// Requetes JPQL pour la recherche des utilisateurs:
 	public static final String countUserMail = "SELECT count(u) FROM Utilisateur u WHERE u.mail = :mail";

@@ -62,11 +62,21 @@
 						</div>
 						<!-- Fin post -->
 						
-						<!-- Date / Auteur -->
-						<div class="containerAuteur">
-							<span>Post&eacute;{{(post.userDao.pseudo != '' ? (' par ' + post.userDao.pseudo) : '')}} le {{post.dateCreaS}}</span>
+						<div class="bottomPostInfo">
+							<!-- Valider le post PARENT (idPostRef = 0) que si c'est l'user qui a créé le post -->
+							<div class="containerAuteur" ng-show="(user && post.idPostRef == 0 && post.idUserCreation == user.idUser && post.postValidate != 1)">
+								<button type="button" class="btn btn-sm btn-success gauche" ng-click="validatePost()">
+									<span tooltip="Validez ce post si une aide satisfaisante vous a &eacute;t&eacute; apport&eacute;e">Valider ce post</span>
+								</button>
+							</div>
+							
+							<!-- Date / Auteur: on ne le montre pas dans le cas où on place le btn de validation du post -->
+							<div class="containerAuteur" ng-hide="(user && post.idPostRef == 0 && post.idUserCreation == user.idUser && post.postValidate != 1)">
+								<span ng-hide="post.userDao.pseudo != ''">Post&eacute; le {{post.dateCreaS}}</span>
+								<span ng-show="post.userDao.pseudo != ''">Post&eacute; par <strong>{{post.userDao.pseudo}}</strong> le {{post.dateCreaS}}</span>
+							</div>
+							<!-- Fin Date / Auteur -->
 						</div>
-						<!-- Fin Date / Auteur -->
 						
 					</div>
 					<hr />
@@ -75,7 +85,9 @@
 				<!-- Contribution -->
 				<div class="containerMain" ng-show="user && postParent && postChild">
 					<div class="divButtonContribuer">
-						<button type="button" class="buttonContribuer btn {{ isCollapsedContribBtn ? 'btn-success' : 'btn-danger' }}" ng-click="isCollapsedContribBtn = !isCollapsedContribBtn">{{ isCollapsedContribBtn ? 'Contribuer' : 'Fermer' }}</button>
+						<button type="button" class="buttonContribuer btn btn-sm {{ isCollapsedContribBtn ? 'btn-success' : 'btn-danger' }}" ng-click="isCollapsedContribBtn = !isCollapsedContribBtn">
+							<span tooltip="Apportez votre aide &agrave; ce post !">{{ isCollapsedContribBtn ? 'Contribuer' : 'Fermer' }}</span>
+						</button>
 					</div>
 					<div collapse="isCollapsedContribBtn">
 						<div class="form-group">
@@ -86,7 +98,7 @@
 							<small>Veuillez d&eacute;crire votre r&eacute;ponse (500 mots maximum).</small>
 						</p>
 						<div class="divButtonContribuer">
-							<button type="button" class="buttonContribuer btn btn-success" ng-click="createPostChild()">Enregistrer</button>
+							<button type="button" class="buttonContribuer btn btn-sm btn-success" ng-click="createPostChild()">Enregistrer</button>
 						</div>
 					</div>
 				</div>

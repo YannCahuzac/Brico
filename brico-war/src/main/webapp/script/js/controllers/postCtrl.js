@@ -142,6 +142,35 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 					}
 				};
 				
+				// Méthode qui permet de valider un post (parent) quand c'est l'user (connecté) du post qui en fait la demande:
+				$scope.validatePost = function(){
+					if($rootScope.user && $scope.postParent){
+						// TODO
+						$scope.postParent.tokenUser = $rootScope.user.token;
+						$timeout(function() {
+							$scope.$apply(function () {
+								$scope.showSpinner = true;
+							});
+							postSrv.validatePost($scope.postParent).then(function(d) {
+								$scope.showSpinner = false;
+								if(d){
+									if(d.create){
+										$scope.getPostsByPostId();
+										$scope.alerts = utilSrv.alertIt('success', 'Votre post a bien \u00e9t\u00e9 valid\u00e9e.');
+									}else{
+										$scope.alerts = utilSrv.alertIt('danger', d.lib1);
+									}
+								}else{
+									$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la validation de votre post.');
+								}
+							}, function(errResponse) {
+								$scope.showSpinner = false;
+								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors de la validation de votre post.');
+							});
+						}, 0);
+					}
+				}
+				
 				// Init:
 				$scope.getPostsByPostId();
 				

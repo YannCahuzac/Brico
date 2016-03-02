@@ -47,14 +47,36 @@ public class PostSrv {
 
 		if (Outils.isValidPostDao(postDao)) {
 			try {
-				entityManager.merge(new Post(postDao));
+				entityManager.merge(new Post(postDao, true));
 			} catch (Exception e) {
 				fluxRet.setCreate(Boolean.FALSE);
+				fluxRet.setLib1("Exception en base lors de la création du post.");
 				logger.info("Exception lors de la création du post: " + e.getMessage());
 			}
 		} else {
 			fluxRet.setCreate(Boolean.FALSE);
 			fluxRet.setLib1("Enregistrement impossible: il faut saisir tous les champs obligatoires et respecter la taille limite pour chaque champs.");
+		}
+		return fluxRet;
+	}
+
+	/**
+	 * Validation d'un post parent.
+	 */
+	public JsonFLux validatePost(PostDao postDao) {
+		JsonFLux fluxRet = new JsonFLux();
+		fluxRet.setCreate(Boolean.TRUE);
+		if (postDao != null && postDao.getIdPost() != null) {
+			try {
+				entityManager.createQuery(Constants.validatePosts).setParameter("id", postDao.getIdPost()).executeUpdate();
+			} catch (Exception e) {
+				fluxRet.setCreate(Boolean.FALSE);
+				fluxRet.setLib1("Exception en base lors de la validation du post.");
+				logger.info("Exception lors de la validation du post: " + e.getMessage());
+			}
+		} else {
+			fluxRet.setCreate(Boolean.FALSE);
+			fluxRet.setLib1("Aucun post id à valider.");
 		}
 		return fluxRet;
 	}

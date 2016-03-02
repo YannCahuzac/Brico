@@ -1,5 +1,4 @@
 Terminer la rubrique [License] de l'application
 Gestion psw oublié
-Pouvoir valider un post dans la consultation des posts utilisateur
 Pouvoir voter pour un post si user connecté
 Voir Gestion Post si y'a plus de 20 posts retournés
