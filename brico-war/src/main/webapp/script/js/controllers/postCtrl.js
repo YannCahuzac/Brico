@@ -1,6 +1,6 @@
 // Ce controller est utilisé pour 2 states définis dans app.js: postById et postByIdUser.
-App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 'postSrv', '$timeout', '$state',
-		function($scope, $stateParams, utilSrv, $rootScope, postSrv, $timeout, $state) {
+App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 'postSrv', '$timeout', '$state', '$cookieStore',
+		function($scope, $stateParams, utilSrv, $rootScope, postSrv, $timeout, $state, $cookieStore) {
 
 			// Note max d'un post:
 			$scope.maxRate = 10;
@@ -19,6 +19,10 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 			$scope.alerts = [];
 			$scope.closeAlert = function(index) {
 				utilSrv.closeAlert($scope.alerts, index);
+			};
+			
+			$scope.closePostAlert = function(post, index) {
+				utilSrv.closeAlert(post.alerts, index);
 			};
 
 			if($state.current.name === 'postById'){
@@ -145,7 +149,6 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				// Méthode qui permet de valider un post (parent) quand c'est l'user (connecté) du post qui en fait la demande:
 				$scope.validatePost = function(){
 					if($rootScope.user && $scope.postParent){
-						// TODO
 						$scope.postParent.tokenUser = $rootScope.user.token;
 						$timeout(function() {
 							$scope.$apply(function () {
@@ -169,6 +172,26 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 							});
 						}, 0);
 					}
+				}
+				
+				// Méthode qui permet de voter pour un post (user connecté ou non):
+				$scope.voteThisPost = function(post, note){
+					// On genere le cookie au cas où il n'existerait pas:
+					if (!angular.isDefined($cookieStore.get('voteCookie'))) {
+						$cookieStore.put('voteCookie', []);
+					}
+					// On stocke la valeur du cookie dans un array:
+					var tabPostsIds = $cookieStore.get('voteCookie');
+					// On check si cet array contient déjà le postId:
+					if($.inArray(post.idPost, tabPostsIds) > -1){
+						post.alerts = utilSrv.alertIt('warning', 'Vous avez d\u00e9j\u00e0 vot\u00e9 pour ce post.');
+					}else{
+						// TODO Côté serveur!
+						tabPostsIds.push(post.idPost);
+						$cookieStore.put('voteCookie', tabPostsIds);
+						post.alerts = utilSrv.alertIt('success', 'Votre vote a bien \u00e9t\u00e9 pris en compte pour ce post.');
+					}
+					post.alreadyVoted = true;
 				}
 				
 				// Init:

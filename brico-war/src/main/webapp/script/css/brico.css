@@ -92,6 +92,7 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 }
 
 .noteRate {
+	cursor: pointer;
 	color: #767676;
 }
 
@@ -117,6 +118,11 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 
 .validitePost {
 	color: #767676;
+	font-size: 12px;
+}
+
+.infoContribPost {
+	margin-left: 10px;
 	font-size: 12px;
 }
 
@@ -194,4 +200,12 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 
 .myThemeTable .table>tbody>tr>td {
 	cursor: default;
+}
+
+.widget .widget-body{
+	min-height: 100px;
+}
+
+.bricoBody .widget .widget-content .title{
+	font-size: 20px;
 }

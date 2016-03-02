@@ -117,9 +117,8 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 	/*********************** Fin Types ************************/
     /***************** Banner Cookie Control *******************/
 	$scope.defineCookieVote = function() {
-		$cookieStore.remove('voteCookie');
 	    if (!angular.isDefined($cookieStore.get('voteCookie'))) {
-	    	$cookieStore.put('voteCookie', false);
+	    	$cookieStore.put('voteCookie', []);
 	    	$timeout(function() {
 	    		$scope.$apply(function () {
 	    			toaster.pop({

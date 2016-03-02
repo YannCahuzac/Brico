@@ -25,6 +25,7 @@ public class PostDao {
 	// Utilisés pour l'IHM:
 	private Integer noteUser = 0;
 	private boolean overStar = false;
+	private boolean alreadyVoted = false;
 	private Integer noteUserOver = 0;
 	private String dateCreaS;
 	private String libcss1;

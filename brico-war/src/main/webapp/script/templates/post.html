@@ -7,9 +7,9 @@
 		</div>
 		<span ng-show="postParent"><div class="title">{{postParent.title}}</div></span> 
 		<span ng-hide="postParent"><div class="title">Aucun post n'a &eacute;t&eacute; trouv&eacute;</div></span>
-		<div ng-show="postParent && user" class="comment">Vous pouvez contribuer &agrave; ce post!</div>
-		<div ng-show="postParent && !user" class="comment text-danger">Vous devez &ecirc;tre connect&eacute; pour contribuer &agrave; ce post.</div>
-		<div ng-hide="postParent" class="comment">Aucune action possible</div>
+		<div ng-show="postParent && user" class="comment text-success"><i class="fa fa-check"></i><span class="infoContribPost">Vous pouvez contribuer &agrave; ce post !</span></div>
+		<div ng-show="postParent && !user" class="comment text-danger"><i class="fa fa-ban"></i><span class="infoContribPost">Vous devez &ecirc;tre connect&eacute; pour contribuer &agrave; ce post.</span></div>
+		<div ng-hide="postParent" class="comment text-danger"><i class="fa fa-ban"></i><span class="infoContribPost">Aucune action possible</span></div>
 		</rd-widget-body> </rd-widget>
 	</div>
 </div>
@@ -43,8 +43,8 @@
 					
 						<!-- Note du post -->
 						<div class="containerNote">
-						    <rating ng-model="post.noteUser" max="maxRate" readonly="false" on-hover="post.overStar = true; post.noteUserOver = value;" 
-						    	on-leave="post.overStar = false;" aria-labelledby="default-rating" class="noteRate"></rating>
+						    <rating ng-model="post.noteUser" max="maxRate" readonly="post.alreadyVoted" on-hover="post.overStar = true; post.noteUserOver = value;" 
+						    	on-leave="post.overStar = false;" ng-click="voteThisPost(post, post.noteUserOver);" aria-labelledby="default-rating" class="noteRate"></rating>
 						    <span class="label"
 						    	ng-class="{
 							    	'label-warning': (100 * (post.noteUserOver / maxRate))<30, 
@@ -76,6 +76,11 @@
 								<span ng-show="post.userDao.pseudo != ''">Post&eacute; par <strong>{{post.userDao.pseudo}}</strong> le {{post.dateCreaS}}</span>
 							</div>
 							<!-- Fin Date / Auteur -->
+						</div>
+						
+						<!-- Alert spécifique à chaque post -->
+						<div class="alerts-container" data-ng-show="post.alerts && post.alerts.length">
+							<alert data-ng-repeat="alert in post.alerts" type="{{alert.type}}" close="closePostAlert(post, $index)">{{alert.msg}}</alert>
 						</div>
 						
 					</div>
