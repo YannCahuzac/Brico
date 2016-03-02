@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/rdash-ui/dist/css/rdash.min.css">
 		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/select2/select2.css">
+		<link rel="stylesheet" type="text/css" href="/brico-war/bower_components/angularjs-toaster/toaster.min.css">
 		<!-- endbuild -->
 		<!-- build:utilsJs -->
 		<!-- RAJOUTEZ LE FICHIER DANS LE GULPFILE.JS -->
@@ -26,6 +27,7 @@
 		<script type="text/javascript" src="/brico-war/script/js/utils/select2.min.js"></script>
 		<script type="text/javascript" src="/brico-war/script/js/utils/select2.js"></script>
 		<script type="text/javascript" src="/brico-war/script/js/utils/angular-table.min.js"></script>
+		<script type="text/javascript" src="/brico-war/script/js/utils/toaster.min.js"></script>
 		<!-- endbuild -->
 		<!-- build:appJs -->
 		<!-- ATTENTION BIEN METTRE LES SERVICES AVANT LES CONTROLEURS -->
@@ -57,6 +59,8 @@
 	<body ng-controller="MasterCtrl" class="bricoBody">
 
 		<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+			<toaster-container></toaster-container>
 	
 			<!-- Sidebar -->
 			<div id="sidebar-wrapper">

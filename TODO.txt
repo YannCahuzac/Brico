@@ -1,4 +1,4 @@
 Terminer la rubrique [License] de l'application
 Gestion psw oublié
-Pouvoir voter pour un post si user connecté
+Pouvoir voter pour un post avec cookies
 Voir Gestion Post si y'a plus de 20 posts retournés

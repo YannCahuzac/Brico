@@ -15,7 +15,8 @@
     "select2": "3.4.8",
     "angular-ui-select2": "~0.0.5",
     "rdash-ui": "1.0.*",
-    "at-table": "~1.0.7"
+    "at-table": "~1.0.7",
+    "angularjs-toaster": "~1.2.0"
   },
   "resolutions": {
     "angular": "~1.2.0"

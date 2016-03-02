@@ -94,7 +94,8 @@ gulp.task('custom-utilsJs', function() {
 				paths.srcUtils + 'angular-ui-router.min.js',
 				paths.srcUtils + 'select2.min.js',
 				paths.srcUtils + 'select2.js',
-				paths.srcUtils + 'angular-table.min.js'
+				paths.srcUtils + 'angular-table.min.js',
+				paths.srcUtils + 'toaster.min.js'
 			]
 			)
 			.pipe(concat(paths.utilsJsFinal))

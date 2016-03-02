@@ -1,6 +1,6 @@
-App.controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', '$state', 'typesSrv', MasterCtrl]);
+App.controller('MasterCtrl', ['$scope', '$cookieStore', 'authSrv', '$rootScope', 'themesSrv', 'utilSrv', '$state', 'typesSrv', 'toaster', '$timeout', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv, $state, typesSrv) {
+function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSrv, $state, typesSrv, toaster, $timeout) {
 
 	// Gestion des erreurs: 
 	$scope.alerts = [];
@@ -27,7 +27,6 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
         } else {
             $scope.toggle = false;
         }
-
     });
 
     $scope.toggleSidebar = function() {
@@ -116,4 +115,25 @@ function MasterCtrl($scope, $cookieStore, authSrv, $rootScope, themesSrv, utilSr
 	
 	$scope.getTypes();
 	/*********************** Fin Types ************************/
+    /***************** Banner Cookie Control *******************/
+	$scope.defineCookieVote = function() {
+		$cookieStore.remove('voteCookie');
+	    if (!angular.isDefined($cookieStore.get('voteCookie'))) {
+	    	$cookieStore.put('voteCookie', false);
+	    	$timeout(function() {
+	    		$scope.$apply(function () {
+	    			toaster.pop({
+	    		        type: 'error',
+	    		        title: 'Information Cookies',
+	    		        body: 'En poursuivant votre navigation sur ce site, vous acceptez l\'utilisation de cookies pour faciliter la gestion de vos actions.',
+	    		        showCloseButton: true,
+	    		        timeout: 20000,
+	    		        closeHtml: '<button class="btn btn-sm btn-danger droite">J\'accepte</button>'
+	    			});
+	    		});
+	    	}, 0);
+	    }
+	};
+	$scope.defineCookieVote();
+    /***********************************************************/
 }
