@@ -174,8 +174,21 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 					}
 				}
 				
+				// Recherche dans un tab à plusieurs dimensions:
+				$scope.findInMultipleDim = function(tab, value){
+					var result = null;
+					for( var i = 0, len = tab.length; i < len; i++ ) {
+					    if( tab[i][0] === value ) {
+					        result = tab[i];
+					        break;
+					    }
+					}
+					return result;
+				}
+				
 				// Méthode qui permet de voter pour un post (user connecté ou non):
 				$scope.voteThisPost = function(post, note){
+					console.log('-------------------');
 					// On genere le cookie au cas où il n'existerait pas:
 					if (!angular.isDefined($cookieStore.get('voteCookie'))) {
 						$cookieStore.put('voteCookie', []);
@@ -183,17 +196,34 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 					// On stocke la valeur du cookie dans un array:
 					var tabPostsIds = $cookieStore.get('voteCookie');
 					// On check si cet array contient déjà le postId:
-					if($.inArray(post.idPost, tabPostsIds) > -1){
-						post.alerts = utilSrv.alertIt('warning', 'Vous avez d\u00e9j\u00e0 vot\u00e9 pour ce post.');
+					var result = $scope.findInMultipleDim(tabPostsIds, post.idPost); 
+					if(result !== null){
+						post.alerts = utilSrv.alertIt('warning', 'Vous aviez d\u00e9j\u00e0 attribu\u00e9 ' + result[1] + '/10 \u00e0 ce post !');
+						// On remet la note qu'avait déjà mis l'utilisateur:
+						post.noteUser = result[1];
 					}else{
-						// TODO Côté serveur!
-						tabPostsIds.push(post.idPost);
-						$cookieStore.put('voteCookie', tabPostsIds);
-						post.alerts = utilSrv.alertIt('success', 'Votre vote a bien \u00e9t\u00e9 pris en compte pour ce post.');
+						$scope.showSpinner = true;
+						var data = postSrv.voteThisPost(post); 
+
+						data.then(function(d) {
+							console.log('DEBUT THEN');
+							if(d){
+								post = d;
+								post.alreadyVoted = true;
+								post.alerts = utilSrv.alertIt('success', 'Votre vote a bien \u00e9t\u00e9 pris en compte pour ce post !');
+								
+								tabPostsIds.push([post.idPost, post.noteUser]);
+								$cookieStore.put('voteCookie', tabPostsIds);
+							}else{
+								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors du vote du post.');
+							}
+						});
+						$scope.showSpinner = false;
+
 					}
-					post.alreadyVoted = true;
+					console.log('FIN');
 				}
-				
+								
 				// Init:
 				$scope.getPostsByPostId();
 				

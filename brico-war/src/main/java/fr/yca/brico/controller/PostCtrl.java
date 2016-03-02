@@ -59,6 +59,13 @@ public class PostCtrl {
 		return new ResponseEntity<List<PostDao>>(ret, HttpStatus.OK);
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "voteThisPost", method = { RequestMethod.POST }, consumes = "application/json")
+	public ResponseEntity<PostDao> voteThisPost(HttpServletRequest request, @RequestBody PostDao postDao) {
+		PostDao ret = postSrv.voteThisPost(postDao);
+		return new ResponseEntity<PostDao>(ret, HttpStatus.OK);
+	}
+
 	/**
 	 * Création d'un nouveau post parent.
 	 */

@@ -82,6 +82,49 @@ public class PostSrv {
 	}
 
 	/**
+	 * Vote d'un post.
+	 */
+	public PostDao voteThisPost(PostDao postDao) {
+		boolean allIsOk = true;
+		if (postDao != null && postDao.getIdPost() != null) {
+			try {
+				Integer note = null;
+				if (postDao.getNote() != null) {
+					note = postDao.getNote();
+				} else {
+					note = new Integer(0);
+				}
+
+				Integer nbVotes = null;
+				if (postDao.getNbVotes() != null) {
+					nbVotes = postDao.getNbVotes();
+				} else {
+					nbVotes = new Integer(0);
+				}
+
+				note = (note * nbVotes + postDao.getNoteUser()) / (nbVotes + 1);
+
+				// On rajoutera 1 au nbVotes car on prend en compte le vote en cours de l'user:
+				nbVotes = nbVotes + 1;
+
+				entityManager.createQuery(Constants.votePost).setParameter("note", note).setParameter("nbVotes", nbVotes).setParameter("id", postDao.getIdPost()).executeUpdate();
+
+				postDao.setNote(note);
+				postDao.setNbVotes(nbVotes);
+
+			} catch (Exception e) {
+				allIsOk = false;
+				logger.info("Exception lors du vote du post: " + e.getMessage());
+			}
+		}
+		if (allIsOk) {
+			return postDao;
+		} else {
+			return null;
+		}
+	}
+
+	/**
 	 * Methode générique pour recuperer les posts en base en fonction d'une clause WHERE.
 	 */
 	public List<PostDao> getPosts(TypeRecherche typeRecherche, Integer idRecherche) {

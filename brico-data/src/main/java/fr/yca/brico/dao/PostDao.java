@@ -230,4 +230,12 @@ public class PostDao {
 		this.userDao = userDao;
 	}
 
+	public boolean isAlreadyVoted() {
+		return alreadyVoted;
+	}
+
+	public void setAlreadyVoted(boolean alreadyVoted) {
+		this.alreadyVoted = alreadyVoted;
+	}
+
 }
