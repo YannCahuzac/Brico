@@ -1,13 +1,4 @@
 App.factory('postSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootScope){
-	
-    var voteThisPost = function (postDao) {
-    	return $http.post('/brico-war/action/voteThisPost', postDao).then(function(result){
-            // What we return here is the data that will be accessible 
-            // to us after the promise resolves
-            return result.data;
-        });
-    };
-	
     return {               
     		getPostsByThemeId: function(themeId) {
 		    	return $http({
@@ -89,7 +80,18 @@ App.factory('postSrv', ['$http', '$q', '$rootScope', function($http, $q, $rootSc
 		    			}
 		    	);
 		    },         
-		    voteThisPost: voteThisPost,         
+		    voteThisPost: function(postDao) {
+		    	return $http.post('/brico-war/action/voteThisPost', postDao)
+		    	.then(
+		    			function(response){
+		    				return response.data;
+		    			}, 
+		    			function(errResponse){
+		    				console.error('Une erreur est survenue lors du vote du post.');
+		    				return $q.reject(errResponse);
+		    			}
+		    	);
+		    },         
 		    findStringInPosts: function(s, posts) {
 		    	var postsFiltered = [];
 		    	posts.forEach(function (element, index, array){

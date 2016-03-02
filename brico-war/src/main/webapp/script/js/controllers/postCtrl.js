@@ -188,42 +188,67 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				
 				// Méthode qui permet de voter pour un post (user connecté ou non):
 				$scope.voteThisPost = function(post, note){
-					console.log('-------------------');
-					// On genere le cookie au cas où il n'existerait pas:
-					if (!angular.isDefined($cookieStore.get('voteCookie'))) {
-						$cookieStore.put('voteCookie', []);
-					}
-					// On stocke la valeur du cookie dans un array:
-					var tabPostsIds = $cookieStore.get('voteCookie');
-					// On check si cet array contient déjà le postId:
-					var result = $scope.findInMultipleDim(tabPostsIds, post.idPost); 
-					if(result !== null){
-						post.alerts = utilSrv.alertIt('warning', 'Vous aviez d\u00e9j\u00e0 attribu\u00e9 ' + result[1] + '/10 \u00e0 ce post !');
-						// On remet la note qu'avait déjà mis l'utilisateur:
-						post.noteUser = result[1];
+					if($scope.posts != null){
+						// TODO: il faut retrouver la place du post en cours dans le $scope et appliquer les actions sur $scope.posts[i] !!
+						var index = '';
+						for (var i = 0; i < $scope.posts.length; i++) {
+						    if($scope.posts[i].idPost === post.idPost){
+						    	index = i;
+						    	break;
+						    }
+						}
+						if(index !== ''){
+							// On genere le cookie au cas où il n'existerait pas:
+							if (!angular.isDefined($cookieStore.get('voteCookie'))) {
+								$cookieStore.put('voteCookie', []);
+							}
+							// On stocke la valeur du cookie dans un array:
+							var tabPostsIds = $cookieStore.get('voteCookie');
+							// On check si cet array contient déjà le postId:
+							var result = $scope.findInMultipleDim(tabPostsIds, $scope.posts[index].idPost); 
+							if(result !== null){
+								$scope.posts[index].alerts = utilSrv.alertIt('warning', 'Vous aviez d\u00e9j\u00e0 attribu\u00e9 ' + result[1] + '/10 \u00e0 ce post !');
+								// On remet la note qu'avait déjà mis l'utilisateur:
+								$scope.posts[index].noteUser = result[1];
+							}else{
+								$scope.mergeTheVote(index, tabPostsIds);
+							}
+						}else{
+							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors du vote du post (post non trouv\u00e9 dans le scope).');
+						}
 					}else{
-						$scope.showSpinner = true;
-						var data = postSrv.voteThisPost(post); 
-
-						data.then(function(d) {
-							console.log('DEBUT THEN');
+						$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors du vote du post (scope null).');
+					}
+				}
+					
+				// Enregistre le vote en base et met à jour le post ocncerné:
+				$scope.mergeTheVote = function(index, tabPostsIds){
+					$timeout(function() {
+						$scope.$apply(function () {
+							$scope.showSpinner = true;
+						});
+						postSrv.voteThisPost($scope.posts[index]).then(function(d) {
+							$scope.showSpinner = false;
+							console.log(d);
 							if(d){
-								post = d;
-								post.alreadyVoted = true;
-								post.alerts = utilSrv.alertIt('success', 'Votre vote a bien \u00e9t\u00e9 pris en compte pour ce post !');
+								// IHM MàJ du post voté:
+								$scope.posts[index] = d;
+								$scope.posts[index].alreadyVoted = true;
+								$scope.posts[index].alerts = utilSrv.alertIt('success', 'Votre vote a bien \u00e9t\u00e9 pris en compte pour ce post !');
 								
-								tabPostsIds.push([post.idPost, post.noteUser]);
+								// MàJ du cookie des votes:
+								tabPostsIds.push([$scope.posts[index].idPost, $scope.posts[index].noteUser]);
 								$cookieStore.put('voteCookie', tabPostsIds);
 							}else{
 								$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors du vote du post.');
 							}
+						}, function(errResponse) {
+							$scope.showSpinner = false;
+							$scope.alerts = utilSrv.alertIt('danger', 'Un probl\u00e8me est survenu lors du vote du post.');
 						});
-						$scope.showSpinner = false;
-
-					}
-					console.log('FIN');
+					}, 0)
 				}
-								
+				
 				// Init:
 				$scope.getPostsByPostId();
 				
