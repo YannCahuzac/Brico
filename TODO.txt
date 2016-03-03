@@ -1,5 +1,5 @@
 Terminer la rubrique [License] de l'application
 Gestion psw oublié
-Pouvoir voter pour un post avec cookies
+Pouvoir voter pour un post avec cookies: Srv: récupérer Note + NbVotes en base dans le cas où plusieurs pers voteraient en mm tps sur un mm post
 Voir Gestion Post si y'a plus de 20 posts retournés
 Mettre tous les CSS utilisés côté script + dist 

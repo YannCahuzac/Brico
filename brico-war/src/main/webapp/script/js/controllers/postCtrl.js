@@ -71,7 +71,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 							dateCreation : null,
 							nbVotes : 0,
 							note : 0,
-							postValidate : 0,
+							postValidate : $scope.postParent.postValidate,
 							noteUser : 0,
 							overStar : false,
 							noteUserOver : 0,
@@ -189,7 +189,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 				// Méthode qui permet de voter pour un post (user connecté ou non):
 				$scope.voteThisPost = function(post, note){
 					if($scope.posts != null){
-						// TODO: il faut retrouver la place du post en cours dans le $scope et appliquer les actions sur $scope.posts[i] !!
+						// Il faut retrouver la place du post en cours dans le $scope et appliquer les actions sur $scope.posts[i] !!
 						var index = '';
 						for (var i = 0; i < $scope.posts.length; i++) {
 						    if($scope.posts[i].idPost === post.idPost){
@@ -210,6 +210,9 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 								$scope.posts[index].alerts = utilSrv.alertIt('warning', 'Vous aviez d\u00e9j\u00e0 attribu\u00e9 ' + result[1] + '/10 \u00e0 ce post !');
 								// On remet la note qu'avait déjà mis l'utilisateur:
 								$scope.posts[index].noteUser = result[1];
+							}else if($scope.posts[index].alreadyVoted){
+								// Cas où le cookie aurait été supprimé mais qu'une note avait qd mm déjà été donnée:
+								$scope.posts[index].alerts = utilSrv.alertIt('warning', 'Vous aviez d\u00e9j\u00e0 attribu\u00e9 une note \u00e0 ce post !');
 							}else{
 								$scope.mergeTheVote(index, tabPostsIds);
 							}
@@ -221,7 +224,7 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 					}
 				}
 					
-				// Enregistre le vote en base et met à jour le post ocncerné:
+				// Enregistre le vote en base et met à jour le post concerné:
 				$scope.mergeTheVote = function(index, tabPostsIds){
 					$timeout(function() {
 						$scope.$apply(function () {
@@ -229,7 +232,6 @@ App.controller('postCtrl', [ '$scope', '$stateParams', 'utilSrv', '$rootScope', 
 						});
 						postSrv.voteThisPost($scope.posts[index]).then(function(d) {
 							$scope.showSpinner = false;
-							console.log(d);
 							if(d){
 								// IHM MàJ du post voté:
 								$scope.posts[index] = d;

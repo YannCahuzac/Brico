@@ -95,6 +95,7 @@ public class PostSrv {
 					note = new Integer(0);
 				}
 
+				// TODO Récupérer infos en base plutôt que dans le navigateur!!
 				Integer nbVotes = null;
 				if (postDao.getNbVotes() != null) {
 					nbVotes = postDao.getNbVotes();

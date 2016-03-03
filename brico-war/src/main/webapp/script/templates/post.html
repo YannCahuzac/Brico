@@ -79,7 +79,7 @@
 						</div>
 						
 						<!-- Alert spécifique à chaque post -->
-						<div class="alerts-container" data-ng-show="post.alerts && post.alerts.length">
+						<div class="alerts-container" data-ng-show="post.alerts && post.alerts.length" style="margin-top: 20px;">
 							<alert data-ng-repeat="alert in post.alerts" type="{{alert.type}}" close="closePostAlert(post, $index)">{{alert.msg}}</alert>
 						</div>
 						

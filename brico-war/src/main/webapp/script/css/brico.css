@@ -202,10 +202,14 @@ body.bricoBody .row.header .meta .breadcrumb-links {
 	cursor: default;
 }
 
-.widget .widget-body{
+.widget .widget-body {
 	min-height: 100px;
 }
 
-.bricoBody .widget .widget-content .title{
+.bricoBody .widget .widget-content .title {
 	font-size: 20px;
+}
+
+.myThemeTable .table {
+	margin-bottom: 0px;
 }

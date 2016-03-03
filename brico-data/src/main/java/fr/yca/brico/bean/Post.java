@@ -67,6 +67,7 @@ public class Post implements java.io.Serializable {
 			setTypePost(postDao.getTypePost());
 			// 0 pour dire qu'il s'agit d'un post parent ou idParent sinon:
 			setIdPostRef(postDao.getIdPostRef());
+			setPostValidate(postDao.getPostValidate());
 
 			if (init) {
 				if (postDao.getIdPostRef() != null && postDao.getIdPostRef() != 0) {
@@ -80,13 +81,11 @@ public class Post implements java.io.Serializable {
 				// Init:
 				setNbVotes(0);
 				setNote(0);
-				setPostValidate(0);
 			} else {
 				setIdPost(postDao.getIdPost());
 				setDateCreation(postDao.getDateCreation());
 				setNbVotes(postDao.getNbVotes());
 				setNote(postDao.getNote());
-				setPostValidate(postDao.getPostValidate());
 				setTitle(postDao.getTitle());
 			}
 		}
