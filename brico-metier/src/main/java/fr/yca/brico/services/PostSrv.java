@@ -39,7 +39,7 @@ public class PostSrv {
 	}
 
 	/**
-	 * Création d'un nouveau post parent.
+	 * Création d'un nouveau post parent ou enfant.
 	 */
 	public JsonFLux createPost(PostDao postDao) {
 		JsonFLux fluxRet = new JsonFLux();
@@ -47,7 +47,21 @@ public class PostSrv {
 
 		if (Outils.isValidPostDao(postDao)) {
 			try {
-				entityManager.merge(new Post(postDao, true));
+				// Si c'est un parent ou qu'il est déjà validé:
+				if (postDao.getIdPostRef() == 0 || postDao.getPostValidate() == 1) {
+					entityManager.merge(new Post(postDao, true));
+				} else {
+					// On vérifie en base si le post parent n'a pas été validé entre temps:
+					Post parentFromDB = entityManager.find(Post.class, postDao.getIdPostRef());
+					if (parentFromDB != null) {
+						postDao.setPostValidate(parentFromDB.getPostValidate());
+						entityManager.merge(new Post(postDao, true));
+					} else {
+						fluxRet.setCreate(Boolean.FALSE);
+						fluxRet.setLib1("Exception en base lors de la création du post (post parent non retrouvé en base).");
+						logger.info("Exception lors de la creation du post: post parent non retrouve en base.");
+					}
+				}
 			} catch (Exception e) {
 				fluxRet.setCreate(Boolean.FALSE);
 				fluxRet.setLib1("Exception en base lors de la création du post.");
@@ -88,31 +102,38 @@ public class PostSrv {
 		boolean allIsOk = true;
 		if (postDao != null && postDao.getIdPost() != null) {
 			try {
-				Integer note = null;
-				if (postDao.getNote() != null) {
-					note = postDao.getNote();
+
+				// On récupère les infos en base plutôt que dans le navigateur car si n bricoleurs votent simultanément ça fait foirer les votes:
+				Post postFromDB = entityManager.find(Post.class, postDao.getIdPost());
+
+				if (postFromDB != null) {
+
+					Integer note = null;
+					if (postFromDB.getNote() != null) {
+						note = postFromDB.getNote();
+					} else {
+						note = new Integer(0);
+					}
+
+					Integer nbVotes = null;
+					if (postFromDB.getNbVotes() != null) {
+						nbVotes = postFromDB.getNbVotes();
+					} else {
+						nbVotes = new Integer(0);
+					}
+
+					note = (note * nbVotes + postDao.getNoteUser()) / (nbVotes + 1);
+
+					// On rajoutera 1 au nbVotes car on prend en compte le vote en cours de l'user:
+					nbVotes = nbVotes + 1;
+
+					entityManager.createQuery(Constants.votePost).setParameter("note", note).setParameter("nbVotes", nbVotes).setParameter("id", postDao.getIdPost()).executeUpdate();
+
+					postDao.setNote(note);
+					postDao.setNbVotes(nbVotes);
 				} else {
-					note = new Integer(0);
+					allIsOk = false;
 				}
-
-				// TODO Récupérer infos en base plutôt que dans le navigateur!!
-				Integer nbVotes = null;
-				if (postDao.getNbVotes() != null) {
-					nbVotes = postDao.getNbVotes();
-				} else {
-					nbVotes = new Integer(0);
-				}
-
-				note = (note * nbVotes + postDao.getNoteUser()) / (nbVotes + 1);
-
-				// On rajoutera 1 au nbVotes car on prend en compte le vote en cours de l'user:
-				nbVotes = nbVotes + 1;
-
-				entityManager.createQuery(Constants.votePost).setParameter("note", note).setParameter("nbVotes", nbVotes).setParameter("id", postDao.getIdPost()).executeUpdate();
-
-				postDao.setNote(note);
-				postDao.setNbVotes(nbVotes);
-
 			} catch (Exception e) {
 				allIsOk = false;
 				logger.info("Exception lors du vote du post: " + e.getMessage());
